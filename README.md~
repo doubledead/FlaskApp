@@ -21,3 +21,7 @@ Install all required JS libraries
 
 > cd static/
 > bower install
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2b0b6a6ae961fca66e7083a75bf5df66ba873490
