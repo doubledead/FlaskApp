@@ -30,3 +30,6 @@ def configure_app(app):
     config_name = os.getenv('FLAKS_CONFIGURATION', 'default')
     app.config.from_object(config[config_name]) # object-based default configuration
     app.config.from_pyfile('config.cfg', silent=True) # instance-folders configuration
+    # Configure Security
+    user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+    app.security = Security(app, user_datastore)
