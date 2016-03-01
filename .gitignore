@@ -61,4 +61,9 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
+# bower dependencies
 flaskapp/static/bower_components
+
+# database
+*.sqlite
+flaskapp/*.sqlite
