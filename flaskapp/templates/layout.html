@@ -23,6 +23,9 @@
         <ul class="nav navbar-nav">
           <li><a class="navbar-brand" href="#">Tab 1</a></li>
           <li><a class="navbar-brand" href="#">Tab 2</a></li>
+          {% if user.is_authenticated() %}
+          <li><a class="navbar-brand" href="#">Main</a></li>
+          {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% if user.has_role('admin') %}
@@ -30,6 +33,7 @@
           {% endif %}
           {% if not user.is_authenticated() %}
             <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span>Log In</a></li>
+            <li><a href="/register"><span class="glyphicon glyphicon-log-in"></span>Register</a></li>
           {% else %}
             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
           {% endif %}

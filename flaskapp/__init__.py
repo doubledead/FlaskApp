@@ -1,8 +1,10 @@
 from flask import abort, Flask, g, render_template, request
+from flask_mail import Mail
 from flask_security import current_user
 from flaskapp.utils import get_instance_folder_path
 from flaskapp.main.controllers import main
 from flaskapp.admin.controllers import admin
+from flaskapp.cache import cache
 from flaskapp.config import configure_app
 from flaskapp.data.models import db
 
@@ -12,6 +14,8 @@ app = Flask(__name__,
             template_folder='templates')
 
 configure_app(app)
+cache.init_app(app)
+mail = Mail()
 db.init_app(app)
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
@@ -35,6 +39,7 @@ def inject_user():
     return dict(user=current_user)
 
 @app.route('/')
+@cache.cached(300)
 def home():
     return render_template('index.html')
 
