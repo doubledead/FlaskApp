@@ -17,12 +17,13 @@ configure_app(app)
 cache.init_app(app)
 mail = Mail()
 db.init_app(app)
+mail.init_app(app)
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
 @app.errorhandler(404)
 def page_not_found(error):
 	app.logger.error('Page not found: %s', (request.path))
-	return render_template('404.html'), 4044
+	return render_template('404.html'), 404
 
 @app.errorhandler(500)
 def internal_server_error(error):
@@ -30,8 +31,8 @@ def internal_server_error(error):
     return render_template('500.html'), 500
 
 @app.errorhandler(Exception)
-def unhandled_exception(e):
-    app.logger.error('Unhandled Exception: %s', (e))
+def unhandled_exception(error):
+    app.logger.error('Unhandled Exception: %s', (error))
     return render_template('500.html'), 500
 
 @app.context_processor
