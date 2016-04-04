@@ -22,7 +22,7 @@ app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
 @app.errorhandler(404)
 def page_not_found(error):
-	app.logger.error('Page not found: %s', (request.path))
+	app.logger.error('Page not found: %s', (request.path, error))
 	return render_template('404.html'), 404
 
 @app.errorhandler(500)

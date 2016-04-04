@@ -28,15 +28,14 @@ class BaseConfig(object):
     SECURITY_REGISTERABLE = True
     SECURITY_POST_LOGIN_VIEW = '/main'
     SECURITY_POST_LOGOUT_VIEW = '/'
-    SECURITY_POST_REGISTER_VIEW = '/main'
+    SECURITY_POST_REGISTER_VIEW = '/index'
     SECURITY_SEND_REGISTER_EMAIL = False
 
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     TESTING = True
-    # SQLALCHEMY_DATABASE_URI = 'sqlite:///C:/Temp/flaskapp.db'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///flaskapp.sqlite'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
     SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39f'
 
 
