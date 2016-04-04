@@ -12,7 +12,7 @@ class BaseConfig(object):
     LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     LOGGING_LOCATION = 'flaskapp.log'
     LOGGING_LEVEL = logging.DEBUG
-    CACHE_TYPE = 'simple'
+    # CACHE_TYPE = 'simple'
 
      # Flask-Mail
      # Required for Flask-Security registration to function properly
@@ -28,7 +28,7 @@ class BaseConfig(object):
     SECURITY_REGISTERABLE = True
     SECURITY_POST_LOGIN_VIEW = '/main'
     SECURITY_POST_LOGOUT_VIEW = '/'
-    SECURITY_POST_REGISTER_VIEW = '/index'
+    SECURITY_POST_REGISTER_VIEW = '/'
     SECURITY_SEND_REGISTER_EMAIL = False
 
 

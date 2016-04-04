@@ -17,6 +17,11 @@ This webapp requires these programs:
 
 	$ pip install -r requirements.txt
 
-#### 3. Run the Flask project
+#### 3. Install all required JS libraries
+
+  $ cd static/
+  $ bower install
+
+#### 4. Run the Flask project
 
 	$ python run.py
