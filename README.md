@@ -8,16 +8,15 @@ This webapp requires these programs:
 - virtualenv
 - bower
 
-Activate virtualenv
+#### 1. Activate virtualenv
 
-> virtualenv env
-> source env/bin/activate
+	$ virtualenv env
+	$ source env/bin/activate
 
-Install all required Python libraries
+#### 2. Install all required Python libraries
 
-> pip install -r requirements.txt
+	$ pip install -r requirements.txt
 
-Install all required JS libraries
+#### 3. Run the Flask project
 
-> cd static/
-> bower install
+	$ python run.py

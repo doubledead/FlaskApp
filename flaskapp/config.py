@@ -15,6 +15,7 @@ class BaseConfig(object):
     CACHE_TYPE = 'simple'
 
      # Flask-Mail
+     # Required for Flask-Security registration to function properly
     MAIL_DEFAULT_SENDER = 'info@flaskapp.us'
     MAIL_SERVER = 'smtp.postmarkapp.com'
     MAIL_PORT = 25
