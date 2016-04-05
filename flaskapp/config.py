@@ -8,7 +8,7 @@ class BaseConfig(object):
     TESTING = False
     # sqlite :memory: identifier is the default if no filepath is present
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
-    SECRET_KEY = '1d94e52c-1c89-4515-b87a-f48cf3cb7f0b'
+    SECRET_KEY = '1d94e52c-1c89-4515-b87a-f48cf3cb7f0a'
     LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     LOGGING_LOCATION = 'flaskapp.log'
     LOGGING_LEVEL = logging.DEBUG
@@ -34,16 +34,17 @@ class BaseConfig(object):
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    TESTING = True
+    # Setting TESTING to True disables @login_required restrictions
+    TESTING = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
-    SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39f'
+    SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39a'
 
 
 class TestingConfig(BaseConfig):
     DEBUG = False
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
-    SECRET_KEY = '792842bc-c4df-4de1-9177-d5207bd9faa6'
+    SECRET_KEY = '792842bc-c4df-4de1-9177-d5207bd9faaa'
 
 config = {
     "development": "flaskapp.config.DevelopmentConfig",
