@@ -5,7 +5,7 @@ from flaskapp.utils import get_instance_folder_path
 from flaskapp.main.controllers import main
 from flaskapp.admin.controllers import admin
 from flaskapp.user.controllers import user
-# from flaskapp.cache import cache
+from flaskapp.cache import cache
 from flaskapp.config import configure_app
 from flaskapp.data.models import db
 
@@ -15,7 +15,7 @@ app = Flask(__name__,
             template_folder='templates')
 
 configure_app(app)
-# cache.init_app(app)
+cache.init_app(app)
 
 #: Flask-Mail extension instance
 mail = Mail()
@@ -45,7 +45,7 @@ def inject_user():
     return dict(user=current_user)
 
 @app.route('/')
-# @cache.cached(300)
+@cache.cached(300)
 def home():
     return render_template('index.html')
 

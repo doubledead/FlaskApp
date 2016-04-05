@@ -11,6 +11,5 @@ user = Blueprint('user', __name__, template_folder='templates')
 
 @user.route('/')
 @login_required
-# @roles_required('admin')
 def index():
     return render_template('user_profile.html')

@@ -12,7 +12,7 @@ class BaseConfig(object):
     LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     LOGGING_LOCATION = 'flaskapp.log'
     LOGGING_LEVEL = logging.DEBUG
-    # CACHE_TYPE = 'simple'
+    CACHE_TYPE = 'simple'
 
      # Flask-Mail
      # Required for Flask-Security registration to function properly
@@ -28,13 +28,13 @@ class BaseConfig(object):
     SECURITY_REGISTERABLE = True
     SECURITY_POST_LOGIN_VIEW = '/main'
     SECURITY_POST_LOGOUT_VIEW = '/'
-    SECURITY_POST_REGISTER_VIEW = '/'
+    SECURITY_POST_REGISTER_VIEW = '/main'
     SECURITY_SEND_REGISTER_EMAIL = False
 
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    # Setting TESTING to True disables @login_required restrictions
+    # Setting TESTING to True disables @login_required checks
     TESTING = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
     SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39a'

@@ -1,5 +1,5 @@
 {
-  "name": "pl-py",
+  "name": "FlaskApp",
   "description": "",
   "main": "",
   "moduleType": [],
@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "jquery": "~2.2.1",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "angular": "angularjs#^1.5.3"
   }
 }
