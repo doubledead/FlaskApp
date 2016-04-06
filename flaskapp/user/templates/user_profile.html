@@ -1,6 +1,22 @@
-{% extends 'layout.html' %}
+{% extends 'layout_angular.html' %}
 {% block container %}
-    <div>
-        User Profile
+    <div class="jumbotron">
+        <h1>Profile</h1>
+        <p>User profile page.</p>
     </div>
+    {% raw %}
+      <div class="row" ng-controller="formCtrl">
+    		<form name="baseForm" role="form">
+          <div class="form-group">
+            <label for="tb-fname">First Name:</label>
+            <input type="text" class="form-control" id="tb-fname" ng-model="fName">
+          </div>
+          <div class="form-group">
+            <label for="tb-lname">Last Name:</label>
+            <input type="text" class="form-control" id="tb-lname" ng-model="lName">
+          </div>
+          <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
+        </form>
+      </div>
+    {% endraw %}
 {% endblock %}
