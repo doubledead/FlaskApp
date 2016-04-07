@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('baseApp.form', [
-	'form.controllers'
-	//'form.directives'
+	'form.controllers',
+	'form.directives'
 ])
 .run(['$rootScope', function ($rootScope) {
 
