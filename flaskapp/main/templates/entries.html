@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block container %}
+    <div class="jumbotron">
+        <h1>Entries</h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-3 col-md-3">Title</div>
+      <div class="col-sm-9 col-md-9">Body</div>
+    </div>
+    {% for data in entries %}
+      <div class="row">
+        <div class="col-sm-3 col-md-3">{{data.title}}</div>
+        <div class="col-sm-3 col-md-3">{{data.body}}</div>
+      </div>
+    {% endfor %}
+{% endblock %}

@@ -1,5 +1,10 @@
 # FlaskApp
-Flask app using modular blueprints
+Flask app using modular blueprints.
+
+Features:
+  -Flask-Security
+  -Jinja2 templating
+  -Embedded AngularJS
 
 This webapp requires these programs: 
 
@@ -8,7 +13,7 @@ This webapp requires these programs:
 - virtualenv
 - bower
 
-#### 1. Activate virtualenv
+#### 1. Activate virtualenv (ran at root of project)
 
 	$ virtualenv env
 	$ source env/bin/activate
@@ -22,6 +27,7 @@ This webapp requires these programs:
   $ cd static/
   $ bower install
 
-#### 4. Run the Flask project
+#### 4. Run the Flask project (ran at root of project)
 
-	$ python run.py
+	$ python seed.py
+  $ python run.py

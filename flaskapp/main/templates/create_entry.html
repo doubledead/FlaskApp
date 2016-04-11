@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block container %}
+    <div class="jumbotron">
+        <h1>Create Entry</h1>
+    </div>
+    {% if form.title.errors %}
+      <ul class="errors">
+      {% for error in form.title.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+      </ul><br/>
+    {% endif %}
+    <div class="top-pad">
+      <form method="POST" action="{{url_for('main.create_entry')}}">
+        {{ form.csrf_token }}
+        {{ form.title.label }} {{ form.title(size=20) }}
+        {{ form.body.label }} {{ form.body(size=20) }}
+        <input type="submit" value="Create">
+      </form>
+    </div>
+{% endblock %}
