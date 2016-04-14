@@ -14,7 +14,10 @@ main = Blueprint('main', __name__, template_folder='templates')
 @main.route('/')
 @login_required
 def index():
-    return render_template('main.html')
+  entries = [entry for entry in Entry.query.all()]
+  current_app.logger.info('Displaying all entries.')
+
+  return render_template('main.html', entries=entries)
 
 @main.route('/entries/')
 @login_required

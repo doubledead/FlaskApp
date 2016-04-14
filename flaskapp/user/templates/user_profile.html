@@ -2,7 +2,9 @@
 {% block container %}
     <div class="jumbotron">
         <h1>Profile</h1>
-        <p>User profile page.</p>
+        {% if current_user.is_authenticated %}
+          <p>Hi, {{ current_user.email }}!
+        {% endif %}
     </div>
     {% raw %}
       <div class="row" ng-controller="formCtrl">
@@ -20,6 +22,15 @@
           -->
           <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
         </form>
+      </div>
+      <div class="row">
+        <div class="col-md-12"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">{{fname}}</div>
+        <div class="col-md-4">{{lname}}</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
       </div>
     {% endraw %}
 {% endblock %}
