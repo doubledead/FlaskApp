@@ -25,7 +25,7 @@ This webapp requires these programs:
 
 #### 3. Install all required JS libraries
 
-  $ cd static/
+  $ cd static
   $ bower install
 
 #### 4. Install SQLite test data (run at root of project)
