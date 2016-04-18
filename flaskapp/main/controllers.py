@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash
 from flask import current_app, redirect, request, url_for
 from flask_security.decorators import roles_required
-from flask_security import login_required
+from flask_security import login_required, current_user
 from flaskapp.main.forms.entry_forms import CreateEntryForm
 from flaskapp.cache import cache
 from flaskapp.data.models import Entry, db
@@ -32,6 +32,8 @@ def display_entries():
 @login_required
 def create_entry():
   form = CreateEntryForm(request.form)
+  user_id = current_user.user_id
+  
   if request.method == 'POST' and form.validate():
     title = form.title.data
     body = form.body.data

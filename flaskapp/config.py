@@ -36,6 +36,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     # Setting TESTING to True disables @login_required checks
     TESTING = False
+    # Linux SQLite reference
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
     SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39a'
 

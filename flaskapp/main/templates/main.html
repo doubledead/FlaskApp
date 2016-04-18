@@ -16,8 +16,9 @@
     </div>
     {% for data in entries %}
       <div class="row">
-        <div class="col-sm-3 col-md-3">{{data.title}}</div>
-        <div class="col-sm-3 col-md-3">{{data.body}}</div>
+        <div class="col-sm-3 col-md-4">{{data.title}}</div>
+        <div class="col-sm-3 col-md-4">{{data.body}}</div>
+        <div class="col-sm-3 col-md-4">{{data.user_id}}</div>
       </div>
     {% endfor %}
 {% endblock %}
