@@ -32,7 +32,7 @@ def display_entries():
 @login_required
 def create_entry():
   form = CreateEntryForm(request.form)
-  user_id = current_user.user_id
+  #user_id = current_user.user_id
   
   if request.method == 'POST' and form.validate():
     title = form.title.data

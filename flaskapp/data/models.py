@@ -7,11 +7,14 @@ class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
     body = db.Column(db.String(300))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    #create_date = db.Column(db.DateTime())
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, title, body):
       self.title = title
       self.body = body
+      #self.create_date = create_date
+      #self.user_id = user_id
 
     def __repr__(self):
       return '<Entry %r>' % self.title
@@ -40,13 +43,13 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(120))
     active = db.Column(db.Boolean())
-    confirmed_at = db.Column(db.DateTime())
-    last_login_at = db.Column(db.DateTime())
-    current_login_at = db.Column(db.DateTime())
-    last_login_ip = db.Column(db.String(100))
-    current_login_ip = db.Column(db.String(100))
-    login_count = db.Column(db.Integer)
-    registered_at = db.Column(db.DateTime())
+    #confirmed_at = db.Column(db.DateTime())
+    #last_login_at = db.Column(db.DateTime())
+    #current_login_at = db.Column(db.DateTime())
+    #last_login_ip = db.Column(db.String(100))
+    #current_login_ip = db.Column(db.String(100))
+    #login_count = db.Column(db.Integer)
+    #registered_at = db.Column(db.DateTime())
 
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))

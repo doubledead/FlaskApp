@@ -3,6 +3,11 @@ from flask_security import Security, SQLAlchemyUserDatastore
 import os
 import logging
 
+db_username = 'puser'
+db_password = 'Password1'
+db_name = 'devdb'
+db_hostname = 'localhost'
+
 class BaseConfig(object):
     DEBUG = False
     TESTING = False
@@ -37,7 +42,8 @@ class DevelopmentConfig(BaseConfig):
     # Setting TESTING to True disables @login_required checks
     TESTING = False
     # Linux SQLite reference
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
+    #SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://puser:Password1@localhost/devdb'
     SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39a'
 
 

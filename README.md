@@ -28,7 +28,7 @@ This webapp requires these programs:
   $ cd static
   $ bower install
 
-#### 4. Install SQLite test data (run at root of project)
+#### 4. Install SQLite(or postgreSQL, depending on connection) test data (run at root of project)
 
   $ python seed.py
 
