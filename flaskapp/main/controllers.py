@@ -32,13 +32,14 @@ def display_entries():
 @login_required
 def create_entry():
   form = CreateEntryForm(request.form)
-  #user_id = current_user.user_id
+  user_id = current_user.id
   
   if request.method == 'POST' and form.validate():
     title = form.title.data
     body = form.body.data
+    user_id = user_id
     current_app.logger.info('Adding a new entry %s.', (title))
-    entry = Entry(title, body)
+    entry = Entry(title, body, user_id)
 
     try:
       db.session.add(entry)

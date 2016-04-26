@@ -9,18 +9,19 @@
     </div>
     <div class="row">
     	<div class="col-sm-3 col-md-1">Id</div>
-    	<div class="col-sm-3 col-md-4">Title</div>
+        <div class="col-sm-9 col-md-1">User Id</div>
+    	<div class="col-sm-3 col-md-3">Title</div>
     	<div class="col-sm-9 col-md-7">Body</div>
     </div>
     <div class="row">
     	<div class="col-md-12">&nbsp;</div>
     </div>
     {% for data in entries %}
-      <div class="row">
-      	<div class="col-sm-3 col-md-1">{{data.id}}</div>
-        <div class="col-sm-3 col-md-4">{{data.title}}</div>
+    <div class="row">
+        <div class="col-sm-3 col-md-1">{{data.id}}</div>
+        <div class="col-sm-3 col-md-1">{{data.user_id}}</div>
+        <div class="col-sm-3 col-md-3">{{data.title}}</div>
         <div class="col-sm-3 col-md-7">{{data.body}}</div>
-        <!--<div class="col-sm-3 col-md-4">{{data.user_id}}</div>-->
-      </div>
+    </div>
     {% endfor %}
 {% endblock %}

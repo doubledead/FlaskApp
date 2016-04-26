@@ -4,22 +4,24 @@
         <h1>Entries</h1>
     </div>
     <div class="row">
-      <p><a href="{{ url_for('main.display_entries') }}">Entries</a></p>
-      <p><a href="{{ url_for('main.create_entry') }}">Create Entry</a></p>
+    	<p><a href="{{ url_for('main.display_entries') }}">Entries</a></p>
+    	<p><a href="{{ url_for('main.create_entry') }}">Create Entry</a></p>
     </div>
     <div class="row">
-      <div class="col-sm-3 col-md-1">ID</div>
-      <div class="col-sm-3 col-md-4">Title</div>
-      <div class="col-sm-9 col-md-7">Body</div>
+    	<div class="col-sm-3 col-md-1">ID</div>
+    	<div class="col-sm-3 col-md-1">User ID</div>
+    	<div class="col-sm-3 col-md-3">Title</div>
+    	<div class="col-sm-9 col-md-7">Body</div>
     </div>
     <div class="row">
-      <div class="col-md-12">&nbsp;</div>
+    	<div class="col-md-12">&nbsp;</div>
     </div>
     {% for data in entries %}
-      <div class="row">
-      	<div class="col-sm-3 col-md-1">{{data.id}}</div>
-        <div class="col-sm-3 col-md-4">{{data.title}}</div>
-        <div class="col-sm-3 col-md-7">{{data.body}}</div>
-      </div>
+    <div class="row">
+    	<div class="col-sm-3 col-md-1">{{data.id}}</div>
+    	<div class="col-sm-3 col-md-1">{{data.user_id}}</div>
+    	<div class="col-sm-3 col-md-3">{{data.title}}</div>
+		<div class="col-sm-3 col-md-7">{{data.body}}</div>
+    </div>
     {% endfor %}
 {% endblock %}

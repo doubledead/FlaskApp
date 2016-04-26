@@ -8,25 +8,28 @@ class Entry(db.Model):
     title = db.Column(db.String(80))
     body = db.Column(db.String(300))
     #create_date = db.Column(db.DateTime())
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, title, body):
+    def __init__(self, title, body, user_id):
       self.title = title
       self.body = body
       #self.create_date = create_date
-      #self.user_id = user_id
+      self.user_id = user_id
 
     def __repr__(self):
       return '<Entry %r>' % self.title
 
 
 
-roles_users = db.Table('roles_users', \
-db.Column('user_id', db.Integer(), db.ForeignKey('user.id')), \
-db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+roles_users = db.Table(
+    'roles_users',
+    db.Column('user_id', db.Integer(), db.ForeignKey('users.id')),
+    db.Column('role_id', db.Integer(), db.ForeignKey('roles.id')))
 
 
 class Role(db.Model, RoleMixin):
+    __tablename__ = 'roles'
+
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
@@ -39,6 +42,8 @@ class Role(db.Model, RoleMixin):
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(120))
@@ -53,12 +58,3 @@ class User(db.Model, UserMixin):
 
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
-
-    def __init__(self, email, password, active, roles):
-        self.email = email
-        self.password = password
-        self.active = active
-        self.roles = roles
-
-    def __repr__(self):
-        return '<User %r>' % (self.email)
