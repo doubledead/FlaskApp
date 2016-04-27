@@ -1,42 +1,36 @@
 angular.module('form.controllers', [])
 .controller('formCtrl', ['$scope', '$http', function ($scope, $http) {
 
+    $scope.params = {};
+
 	$scope.submitForm = function () {
-		var timeStamp = new Date();
+        var 
+            deferred = $.Deferred(),
+            data = JSON.stringify($scope.params);
 
-		console.log('Test: ' + timeStamp);
+        // jQuery Ajax is used to reach Flask endpoints
+        // because AngularJS routes are not used.
+        $.ajax({
+            cache: false,
+            contentType: 'application/json; charset=utf-8',
+            accepts: 'application/json',
+            url: '/main/create',
+            data: data,
+            dataType: 'json',
+            type: 'POST'
+        }).success(function(response) {
+            deferred.resolve(response);
+            console.log(response);
+            $scope.$apply(reset());
+        }).fail(function(response) {
 
-		/*
-    $http.get('/test').then(function(resp) {
-			console.log(resp.data);
-		});
-    */
+        }).done(function(response) {
 
-    var deferred = $.Deferred();
+        });
+        return deferred.promise();
+    };
 
-    $.ajax({
-        cache: false,
-        contentType: 'application/json; charset=utf-8',
-        accepts: 'application/json',
-        url: '/user/test',
-        data: '',
-        dataType: 'json',
-        type: 'POST'
-    }).done( function(response) {
-
-        deferred.resolve(response);
-        console.log(response);
-        if (response) {
-          $scope.$apply($scope.fname = response.fname);
-          $scope.$apply($scope.lname = response.lname);
-          // These need to be parsed
-          //$scope.$apply($scope.dateOfBirth = response.dateOfBirth);
-          //$scope.$apply($scope.email = response.email);
-        }
-
-    });
-    return deferred.promise();
-	};
-
-
+    function reset() {
+        $scope.params = {};
+    }
 }]);

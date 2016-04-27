@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'layout_angular.html' %}
 {% block container %}
     <div class="jumbotron">
         <h1>Create Entry</h1>
@@ -22,4 +22,25 @@
         <input type="submit" value="Create">
       </form>
     </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    {% raw %}
+      <div class="top-pad" ng-app="baseApp" ng-controller="formCtrl">
+        <form name="baseForm" role="form">
+          <entry-row></entry-row>
+          <!--
+          <div class="form-group">
+            <label for="tb-title">Title:</label>
+            <input type="text" class="form-control" id="tb-title" ng-model="params.title">
+          </div>
+          <div class="form-group">
+            <label for="tb-body">Body:</label>
+            <input type="text" class="form-control" id="tb-body" ng-model="params.body">
+          </div>
+          -->
+          <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
+        </form>
+      </div>
+    {% endraw %}
 {% endblock %}
