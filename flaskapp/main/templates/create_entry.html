@@ -3,6 +3,11 @@
     <div class="jumbotron">
         <h1>Create Entry</h1>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Flask Form</h4>
+      </div>
+    </div>
     {% if form.title.errors %}
       <ul class="errors">
       {% for error in form.title.errors %}
@@ -24,6 +29,11 @@
     </div>
     <div class="row">
       <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Embedded AngularJS Form</h4>
+      </div>
     </div>
     {% raw %}
       <div class="top-pad" ng-app="baseApp" ng-controller="formCtrl">
