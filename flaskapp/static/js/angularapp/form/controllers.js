@@ -3,7 +3,8 @@ angular.module('form.controllers', [])
 
     $scope.params = {};
     $scope.stage = "";
-    $scope.direction = 0;
+    //$scope.direction = 0;
+    $scope.longStage = 0;
 
     $scope.next = function (stage) {
     	$scope.direction = 1;
@@ -62,6 +63,6 @@ angular.module('form.controllers', [])
 
         // Send the app back to a Flask route
         // This method is kind of experimental at the moment.
-        //$timeout(changeRoute, 2000);
+        $timeout(changeRoute, 1000);
     }
 }]);
