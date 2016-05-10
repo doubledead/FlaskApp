@@ -5,6 +5,7 @@ angular.module('form.controllers', [])
     $scope.stage = "";
     //$scope.direction = 0;
     $scope.longStage = 0;
+    $scope.formValid = false;
 
     $scope.next = function (stage) {
     	$scope.direction = 1;
@@ -29,6 +30,10 @@ angular.module('form.controllers', [])
         var 
             deferred = $.Deferred(),
             data = JSON.stringify($scope.params);
+
+        if ($scope.baseForm.$valid) {
+        	
+        }
 
         // jQuery Ajax is used to reach Flask endpoints
         // because AngularJS routes are not used.
