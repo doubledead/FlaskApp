@@ -2,11 +2,38 @@ angular.module('form.controllers', [])
 .controller('formCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
 
     $scope.params = {};
+    $scope.stage = "";
+    //$scope.direction = 0;
+    $scope.longStage = 0;
+    $scope.formValid = false;
+
+    $scope.next = function (stage) {
+    	$scope.direction = 1;
+    	$scope.stage = stage;
+    	if (stage=="stage3") {
+    		$scope.longStage = 1;
+    	}
+    	console.log("Direction: " + $scope.direction);
+    	console.log("Stage: " + $scope.stage);
+    };
+
+    $scope.back = function (stage) {
+    	$scope.direction = 0;
+    	$scope.stage = stage;
+
+    	console.log("Direction: " + $scope.direction);
+    	console.log("Stage: " + $scope.stage);
+    };
+
 
 	$scope.submitForm = function () {
         var 
             deferred = $.Deferred(),
             data = JSON.stringify($scope.params);
+
+        if ($scope.baseForm.$valid) {
+        	
+        }
 
         // jQuery Ajax is used to reach Flask endpoints
         // because AngularJS routes are not used.
@@ -37,9 +64,10 @@ angular.module('form.controllers', [])
     function reset() {
         // Clean up scope before destorying
         $scope.params = {};
+        $scope.stage = "";
 
         // Send the app back to a Flask route
-        //$timeout((location.assign("http://127.0.0.1:5000/main/")), 4000);
-        $timeout(changeRoute, 3000);
+        // This method is kind of experimental at the moment.
+        $timeout(changeRoute, 1000);
     }
 }]);

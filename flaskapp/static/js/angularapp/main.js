@@ -3,5 +3,6 @@
 // AngularJS main app inialization
 angular.module('baseApp', [
   'baseApp.index',
-  'baseApp.form'
+  'baseApp.form',
+  'ngAnimate'
 ]);

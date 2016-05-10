@@ -3,10 +3,6 @@ from flask_security import Security, SQLAlchemyUserDatastore
 import os
 import logging
 
-db_username = 'puser'
-db_password = 'Password1'
-db_name = 'devdb'
-db_hostname = 'localhost'
 
 class BaseConfig(object):
     DEBUG = False
