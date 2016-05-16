@@ -28,16 +28,7 @@ angular.module('form.directives', [])
 .directive('entryRow', function () {
     return {
         restrict: 'E',
-        //templateUrl: 'partials/form/row.html',
-        template: 
-        '<div class="form-group">' +
-        '<label for="tb-title">Title:</label>' +
-        '<input type="text" id="tb-title" class="form-control" ng-model="params.title">' +
-        '</div>' +
-        '<div class="form-group">' +
-        '<label for="tb-body">Body:</label>' +
-        '<input type="text" id="tb-body" class="form-control" ng-model="params.body">' +
-        '</div>',
+        templateUrl: 'form/row.html',
         link: function (scope, element, attrs) {
 
         }
