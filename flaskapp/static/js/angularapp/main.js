@@ -2,7 +2,8 @@
 
 // AngularJS main app inialization
 angular.module('baseApp', [
-  'baseApp.index',
-  'baseApp.form',
-  'ngAnimate'
+	'templates',
+	'baseApp.index',
+	'baseApp.form',
+	'ngAnimate'
 ]);

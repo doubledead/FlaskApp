@@ -13,16 +13,11 @@ angular.module('form.controllers', [])
     	if (stage=="stage3") {
     		$scope.longStage = 1;
     	}
-    	console.log("Direction: " + $scope.direction);
-    	console.log("Stage: " + $scope.stage);
     };
 
     $scope.back = function (stage) {
     	$scope.direction = 0;
     	$scope.stage = stage;
-
-    	console.log("Direction: " + $scope.direction);
-    	console.log("Stage: " + $scope.stage);
     };
 
 
