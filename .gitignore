@@ -67,3 +67,6 @@ flaskapp/static/bower_components
 # database
 *.sqlite
 flaskapp/*.sqlite
+
+# IntelliJ IDEA IDE
+.idea/
