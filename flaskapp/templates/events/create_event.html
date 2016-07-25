@@ -1,4 +1,4 @@
-{% extends 'layouts/boilerplate.html' %}
+{% extends 'layouts/layout_angular.html' %}
 {% block container %}
   <div class="jumbotron">
     <h1>Create Event</h1>
@@ -23,10 +23,22 @@
           {{ render_field_with_errors(form.address, size=20, class='form-control') }}
         </div>
         <div class="form-group">
-          {{ render_field_with_errors(form.city, size=20, class='form-control') }}
+{#          {{ render_field_with_errors(form.city, size=20, class='form-control') }}#}
         </div>
         <div class="form-group">
-          {{ render_field_with_errors(form.zip, size=20, class='form-control') }}
+{#          {{ render_field_with_errors(form.state, size=20, class='form-control') }}#}
+        </div>
+        <div class="form-group">
+{#          {{ render_field_with_errors(form.zip, size=20, class='form-control') }}#}
+        </div>
+        <div class="form-group">
+{#          {{ render_field_with_errors(form.country, size=20, class='form-control') }}#}
+        </div>
+        <div class="form-group">
+          {{ render_field_with_errors(form.start_date, size=20, class='form-control') }}
+        </div>
+        <div class="form-group">
+          {{ render_field_with_errors(form.end_date, size=20, class='form-control') }}
         </div>
         <input type="submit" value="Create" class="btn btn-sm btn-success">
       </form>
@@ -46,6 +58,62 @@
   <div class="row">
     <div class="col-md-12">&nbsp;</div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Embedded AngularJS Form</h4>
+    </div>
+  </div>
   {% raw %}
+    <div class="top-pad" ng-app="baseApp" ng-controller="formCtrl">
+      <form name="baseForm" role="form" novalidate ng-cloak>
+        <!--
+        <h3>Directive Form</h3>
+        <entry-row></entry-row>
+        <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
+        -->
+        <div class="row">
+          <div class="col-md-12">&nbsp;</div>
+        </div>
+        <h3>Ng-Switch Form</h3>
+        <div class="animate-switch-container" ng-switch on="stage" ng-class="{forward: direction, backward:!direction,longStage: longStage}">
+          <div class="animate-switch" ng-switch-default>
+            <p>Welcome to the form.</p>
+            <button type="button" class="btn btn-primary" ng-click="next('stage1')">Next</button>
+          </div>
+          <div class="animate-switch" ng-switch-when="stage1">
+            <div class="form-group">
+              <label for="tb-title">Title:</label>
+              <input type="text" class="form-control" id="tb-title" ng-model="params.title">
+            </div>
+            <button type="button" class="btn btn-info" ng-click="back('')">Back</button>
+            <button type="button" class="btn btn-primary" ng-click="next('stage2')">Next</button>
+          </div>
+          <div class="animate-switch" ng-switch-when="stage2">
+            <div class="form-group">
+              <label for="tb-body">Body:</label>
+              <input type="text" class="form-control" id="tb-body" ng-model="params.body">
+            </div>
+            <button type="button" class="btn btn-info" ng-click="back('stage1')">Back</button>
+            <button type="button" class="btn btn-primary" ng-click="next('stage3')">Next</button>
+          </div>
+          <div class="animate-switch" ng-switch-when="stage3">
+            <div class="row">
+              <div class="col-md-12">{{params.title}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">{{params.body}}</div>
+            </div>
+            <button type="button" class="btn btn-info" ng-click="back('stage2')">Back</button>
+            <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">&nbsp;</div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+      </div>
+    </div>
   {% endraw %}
 {% endblock %}
