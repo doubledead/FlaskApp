@@ -53,8 +53,10 @@ from flaskapp.main.views import main
 from flaskapp.admin.views import admin
 from flaskapp.users.views import user
 from flaskapp.events.views import events
+from flaskapp.entries.views import entries
 
 app.register_blueprint(main, url_prefix='/main')
 app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(user, url_prefix='/user')
 app.register_blueprint(events, url_prefix='/events')
+app.register_blueprint(entries, url_prefix='/entries')
