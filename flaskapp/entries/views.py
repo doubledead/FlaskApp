@@ -2,6 +2,7 @@ from flask import Blueprint, render_template
 from flask import request, redirect, url_for, json, current_app
 from ..core import db
 from flask_security import login_required, current_user
+from datetime import datetime
 from .forms import CreateEntryForm, UpdateEntryForm
 from .models import Entry
 from sqlalchemy import exc
@@ -33,10 +34,12 @@ def create_entry():
 
     if request.method == 'POST' and form.validate():
         title = form.title.data
+        post_date = form.post_date.data
         body = form.body.data
+        create_date = datetime.utcnow()
         user_id = user_id
         current_app.logger.info('Adding a new entry %s.', (title))
-        entry = Entry(title, body, user_id)
+        entry = Entry(title, post_date, body, create_date, user_id)
 
         try:
             db.session.add(entry)
@@ -63,8 +66,9 @@ def update(entry_id):
 
     user_id = current_user.id
     form = UpdateEntryForm()
-    if request.method == "POST" and form.validate_on_submit():
+    if request.method == "POST" and form.validate():
         entry.title = form.title.data
+        entry.post_date = form.post_date.data
         entry.body = form.body.data
         entry.user_id = user_id
         current_app.logger.info('Updating entry %s.', entry.title)
@@ -75,8 +79,9 @@ def update(entry_id):
             current_app.logger.error(e)
 
         return redirect(url_for('entries.show', entry_id=entry.id))
-    else:
+    elif request.method != "POST":
         form.title.data = entry.title
+        form.post_date.data = entry.post_date
         form.body.data = entry.body
 
     return render_template("entries/edit.html", entry=entry, form=form)
@@ -95,8 +100,5 @@ def delete(entry_id):
             current_app.logger.error(e)
 
         return redirect(url_for('entries.display_entries'))
-
-    # db.session.delete(entry)
-    # db.session.commit()
 
     return redirect(url_for('entries.display_entries'))

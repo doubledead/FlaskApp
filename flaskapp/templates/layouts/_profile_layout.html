@@ -19,10 +19,10 @@
   </head>
   <body>
   <nav class="navbar navbar-inverse">
-      {% include "layouts/_menu.html" %}
+    {% include "layouts/_menu.html" %}
   </nav>
   <div class="container">
-      {% block container %}{% endblock %}
+    {% block container %}{% endblock %}
   </div>
   <footer class="footer"></footer>
   <script>
@@ -43,16 +43,6 @@
         format: 'mm-dd-yyyy'
       });
     });
-  </script>
-  <script>
-    function test() {
-      var dateField = document.getElementById("birthdate").value;
-      var dateTest1 = moment(dateField).utc();
-      console.log(dateTest1);
-
-      $( "#birthdate" ).val( dateTest1 );
-
-    }
   </script>
   </body>
 </html>

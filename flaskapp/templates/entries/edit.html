@@ -1,4 +1,4 @@
-{% extends 'layouts/boilerplate.html' %}
+{% extends 'layouts/_datepicker_layout.html' %}
 {% block container %}
   <div class="jumbotron">
     <h1>Edit Entry</h1>
@@ -16,6 +16,9 @@
             {{ form.csrf_token }}
           <div class="form-group">
             {{ render_field_with_errors(form.title, size=20, class='form-control') }}
+          </div>
+          <div class="form-group">
+            {{ render_field_with_errors(form.post_date, size=20, class='form-control') }}
           </div>
           <div class="form-group">
             {{ render_field_with_errors(form.body, size=20, class='form-control') }}

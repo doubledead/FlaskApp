@@ -6,12 +6,14 @@ from sqlalchemy.exc import SQLAlchemyError
 class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
+    post_date = db.Column(db.DateTime())
     body = db.Column(db.String(300))
     create_date = db.Column(db.DateTime())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, title, body, user_id, create_date=None):
+    def __init__(self, title, post_date, body, user_id, create_date=None):
         self.title = title
+        self.post_date = post_date
         self.body = body
         if create_date is None:
             create_date = datetime.utcnow()
