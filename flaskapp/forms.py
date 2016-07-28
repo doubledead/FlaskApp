@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-    flaskproject.forms
+    flaskapp.forms
     ~~~~~~~~~~~~~~
     consolodated forms module
 """
 
-# from .users.forms import *
+from .entries.forms import *
+from .events.forms import *
+from .users.forms import *
