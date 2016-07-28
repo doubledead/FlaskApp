@@ -26,7 +26,7 @@ class CreateEventForm(Form):
         validators.DataRequired(),
         validators.Length(min=1, max=70)
     ])
-    zip = StringField('Zip Code', [
+    zip_code = StringField('Zip Code', [
         validators.DataRequired(),
         validators.Length(min=1, max=70)
     ])
@@ -37,13 +37,32 @@ class CreateEventForm(Form):
     start_date = DateField('Start Date', [validators.DataRequired()], format='%m-%d-%Y')
     end_date = DateField('End Date', [validators.DataRequired()], format='%m-%d-%Y')
 
-class EditEventForm(Form):
-    email = StringField('Email Address', [
+class UpdateEventForm(Form):
+    title = StringField('Title', [
         validators.DataRequired(),
-        validators.Length(min=6, max=30)
+        validators.Length(min=1, max=30)
     ])
-    first_name = StringField('First Name', [validators.Length(min=1, max=70)])
-    last_name = StringField('Last Name', [validators.Length(min=1, max=70)])
-    birthdate = DateField('Birth Date', [validators.DataRequired()], format='%m-%d-%Y')
+    address = StringField('Address', [
+        validators.DataRequired(),
+        validators.Length(min=1, max=70)
+    ])
+    city = StringField('City', [
+        validators.DataRequired(),
+        validators.Length(min=1, max=70)
+    ])
+    state = StringField('State', [
+        validators.DataRequired(),
+        validators.Length(min=1, max=70)
+    ])
+    zip_code = StringField('Zip Code', [
+        validators.DataRequired(),
+        validators.Length(min=1, max=70)
+    ])
+    country = StringField('Country', [
+        validators.DataRequired(),
+        validators.Length(min=1, max=70)
+    ])
+    start_date = DateField('Start Date', [validators.DataRequired()], format='%m-%d-%Y')
+    end_date = DateField('End Date', [validators.DataRequired()], format='%m-%d-%Y')
     # birthdate = DateTimeField('Birth Date', format='%m/%d/%Y %I:%M:%S %p')
     # birthdate = DateField('Birth Date', format='%Y-%m-%d')

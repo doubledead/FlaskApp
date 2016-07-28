@@ -29,14 +29,14 @@ class Event(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     status = db.Column(db.Integer())
     title = db.Column(db.String(225))
-    last_edit_date = db.Column(db.DateTime())
-    start_date = db.Column(db.DateTime())
-    end_date = db.Column(db.DateTime())
     address = db.Column(db.String(225))
     city = db.Column(db.String(225))
     state = db.Column(db.String(225))
     zip_code = db.Column(db.String(225))
     country = db.Column(db.String(225))
+    start_date = db.Column(db.DateTime())
+    last_edit_date = db.Column(db.DateTime())
+    end_date = db.Column(db.DateTime())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     create_date = db.Column(db.DateTime())
 
@@ -48,18 +48,18 @@ class Event(db.Model):
     #                            secondary=events_invitees,
     #                            backref=db.backref('events', lazy='dynamic'))
 
-    def __init__(self, status, title, last_edit_date, start_date, end_date,
-                 address, city, state, zip_code, country, user_id, create_date=None):
+    def __init__(self, status, title, address, city, state, zip_code, country,
+                 start_date, end_date, last_edit_date, user_id, create_date=None):
         self.status = status
         self.title = title
-        self.last_edit_date = last_edit_date
-        self.start_date = start_date
-        self.end_date = end_date
         self.address = address
         self.city = city
         self.state = state
         self.zip_code = zip_code
         self.country = country
+        self.start_date = start_date
+        self.end_date = end_date
+        self.last_edit_date = last_edit_date
         self.user_id = user_id
         if create_date is None:
             create_date = datetime.utcnow()
