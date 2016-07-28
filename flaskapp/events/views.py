@@ -124,10 +124,20 @@ def create():
     data = request.json
     user_id = current_user.id
 
+    status = 1
     title = data["title"]
-    body = data["body"]
+    address = data["address"]
+    city = data["city"]
+    state = data["state"]
+    zip_code = data["zip_code"]
+    country = data["country"]
+    start_date = data["start_date"]
+    end_date = data["end_date"]
+    last_edit_date = datetime.utcnow()
     user_id = user_id
-    event = Event(title=title, body=body, user_id=user_id)
+    event = Event(statsy=status, title=title, address=address, city=city, state=state,
+                  zip_code=zip_code, country=country, start_date=start_date,
+                  end_date=end_date, last_edit_date=last_edit_date, user_id=user_id)
 
     try:
         db.session.commit()
@@ -135,7 +145,7 @@ def create():
     except exc.SQLAlchemyError as e:
         current_app.logger.error(e)
 
-        return redirect(url_for('main.create_entry'))
+        return redirect(url_for('events.create_event'))
         return json.dumps({'status':'Error'})
 
     return redirect(url_for('events.display_events'))

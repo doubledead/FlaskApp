@@ -6,10 +6,21 @@ angular.module('form.controllers', [])
   $scope.longStage = 0;
   $scope.formValid = false;
 
+  // $scope.params = {
+  //   title: "",
+  //   address: "",
+  //   city: "",
+  //   state: "",
+  //   zip_code: "",
+  //   country: "",
+  //   start_date: "",
+  //   end_date: ""
+  // };
+
   $scope.next = function (stage) {
     $scope.direction = 1;
     $scope.stage = stage;
-    if (stage=="stage3") {
+    if (stage=="stage4") {
       $scope.longStage = 1;
     }
   };
@@ -33,7 +44,7 @@ angular.module('form.controllers', [])
         cache: false,
         contentType: 'application/json; charset=utf-8',
         accepts: 'application/json',
-        url: '/events/create',
+        url: '/events/createjs',
         data: data,
         dataType: 'json',
         type: 'POST'

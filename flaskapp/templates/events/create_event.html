@@ -53,11 +53,6 @@
   <div class="row">
     <div class="col-md-12">&nbsp;</div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h4>Embedded AngularJS Form</h4>
-    </div>
-  </div>
   {% raw %}
     <div class="top-pad" ng-app="baseApp" ng-controller="formCtrl">
       <form name="baseForm" role="form" novalidate ng-cloak>
@@ -84,21 +79,77 @@
             <button type="button" class="btn btn-primary" ng-click="next('stage2')">Next</button>
           </div>
           <div class="animate-switch" ng-switch-when="stage2">
-            <div class="form-group">
-              <label for="tb-body">Body:</label>
-              <input type="text" class="form-control" id="tb-body" ng-model="params.body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="tb-address">Address:</label>
+                  <input type="text" class="form-control" id="tb-address" ng-model="params.address">
+                </div>
+              </div>
+              <div class="col-md-5">&nbsp;</div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="tb-city">City:</label>
+                  <input type="text" class="form-control" id="tb-city" ng-model="params.city">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="tb-state">State:</label>
+                  <input type="text" class="form-control" id="tb-state" ng-model="params.state">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="tb-zip-code">Zip Code:</label>
+                  <input type="text" class="form-control" id="tb-zip-code" ng-model="params.zip_code">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="tb-country">Country:</label>
+                  <input type="text" class="form-control" id="tb-country" ng-model="params.country">
+                </div>
+              </div>
+              <div class="col-md-8">&nbsp;</div>
             </div>
             <button type="button" class="btn btn-info" ng-click="back('stage1')">Back</button>
             <button type="button" class="btn btn-primary" ng-click="next('stage3')">Next</button>
           </div>
           <div class="animate-switch" ng-switch-when="stage3">
             <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="tb-start-date">Start Date:</label>
+                  <input type="text" class="form-control" id="tb-address" ng-model="params.start_date">
+                </div>
+              </div>
+              <div class="col-md-5">&nbsp;</div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="tb-end-date">End Date:</label>
+                  <input type="text" class="form-control" id="tb-end-date" ng-model="params.end_date">
+                </div>
+              </div>
+              <div class="col-md-8">&nbsp;</div>
+            </div>
+            <button type="button" class="btn btn-info" ng-click="back('stage2')">Back</button>
+            <button type="button" class="btn btn-primary" ng-click="next('stage4')">Next</button>
+          </div>
+          <div class="animate-switch" ng-switch-when="stage4">
+            <div class="row">
               <div class="col-md-12">{{params.title}}</div>
             </div>
             <div class="row">
-              <div class="col-md-12">{{params.body}}</div>
+              <div class="col-md-12">{{params.address}}</div>
             </div>
-            <button type="button" class="btn btn-info" ng-click="back('stage2')">Back</button>
+            <button type="button" class="btn btn-info" ng-click="back('stage3')">Back</button>
             <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
           </div>
         </div>
