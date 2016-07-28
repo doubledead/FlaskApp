@@ -15,10 +15,10 @@ class Entry(db.Model):
         self.title = title
         self.post_date = post_date
         self.body = body
+        self.user_id = user_id
         if create_date is None:
             create_date = datetime.utcnow()
         self.create_date = create_date
-        self.user_id = user_id
 
     def __repr__(self):
         return '<Entry %r>' % self.title

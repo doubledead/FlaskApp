@@ -38,13 +38,12 @@ def create_event():
         state = form.state.data
         zip_code = form.zip.data
         country = form.country.data
-        create_date = datetime.utcnow()
         start_date = form.start_date.data
         end_date = form.end_date.data
         user_id = user_id
         current_app.logger.info('Adding a new event %s.', (title))
         event = Event(title, address, city, state, zip_code,
-                      country, create_date, start_date, end_date, user_id)
+                      country, start_date, end_date, user_id)
 
         try:
             db.session.add(event)

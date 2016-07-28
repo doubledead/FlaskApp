@@ -11,10 +11,8 @@
     </p>
   </div>
   <div class="row">
-    <div class="col-sm-3 col-md-1">ID</div>
-    <div class="col-sm-3 col-md-1">User ID</div>
-    <div class="col-sm-3 col-md-3">Post Date</div>
     <div class="col-sm-3 col-md-2">Title</div>
+    <div class="col-sm-3 col-md-3">Post Date</div>
     <div class="col-sm-9 col-md-4">Body</div>
     <div class="col-sm-3 col-md-1">&nbsp;</div>
   </div>
@@ -23,11 +21,9 @@
   </div>
     {% for data in entries %}
       <div class="row">
-        <div class="col-sm-3 col-md-1">{{data.id}}</div>
-        <div class="col-sm-3 col-md-1">{{data.user_id}}</div>
-        <div class="col-sm-3 col-md-3">{{data.post_date}}</div>
-        <div class="col-sm-3 col-md-2">{{data.title}}</div>
-        <div class="col-sm-3 col-md-4">{{data.body}}</div>
+        <div class="col-sm-3 col-md-2">{{ data.title }}</div>
+        <div class="col-sm-3 col-md-3">{{ data.post_date.strftime('%m-%d-%Y') }}</div>
+        <div class="col-sm-3 col-md-4">{{ data.body }}</div>
         <div class="col-sm-3 col-md-1">
           <a href="{{ url_for('entries.show', entry_id=data.id) }}" class="btn btn-xs btn-info">
             View

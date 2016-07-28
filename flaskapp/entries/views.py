@@ -22,7 +22,6 @@ def index():
 def display_entries():
     user_id = current_user.id
     entries = Entry.query.filter_by(user_id=user_id)
-    current_app.logger.info('Displaying all entries.')
 
     return render_template("entries/entries.html", entries=entries)
 
@@ -36,10 +35,8 @@ def create_entry():
         title = form.title.data
         post_date = form.post_date.data
         body = form.body.data
-        create_date = datetime.utcnow()
         user_id = user_id
-        current_app.logger.info('Adding a new entry %s.', (title))
-        entry = Entry(title, post_date, body, create_date, user_id)
+        entry = Entry(title, post_date, body, user_id)
 
         try:
             db.session.add(entry)
@@ -71,7 +68,6 @@ def update(entry_id):
         entry.post_date = form.post_date.data
         entry.body = form.body.data
         entry.user_id = user_id
-        current_app.logger.info('Updating entry %s.', entry.title)
 
         try:
             db.session.commit()
@@ -92,7 +88,6 @@ def delete(entry_id):
     entry = Entry.query.filter_by(id=entry_id).first_or_404()
     user_id = current_user.id
     if user_id == entry.user_id:
-        current_app.logger.info('Deleting entry %s.', entry.title)
         try:
             db.session.delete(entry)
             db.session.commit()
