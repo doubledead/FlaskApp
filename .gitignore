@@ -70,3 +70,6 @@ flaskapp/*.sqlite
 
 # IntelliJ IDEA IDE
 .idea/
+
+# node_modules from JSMVCApp
+flaskapp/static/jsmvcapp/node_modules
