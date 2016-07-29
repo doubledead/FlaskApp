@@ -29,6 +29,10 @@ def update():
     user = User.query.filter_by(id=user_id).first_or_404()
     form = EditProfileForm()
 
+    # There needs to be error checking for existing email
+    # addresses when updating email address.
+    # http://flask-sqlalchemy.pocoo.org/2.1/queries/#querying-records
+
     if request.method == "POST" and form.validate():
         user.email = form.email.data
         user.last_edit_date = datetime.utcnow()

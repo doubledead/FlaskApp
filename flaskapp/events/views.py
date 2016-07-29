@@ -137,7 +137,7 @@ def create():
     end_date = datetime.utcnow()
     last_edit_date = datetime.utcnow()
     user_id = user_id
-    event = Event(statsy=status, title=title, address=address, city=city, state=state,
+    event = Event(status=status, title=title, address=address, city=city, state=state,
                   zip_code=zip_code, country=country, start_date=start_date,
                   end_date=end_date, last_edit_date=last_edit_date, user_id=user_id)
 
