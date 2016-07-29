@@ -1,4 +1,4 @@
-{% extends 'layouts/_datepicker_layout.html' %}
+{% extends 'layouts/layout_angular.html' %}
 {% block container %}
   <div class="jumbotron">
     <h1>Create Entry</h1>
@@ -41,5 +41,36 @@
     <div class="col-md-12">&nbsp;</div>
   </div>
   {% raw %}
+    <div class="top-pad" ng-app="baseApp" ng-controller="entriesCtrl">
+      <form name="entriesForm" role="form" novalidate ng-cloak>
+        <div class="row">
+          <div class="col-sm-3 col-md-6">
+            <div class="form-group">
+              <label for="tb-title">Title:</label>
+              <input type="text" class="form-control" id="tb-title" ng-model="params.title">
+            </div>
+            <div class="form-group">
+              <label for="tb-post-date">Post Date:</label>
+              <input type="text" class="form-control" id="tb-post-date" >
+            </div>
+            <div class="form-group">
+              <label for="tb-body">Body:</label>
+              <textarea class="form-control" id="ta-body" ng-model="params.body"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
+          </div>
+          <div class="col-sm-3 col-md-6">&nbsp;</div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <pre> {{ params | json }}</pre>
+        </div>
+        <div class="col-md-6">&nbsp;</div>
+      </div>
+    </div>
   {% endraw %}
 {% endblock %}

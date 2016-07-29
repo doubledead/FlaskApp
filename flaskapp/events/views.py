@@ -131,8 +131,10 @@ def create():
     state = data["state"]
     zip_code = data["zip_code"]
     country = data["country"]
-    start_date = data["start_date"]
-    end_date = data["end_date"]
+    # start_date = data["start_date"]
+    # end_date = data["end_date"]
+    start_date = datetime.utcnow()
+    end_date = datetime.utcnow()
     last_edit_date = datetime.utcnow()
     user_id = user_id
     event = Event(statsy=status, title=title, address=address, city=city, state=state,
@@ -140,6 +142,7 @@ def create():
                   end_date=end_date, last_edit_date=last_edit_date, user_id=user_id)
 
     try:
+        db.session.add(event)
         db.session.commit()
         return json.dumps({'status':'OK'})
     except exc.SQLAlchemyError as e:

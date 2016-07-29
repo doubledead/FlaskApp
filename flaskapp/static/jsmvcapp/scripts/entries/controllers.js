@@ -1,21 +1,16 @@
-angular.module('form.controllers', [])
-.controller('formCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+angular.module('entries.controllers', [])
+.controller('entriesCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
   $scope.params = {};
   $scope.stage = "";
   //$scope.direction = 0;
   $scope.longStage = 0;
   $scope.formValid = false;
 
-  $scope.params = {
-    title: "",
-    address: "",
-    city: "",
-    state: "",
-    zip_code: "",
-    country: "",
-    start_date: "",
-    end_date: ""
-  };
+  // $scope.params = {
+  //   title: "",
+  //   body: "",
+  //   post_date: ""
+  // };
 
   $scope.next = function (stage) {
     $scope.direction = 1;
@@ -36,7 +31,7 @@ angular.module('form.controllers', [])
       deferred = $.Deferred(),
       data = JSON.stringify($scope.params);
 
-    if ($scope.baseForm.$valid) {}
+    if ($scope.entriesForm.$valid) {}
 
       // jQuery Ajax is used to reach Flask endpoints
       // because AngularJS routes are not used.
@@ -44,7 +39,7 @@ angular.module('form.controllers', [])
         cache: false,
         contentType: 'application/json; charset=utf-8',
         accepts: 'application/json',
-        url: '/events/createjs',
+        url: '/entries/createjs',
         data: data,
         dataType: 'json',
         type: 'POST'
@@ -61,7 +56,7 @@ angular.module('form.controllers', [])
   };
 
   function changeRoute() {
-    location.assign("http://127.0.0.1:5000/events/");
+    location.assign("http://127.0.0.1:5000/entries/");
   }
 
   function reset() {

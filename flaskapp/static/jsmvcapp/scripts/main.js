@@ -5,5 +5,6 @@ angular.module('baseApp', [
 	'templates',
 	'baseApp.index',
 	'baseApp.form',
+  'baseApp.entries',
 	'ngAnimate'
 ]);

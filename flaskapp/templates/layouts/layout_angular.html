@@ -6,10 +6,11 @@
     <title>Flask App</title>
     <meta name="description" content="Flask App">
     <meta name="viewport" content="width=device-width">
+    {% include "assets/_datepicker_vendor_js.html" %}
     <link href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    {% include "assets/_datepicker_vendor_css.html" %}
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/angular_form.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
   <body>
@@ -35,13 +36,7 @@
     </footer>
     
     <!-- JS libraries -->
-    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/moment/min/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/angular/angular.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/angular-animate/angular-animate.min.js') }}"></script>
+    {% include "assets/_angular_vendor_js.html" %}
 
     <!-- AngularJS Project files -->
     <script type="text/javascript" src="{{ url_for('static', filename='jsmvcapp/scripts/templates.js') }}"></script>
@@ -51,6 +46,8 @@
     <script type="text/javascript" src="{{ url_for('static', filename='jsmvcapp/scripts/form/form.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jsmvcapp/scripts/form/controllers.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jsmvcapp/scripts/form/directives.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='jsmvcapp/scripts/entries/entries.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='jsmvcapp/scripts/entries/controllers.js') }}"></script>
 
 
     <script>

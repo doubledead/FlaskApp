@@ -97,3 +97,30 @@ def delete(entry_id):
         return redirect(url_for('entries.display_entries'))
 
     return redirect(url_for('entries.display_entries'))
+
+
+# Endpoint for AngularJS to hit
+@entries.route('/createjs', methods=['GET', 'POST'])
+@login_required
+def create():
+    data = request.json
+    # user_id = current_user.id
+
+    title = data["title"]
+    post_date = datetime.utcnow()
+    body = data["body"]
+    # user_id = user_id
+    user_id = current_user.id
+    entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id)
+
+    try:
+        db.session.add(entry)
+        db.session.commit()
+        return json.dumps({'status':'OK'})
+    except exc.SQLAlchemyError as e:
+        current_app.logger.error(e)
+
+        return redirect(url_for('entries.create_event'))
+        return json.dumps({'status':'Error'})
+
+    return redirect(url_for('entries.display_entries'))
