@@ -1,5 +1,5 @@
 {
-  "name": "FlaskApp",
+  "name": "flaskapp",
   "description": "",
   "main": "",
   "moduleType": [],
@@ -21,6 +21,7 @@
     "angular": "angularjs#^1.5.3",
     "angular-animate": "^1.5.5",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
-    "bootstrap-datepicker": "^1.6.1"
+    "bootstrap-datepicker": "^1.6.1",
+    "underscore": "^1.8.3"
   }
 }

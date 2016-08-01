@@ -7,6 +7,7 @@
     <meta name="description" content="Flask App">
     <meta name="viewport" content="width=device-width">
     {% include "assets/_datepicker_vendor_js.html" %}
+    <script type="text/javascript" src="{{ url_for('static', filename='bower_components/underscore/underscore-min.js') }}"></script>
     <link href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     {% include "assets/_datepicker_vendor_css.html" %}
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">

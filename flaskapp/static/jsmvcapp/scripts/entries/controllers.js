@@ -6,11 +6,12 @@ angular.module('entries.controllers', [])
   $scope.longStage = 0;
   $scope.formValid = false;
 
-  // $scope.params = {
-  //   title: "",
-  //   body: "",
-  //   post_date: ""
-  // };
+  $scope.params = {
+    title: "",
+    post_date: "",
+    tags: [],
+    body: ""
+  };
 
   $scope.next = function (stage) {
     $scope.direction = 1;
@@ -68,4 +69,16 @@ angular.module('entries.controllers', [])
     // This method is kind of experimental at the moment.
     $timeout(changeRoute, 1000);
   }
+
+  $scope.addTag = function () {
+    var tag = {
+      id: _.uniqueId(),
+      description: $scope.tag
+    };
+
+    $scope.params.tags.push(tag);
+
+    $scope.tag = "";
+  };
+
 }]);

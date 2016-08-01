@@ -4,7 +4,7 @@ from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import CreateEntryForm, UpdateEntryForm
-from .models import Entry
+from .models import Entry, Tag
 from sqlalchemy import exc
 
 entries = Blueprint('entries', __name__, template_folder='templates')
@@ -104,14 +104,13 @@ def delete(entry_id):
 @login_required
 def create():
     data = request.json
-    # user_id = current_user.id
 
     title = data["title"]
     post_date = datetime.utcnow()
     body = data["body"]
-    # user_id = user_id
     user_id = current_user.id
-    entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id)
+    tags = data["tags"]
+    entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id, tags=tags)
 
     try:
         db.session.add(entry)
