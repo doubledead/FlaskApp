@@ -103,14 +103,27 @@ def delete(entry_id):
 @entries.route('/createjs', methods=['GET', 'POST'])
 @login_required
 def create():
-    data = request.json
+    # data = request.json
+    data = request.get_json()
 
-    title = data["title"]
+    title = data['title']
     post_date = datetime.utcnow()
-    body = data["body"]
+    body = data['body']
     user_id = current_user.id
-    tags = data["tags"]
-    entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id, tags=tags)
+    tags = data['tags']
+    entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id)
+
+    # current_app.logger.info('Tags %s.', (tags))
+    print(tags)
+
+    # for i in tags:
+    #     print(i)
+
+    # tags is a list of dict objects, a dictionary list
+    for t in tags:
+        for k, v in t.iteritems():
+            # print(k, v)
+            print("Id : {0}, Description : {1}".format(k, v))
 
     try:
         db.session.add(entry)
