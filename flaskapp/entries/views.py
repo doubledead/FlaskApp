@@ -110,20 +110,24 @@ def create():
     post_date = datetime.utcnow()
     body = data['body']
     user_id = current_user.id
-    tags = data['tags']
+    tags_data = data['tags']
     entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id)
 
     # current_app.logger.info('Tags %s.', (tags))
-    print(tags)
+    # print(tags)
 
     # for i in tags:
     #     print(i)
 
     # tags is a list of dict objects, a dictionary list
-    for t in tags:
-        for k, v in t.iteritems():
-            # print(k, v)
-            print("Id : {0}, Description : {1}".format(k, v))
+    # for t in tags:
+    #     for k, v in t.iteritems():
+    #         # print(k, v)
+    #         print("Id : {0}, Description : {1}".format(k, v))
+
+    for t in tags_data:
+        entry.tags.append(t)
+
 
     try:
         db.session.add(entry)
