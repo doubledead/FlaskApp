@@ -24,9 +24,9 @@ class Entry(db.Model):
     create_date = db.Column(db.DateTime())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    tags = db.relationship('Tag',
-                                 secondary=entries_tags,
-                                 backref=db.backref('entries', lazy='joined'))
+    # One-to-many
+    tags = db.relationship('Tag', secondary=entries_tags,
+                           backref=db.backref('entries', lazy='joined'))
 
     def __init__(self, title, post_date, body, user_id, create_date=None):
         self.title = title

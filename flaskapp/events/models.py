@@ -2,40 +2,18 @@ from ..core import db
 from datetime import datetime
 
 
-events_invitees = db.Table(
-    'events_invitees',
-    db.Column('invitee_id', db.Integer(), db.ForeignKey('invitees.id')),
+
+
+events_guests = db.Table(
+    'events_guests',
+    db.Column('user_id', db.Integer(), db.ForeignKey('users.id')),
     db.Column('event_id', db.Integer(), db.ForeignKey('events.id')))
-
-# class Status(db.Model):
-#     __tablename__ = 'statuses'
-#
-#     id = db.Column(db.Integer(), primary_key=True)
-#     name = db.Column(db.String(225))
-#     description = db.Column(db.String(225))
-#     status = db.Column(db.Integer())
-
-class Category(db.Model):
-    __tablename__ = 'categories'
-
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(225))
-    description = db.Column(db.String(225))
-
-class Invitee(db.Model):
-    __tablename__ = 'invitees'
-
-    id = db.Column(db.Integer, primary_key=True)
-    event_id = db.Column(db.Integer(), db.ForeignKey('events.id'))
-    email_address = db.Column(db.String(225))
-    status = db.Column(db.Integer())
 
 
 class Event(db.Model):
     __tablename__ = 'events'
 
     id = db.Column(db.Integer(), primary_key=True)
-    status = db.Column(db.Integer())
     title = db.Column(db.String(225))
     address = db.Column(db.String(225))
     city = db.Column(db.String(225))
@@ -48,17 +26,24 @@ class Event(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     create_date = db.Column(db.DateTime())
 
-    # category_id = db.Column(db.ForeignKey('categories.id'))
-    # category = db.relationship('Category',
-    #                            backref=db.backref('events', lazy='dynamic'))
-    #
-    invitees = db.relationship('Invitee',
-                               secondary=events_invitees,
+    # Status and Category - Simple Relationship
+    # http://flask-sqlalchemy.pocoo.org/2.1/quickstart/
+    status_id = db.Column(db.ForeignKey('status.id'))
+    status = db.relationship('Status',
+                             backref=db.backref('events', lazy='dynamic'))
+
+    category_id = db.Column(db.ForeignKey('category.id'))
+    category = db.relationship('Category',
                                backref=db.backref('events', lazy='dynamic'))
 
-    def __init__(self, status, title, address, city, state, zip_code, country,
-                 start_date, end_date, last_edit_date, user_id, create_date=None):
-        self.status = status
+    # Many-to-many
+    # Guests need to be SQLAlchemy ORM User objects
+    # https://github.com/mattupstate/overholt/blob/master/overholt/stores/models.py
+    guests = db.relationship('User', secondary=events_guests,
+                               backref=db.backref('events', lazy='dynamic'))
+
+    def __init__(self, title, address, city, state, zip_code, country,
+                 start_date, end_date, last_edit_date, user_id, status, category, create_date=None):
         self.title = title
         self.address = address
         self.city = city
@@ -72,6 +57,30 @@ class Event(db.Model):
         if create_date is None:
             create_date = datetime.utcnow()
         self.create_date = create_date
+        self.status = status
+        self.country = category
 
     def __repr__(self):
         return '<Event %r>' % (self.title)
+
+class Category(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(225))
+
+    def __init__(self, name):
+        self.name = name
+
+        def __repr__(self):
+            return 'Category %r>' % self.name
+
+class Status(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(225))
+    description = db.Column(db.String(225))
+    status_code = db.Column(db.Integer())
+
+    def __init__(self, name):
+        self.name = name
+
+        def __repr__(self):
+            return 'Status %r>' % self.name
