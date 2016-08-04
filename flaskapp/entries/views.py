@@ -111,6 +111,7 @@ def create():
     body = data['body']
     user_id = current_user.id
     tags_data = data['tags']
+    # tags_data = Tag(data['tags'])
     entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id)
 
     # current_app.logger.info('Tags %s.', (tags))
@@ -125,8 +126,15 @@ def create():
     #         # print(k, v)
     #         print("Id : {0}, Description : {1}".format(k, v))
 
-    for t in tags_data:
-        entry.tags.append(t)
+    # for t in tags_data:
+    #     entry.tags.append(t)
+    # for t in tags_data:
+    #     tag = Tag.query.get(t)
+    #     entry.tags.append(tag)
+
+    # entry.tags.append(tags_data)
+    tag = Tag(description='test')
+    entry.tags.append(tag)
 
 
     try:
