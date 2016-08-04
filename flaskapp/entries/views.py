@@ -126,15 +126,16 @@ def create():
     #         # print(k, v)
     #         print("Id : {0}, Description : {1}".format(k, v))
 
-    # for t in tags_data:
-    #     entry.tags.append(t)
-    # for t in tags_data:
-    #     tag = Tag.query.get(t)
-    #     entry.tags.append(tag)
+    # tag = Tag(description='test')
+    # tag2 = Tag(description='test2')
+    # entry.tags.append(tag)
+    # entry.tags.append(tag2)
 
-    # entry.tags.append(tags_data)
-    tag = Tag(description='test')
-    entry.tags.append(tag)
+    for t in tags_data:
+        # tag = Tag(t)
+        dict_tag = json.dumps(t)
+        tag = Tag(dict_tag)
+        entry.tags.append(tag)
 
 
     try:
