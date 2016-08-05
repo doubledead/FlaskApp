@@ -107,18 +107,15 @@ def create():
     data = request.get_json()
 
     title = data['title']
+    # post_date = data['post_date']
     post_date = datetime.utcnow()
     body = data['body']
     user_id = current_user.id
     tags_data = data['tags']
-    # tags_data = Tag(data['tags'])
     entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id)
 
     # current_app.logger.info('Tags %s.', (tags))
     # print(tags)
-
-    # for i in tags:
-    #     print(i)
 
     # tags is a list of dict objects, a dictionary list
     # for t in tags:
@@ -132,7 +129,6 @@ def create():
     # entry.tags.append(tag2)
 
     for t in tags_data:
-        # tag = Tag(t)
         dict_tag = json.dumps(t)
         tag = Tag(dict_tag)
         entry.tags.append(tag)

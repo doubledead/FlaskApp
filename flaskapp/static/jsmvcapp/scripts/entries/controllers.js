@@ -72,7 +72,7 @@ angular.module('entries.controllers', [])
 
   $scope.addTag = function () {
     var tag = {
-      id: _.uniqueId(),
+      // id: _.uniqueId(),
       description: $scope.tag
     };
 
