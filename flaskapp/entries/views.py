@@ -128,10 +128,15 @@ def create():
     # entry.tags.append(tag)
     # entry.tags.append(tag2)
 
+    # for t in tags_data:
+    #     dict_tag = json.dumps(t)
+    #     tag = Tag(dict_tag)
+    #     entry.tags.append(tag)
+
     for t in tags_data:
-        dict_tag = json.dumps(t)
-        tag = Tag(dict_tag)
-        entry.tags.append(tag)
+        for k, v in t.items():
+            tag = Tag(description=v)
+            entry.tags.append(tag)
 
 
     try:
