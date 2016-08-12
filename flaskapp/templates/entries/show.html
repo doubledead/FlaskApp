@@ -24,4 +24,18 @@
     </div>
     <div class="col-sm-3 col-md-1">&nbsp;</div>
   </div>
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12"><h4>Tags</h4></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  {% for t in tags %}
+    <div class="row">
+      <div class="col-md-12">{{ t.description }}</div>
+    </div>
+  {% endfor %}
 {% endblock %}

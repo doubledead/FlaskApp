@@ -29,7 +29,6 @@ def display_events():
 @login_required
 def create_event():
     form = CreateEventForm(request.form)
-    user_id = current_user.id
 
     if request.method == 'POST' and form.validate():
         status = 1
@@ -42,7 +41,7 @@ def create_event():
         start_date = form.start_date.data
         end_date = form.end_date.data
         last_edit_date = datetime.utcnow()
-        user_id = user_id
+        user_id = current_user.id
         current_app.logger.info('Adding a new event %s.', (title))
         event = Event(status, title, address, city, state, zip_code,
                       country, start_date, end_date, last_edit_date, user_id)
@@ -117,7 +116,7 @@ def delete(event_id):
 
     return redirect(url_for('events.display_events'))
 
-# Endpoint for AngularJS to hit
+# Endpoint for JSMVCApp to hit
 @events.route('/createjs', methods=['GET', 'POST'])
 @login_required
 def create():

@@ -29,13 +29,12 @@ def display_entries():
 @login_required
 def create_entry():
     form = CreateEntryForm(request.form)
-    user_id = current_user.id
 
     if request.method == 'POST' and form.validate():
         title = form.title.data
         post_date = form.post_date.data
         body = form.body.data
-        user_id = user_id
+        user_id = current_user.id
         entry = Entry(title, post_date, body, user_id)
 
         try:
@@ -54,20 +53,20 @@ def create_entry():
 def show(entry_id):
     entry = Entry.query.filter_by(id=entry_id).first_or_404()
 
-    return render_template("entries/show.html", entry=entry)
+    tags = entry.tags
+
+    return render_template("entries/show.html", entry=entry, tags=tags)
 
 @entries.route('/edit/<entry_id>', methods=['GET', 'POST'])
 @login_required
 def update(entry_id):
     entry = Entry.query.filter_by(id=entry_id).first_or_404()
 
-    user_id = current_user.id
     form = UpdateEntryForm()
     if request.method == "POST" and form.validate():
         entry.title = form.title.data
         entry.post_date = form.post_date.data
         entry.body = form.body.data
-        entry.user_id = user_id
 
         try:
             db.session.commit()
@@ -137,6 +136,9 @@ def create():
         for k, v in t.items():
             tag = Tag(description=v)
             entry.tags.append(tag)
+        # for k, v in t.iteritems():
+        #     tag = Tag(description=v)
+        #     entry.tags.append(tag)
 
 
     try:
