@@ -1,2 +1,1 @@
-web: gunicorn app:flaskapp
-init: python run.py
+web: python run.py
