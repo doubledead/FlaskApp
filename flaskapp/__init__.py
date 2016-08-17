@@ -18,7 +18,7 @@ app = Flask(__name__,
 
 app.config.from_object('flaskapp.settings')
 app.config.from_pyfile('config.cfg', silent=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 cache.init_app(app)
 
