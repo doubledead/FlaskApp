@@ -62,7 +62,7 @@ target/
 .ipynb_checkpoints
 
 # bower dependencies
-#flaskapp/static/bower_components
+flaskapp/static/bower_components
 
 # database
 *.sqlite
