@@ -57,7 +57,9 @@ angular.module('entries.controllers', [])
   };
 
   function changeRoute() {
-    location.assign("http://127.0.0.1:5000/entries/");
+    // location.assign("http://127.0.0.1:5000/entries/");
+    var returnRoute = location.origin + "/entries/";
+    location.assign(returnRoute);
   }
 
   function reset() {

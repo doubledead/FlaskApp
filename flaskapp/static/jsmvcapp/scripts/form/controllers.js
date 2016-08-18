@@ -44,7 +44,7 @@ angular.module('form.controllers', [])
         cache: false,
         contentType: 'application/json; charset=utf-8',
         accepts: 'application/json',
-        url: '/events/createjs',
+        url: '/events/create',
         data: data,
         dataType: 'json',
         type: 'POST'
@@ -61,7 +61,9 @@ angular.module('form.controllers', [])
   };
 
   function changeRoute() {
-    location.assign("http://127.0.0.1:5000/events/");
+    // location.assign("http://127.0.0.1:5000/events/");
+    var returnRoute = location.origin + "/events/";
+    location.assign(returnRoute);
   }
 
   function reset() {
