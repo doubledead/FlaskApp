@@ -9,7 +9,7 @@ from flask_wtf import Form
 from wtforms import StringField, DateField, DateTimeField
 from wtforms import validators
 
-class CreateEventForm(Form):
+class NewEventForm(Form):
     title = StringField('Title', [
         validators.DataRequired(),
         validators.Length(min=1, max=30)

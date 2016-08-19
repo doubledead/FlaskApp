@@ -44,7 +44,7 @@ angular.module('form.controllers', [])
         cache: false,
         contentType: 'application/json; charset=utf-8',
         accepts: 'application/json',
-        url: '/events/create',
+        url: '/events/createjs',
         data: data,
         dataType: 'json',
         type: 'POST'

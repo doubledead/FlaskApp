@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('baseApp.form', [
+angular.module('eventsApp.form', [
 	'form.controllers',
 	'form.directives'
 ])

@@ -6,8 +6,21 @@ from datetime import datetime
 
 events_guests = db.Table(
     'events_guests',
-    db.Column('user_id', db.Integer(), db.ForeignKey('users.id')),
-    db.Column('event_id', db.Integer(), db.ForeignKey('events.id')))
+    db.Column('event_id', db.Integer(), db.ForeignKey('events.id')),
+    db.Column('guest_id', db.Integer(), db.ForeignKey('guests.id')))
+
+class Guest(db.Model):
+    __tablename__ = 'guests'
+
+    id = db.Column(db.Integer(), primary_key=True)
+    email = db.Column(db.String(225))
+    user_id =db.Column(db.Integer())
+
+    def __init__(self, email):
+        self.email = email
+
+    def __repr__(self):
+        return 'Guest %r>' % (self.email)
 
 
 class Event(db.Model):
@@ -23,8 +36,8 @@ class Event(db.Model):
     start_date = db.Column(db.DateTime())
     last_edit_date = db.Column(db.DateTime())
     end_date = db.Column(db.DateTime())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     create_date = db.Column(db.DateTime())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     # Status and Category - Simple Relationship
     # http://flask-sqlalchemy.pocoo.org/2.1/quickstart/
@@ -37,13 +50,13 @@ class Event(db.Model):
                                backref=db.backref('events', lazy='dynamic'))
 
     # Many-to-many
-    # Guests need to be SQLAlchemy ORM User objects
     # https://github.com/mattupstate/overholt/blob/master/overholt/stores/models.py
-    guests = db.relationship('User', secondary=events_guests,
-                               backref=db.backref('events', lazy='dynamic'))
+    guests = db.relationship('Guest', secondary=events_guests,
+                               backref=db.backref('events', lazy='joined'))
 
     def __init__(self, title, address, city, state, zip_code, country,
-                 start_date, end_date, last_edit_date, user_id, status, category, create_date=None):
+                 start_date, end_date, last_edit_date, user_id, status,
+                 category, create_date=None):
         self.title = title
         self.address = address
         self.city = city
@@ -53,12 +66,12 @@ class Event(db.Model):
         self.start_date = start_date
         self.end_date = end_date
         self.last_edit_date = last_edit_date
-        self.user_id = user_id
         if create_date is None:
             create_date = datetime.utcnow()
         self.create_date = create_date
+        self.user_id = user_id
         self.status = status
-        self.country = category
+        self.category = category
 
     def __repr__(self):
         return '<Event %r>' % (self.title)
@@ -66,6 +79,8 @@ class Event(db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(225))
+    description = db.Column(db.String(225))
+    status_code = db.Column(db.Integer())
 
     def __init__(self, name):
         self.name = name

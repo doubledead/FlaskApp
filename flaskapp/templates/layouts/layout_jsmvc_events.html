@@ -1,0 +1,60 @@
+<!Doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Events - Flask App</title>
+    <meta name="description" content="Flask App">
+    <meta name="viewport" content="width=device-width">
+    {% include "assets/_datepicker_vendor_js.html" %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/underscore-min.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/vendor/bootstrap.min.css') }}" rel="stylesheet">
+    {% include "assets/_datepicker_vendor_css.html" %}
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/angular_form.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  </head>
+  <body>
+  <nav class="navbar navbar-inverse">
+    {% include "layouts/_menu.html" %}
+  </nav>
+  <div class="container">
+    {% block container %}{% endblock %}
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS libraries -->
+  {% include "assets/_angular_vendor_js.html" %}
+
+  <!-- AngularJS Project files -->
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/templates.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/main.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/form/form.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/form/controllers.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/form/directives.js') }}"></script>
+
+
+  <script>
+    $(document).ready(function(){
+
+      $('.datepicker').datepicker({
+        format: 'mm-dd-yyyy'
+      });
+    });
+  </script>
+
+  </body>
+</html>

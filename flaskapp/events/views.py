@@ -3,8 +3,8 @@ from flask import request, redirect, url_for, json, current_app
 from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
-from .forms import CreateEventForm, UpdateEventForm
-from .models import Event
+from .forms import NewEventForm, UpdateEventForm
+from .models import Event, Category, Status
 from sqlalchemy import exc
 
 events = Blueprint('events', __name__, template_folder='templates')
@@ -28,10 +28,9 @@ def display_events():
 @events.route('/create', methods=['GET', 'POST'])
 @login_required
 def create_event():
-    form = CreateEventForm(request.form)
+    form = NewEventForm(request.form)
 
     if request.method == 'POST' and form.validate():
-        status = 1
         title = form.title.data
         address = form.address.data
         city = form.city.data
@@ -42,9 +41,10 @@ def create_event():
         end_date = form.end_date.data
         last_edit_date = datetime.utcnow()
         user_id = current_user.id
-        current_app.logger.info('Adding a new event %s.', (title))
-        event = Event(status, title, address, city, state, zip_code,
-                      country, start_date, end_date, last_edit_date, user_id)
+        category = Category(name='Test')
+        status = Status(name='New')
+        event = Event(title, address, city, state, zip_code, country,
+                      start_date, end_date, last_edit_date, user_id, status, category)
 
         try:
             db.session.add(event)
@@ -121,9 +121,7 @@ def delete(event_id):
 @login_required
 def create():
     data = request.json
-    user_id = current_user.id
 
-    status = 1
     title = data["title"]
     address = data["address"]
     city = data["city"]
@@ -135,10 +133,12 @@ def create():
     start_date = datetime.utcnow()
     end_date = datetime.utcnow()
     last_edit_date = datetime.utcnow()
-    user_id = user_id
-    event = Event(status=status, title=title, address=address, city=city, state=state,
+    user_id = current_user.id
+    status = Status(name='New')
+    category = Category(name='Test')
+    event = Event(title=title, address=address, city=city, state=state,
                   zip_code=zip_code, country=country, start_date=start_date,
-                  end_date=end_date, last_edit_date=last_edit_date, user_id=user_id)
+                  end_date=end_date, last_edit_date=last_edit_date, user_id=user_id, status=status, category=category )
 
     try:
         db.session.add(event)

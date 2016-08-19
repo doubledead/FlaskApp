@@ -1,4 +1,4 @@
-{% extends 'layouts/layout_angular.html' %}
+{% extends 'layouts/layout_jsmvc_events.html' %}
 {% block container %}
   <div class="jumbotron">
     <h1>Create Event</h1>
@@ -54,7 +54,7 @@
     <div class="col-md-12">&nbsp;</div>
   </div>
   {% raw %}
-    <div class="top-pad" ng-app="baseApp" ng-controller="formCtrl">
+    <div class="top-pad" ng-app="eventsApp" ng-controller="formCtrl">
       <form name="baseForm" role="form" novalidate ng-cloak>
         <!--
         <h3>Directive Form</h3>

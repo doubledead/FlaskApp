@@ -21,7 +21,7 @@
   {% for data in entries %}
     <div class="row">
       <div class="col-sm-3 col-md-2">{{ data.title }}</div>
-      <div class="col-sm-3 col-md-2">{{ data.post_date.strftime('%m-%d-%Y') }}</div>
+      <div class="col-sm-3 col-md-2">{{ data.post_date }}</div>
       <div class="col-sm-3 col-md-1">
         <a href="{{ url_for('entries.show', entry_id=data.id) }}" class="btn btn-xs btn-info">
           View
