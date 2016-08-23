@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+    flaskapp.users.models
+    ~~~~~~~~~~~~~~~~~~~~~
+    User models
+"""
+
 from flask_security import UserMixin, RoleMixin
 from ..core import db
 

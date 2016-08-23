@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+    flaskapp.events.models
+    ~~~~~~~~~~~~~~~~~~~~~~
+    Event models
+"""
+
 from ..core import db
 from datetime import datetime
-
-
 
 
 events_guests = db.Table(
@@ -16,8 +21,9 @@ class Guest(db.Model):
     email = db.Column(db.String(225))
     user_id =db.Column(db.Integer())
 
-    def __init__(self, email):
+    def __init__(self, email, user_id):
         self.email = email
+        self.user_id = user_id
 
     def __repr__(self):
         return 'Guest %r>' % (self.email)
@@ -82,8 +88,10 @@ class Category(db.Model):
     description = db.Column(db.String(225))
     status_code = db.Column(db.Integer())
 
-    def __init__(self, name):
+    def __init__(self, name, description, status_code):
         self.name = name
+        self.description = description
+        self.status_code = status_code
 
         def __repr__(self):
             return 'Category %r>' % self.name
@@ -94,8 +102,10 @@ class Status(db.Model):
     description = db.Column(db.String(225))
     status_code = db.Column(db.Integer())
 
-    def __init__(self, name):
+    def __init__(self, name, description, status_code):
         self.name = name
+        self.description = description
+        self.status_code = status_code
 
         def __repr__(self):
             return 'Status %r>' % self.name
