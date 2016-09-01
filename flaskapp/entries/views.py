@@ -48,7 +48,7 @@ def create_entry():
 
     return render_template("entries/create_entry.html", form=form)
 
-@entries.route('/<entry_id>', methods=['GET', 'POST'])
+@entries.route('/<entry_id>', methods=['GET'])
 @login_required
 def show(entry_id):
     entry = Entry.query.filter_by(id=entry_id).first_or_404()
@@ -114,31 +114,27 @@ def create():
     entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id)
 
     # current_app.logger.info('Tags %s.', (tags))
-    # print(tags)
+    # print(tags_data)
 
     # tags is a list of dict objects, a dictionary list
-    # for t in tags:
-    #     for k, v in t.iteritems():
-    #         # print(k, v)
-    #         print("Id : {0}, Description : {1}".format(k, v))
-
-    # tag = Tag(description='test')
-    # tag2 = Tag(description='test2')
-    # entry.tags.append(tag)
-    # entry.tags.append(tag2)
-
-    # for t in tags_data:
-    #     dict_tag = json.dumps(t)
-    #     tag = Tag(dict_tag)
-    #     entry.tags.append(tag)
 
     for t in tags_data:
-        for k, v in t.items():
-            tag = Tag(description=v)
-            entry.tags.append(tag)
-        # for k, v in t.iteritems():
-        #     tag = Tag(description=v)
-        #     entry.tags.append(tag)
+        tt = t.items()
+
+        # print(tt[1][1])
+        # for k, v in tt:
+        #     print(k)
+
+        category = tt[0][1]
+        # description = tt[1][1]
+        description = tt[2][1]
+        tag = Tag(category=category,description=description)
+        entry.tags.append(tag)
+
+    # for t in tags_data:
+    #     for k, v in t.items():
+    #         tag = Tag(description=v)
+    #         entry.tags.append(tag)
 
 
     try:

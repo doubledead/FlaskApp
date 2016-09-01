@@ -12,9 +12,11 @@ class Tag(db.Model):
     __tablename__ = 'tags'
 
     id = db.Column(db.Integer(), primary_key=True)
+    category = db.Column(db.String(225))
     description = db.Column(db.String(225))
 
-    def __init__(self, description):
+    def __init__(self, category, description):
+        self.category = category
         self.description = description
 
     def __repr__(self):

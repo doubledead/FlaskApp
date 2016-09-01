@@ -1,9 +1,7 @@
 angular.module('entries.controllers', [])
 .controller('entriesCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
   $scope.params = {};
-  $scope.stage = "";
   //$scope.direction = 0;
-  $scope.longStage = 0;
   $scope.formValid = false;
 
   $scope.params = {
@@ -11,19 +9,6 @@ angular.module('entries.controllers', [])
     post_date: "",
     tags: [],
     body: ""
-  };
-
-  $scope.next = function (stage) {
-    $scope.direction = 1;
-    $scope.stage = stage;
-    if (stage=="stage4") {
-      $scope.longStage = 1;
-    }
-  };
-
-  $scope.back = function (stage) {
-    $scope.direction = 0;
-    $scope.stage = stage;
   };
 
 
@@ -65,7 +50,6 @@ angular.module('entries.controllers', [])
   function reset() {
     // Clean up scope before destorying
     $scope.params = {};
-    $scope.stage = "";
 
     // Send the app back to a Flask route
     // This method is kind of experimental at the moment.
@@ -73,9 +57,12 @@ angular.module('entries.controllers', [])
   }
 
   $scope.addTag = function () {
+    var d = $scope.tag;
     var tag = {
       // id: _.uniqueId(),
-      description: $scope.tag
+      category: "social",
+      test: "test",
+      description: d
     };
 
     $scope.params.tags.push(tag);
