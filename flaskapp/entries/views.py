@@ -121,14 +121,16 @@ def create():
     for t in tags_data:
         tt = t.items()
 
+        # print(tt)
+        # print(tt[0][1])
         # print(tt[1][1])
-        # for k, v in tt:
-        #     print(k)
+        # print(tt[2][1])
 
-        category = tt[0][1]
+        c = tt[0][1]
         # description = tt[1][1]
-        description = tt[2][1]
-        tag = Tag(category=category,description=description)
+        d = tt[1][1]
+        n = tt[2][1]
+        tag = Tag(category=c,description=d,name=n)
         entry.tags.append(tag)
 
     # for t in tags_data:

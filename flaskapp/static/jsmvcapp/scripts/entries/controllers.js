@@ -58,11 +58,11 @@ angular.module('entries.controllers', [])
 
   $scope.addTag = function () {
     var d = $scope.tag;
+    // var id = _.uniqueId();
     var tag = {
-      // id: _.uniqueId(),
       category: "social",
-      test: "test",
-      description: d
+      description: d,
+      name: "name1"
     };
 
     $scope.params.tags.push(tag);
