@@ -46,7 +46,7 @@ def create_entry():
 
         return redirect(url_for('entries.display_entries'))
 
-    return render_template("entries/create_entry.html", form=form)
+    return render_template("entries/create.html", form=form)
 
 @entries.route('/<entry_id>', methods=['GET'])
 @login_required
@@ -121,7 +121,7 @@ def create():
     for t in tags_data:
         tt = t.items()
 
-        # print(tt)
+        print(tt)
         # print(tt[0][1])
         # print(tt[1][1])
         # print(tt[2][1])

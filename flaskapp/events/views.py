@@ -120,25 +120,26 @@ def delete(event_id):
 @events.route('/createjs', methods=['GET', 'POST'])
 @login_required
 def create():
-    data = request.json
+    data = request.get_json()
 
-    title = data["title"]
     address = data["address"]
+    category = Category(name='Test', status_code=100)
     city = data["city"]
-    state = data["state"]
-    zip_code = data["zip_code"]
     country = data["country"]
     # start_date = data["start_date"]
     # end_date = data["end_date"]
-    start_date = datetime.utcnow()
     end_date = datetime.utcnow()
     last_edit_date = datetime.utcnow()
+    start_date = datetime.utcnow()
+    state = data["state"]
+    status = Status(name='active', status_code=100)
+    title = data["title"]
     user_id = current_user.id
-    status = Status(name='New')
-    category = Category(name='Test')
-    event = Event(title=title, address=address, city=city, state=state,
-                  zip_code=zip_code, country=country, start_date=start_date,
-                  end_date=end_date, last_edit_date=last_edit_date, user_id=user_id, status=status, category=category )
+    zip_code = data["zip_code"]
+    event = Event(address=address, category=category, city=city,
+                  country=country,end_date=end_date, last_edit_date=last_edit_date,
+                  start_date=start_date,state=state, status=status, title=title,
+                  user_id=user_id, zip_code=zip_code)
 
     try:
         db.session.add(event)

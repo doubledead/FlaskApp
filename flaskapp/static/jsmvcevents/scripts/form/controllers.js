@@ -9,6 +9,7 @@ angular.module('form.controllers', [])
 
   $scope.params = {
     address: "",
+    category: "event",
     city: "",
     country: "",
     end_date: "",

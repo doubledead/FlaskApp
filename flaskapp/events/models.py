@@ -82,12 +82,10 @@ class Event(db.Model):
 
 class Category(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    description = db.Column(db.String(225))
     name = db.Column(db.String(225))
     status_code = db.Column(db.Integer())
 
-    def __init__(self, description, name, status_code):
-        self.description = description
+    def __init__(self, name, status_code):
         self.name = name
         self.status_code = status_code
 
@@ -96,12 +94,10 @@ class Category(db.Model):
 
 class Status(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    description = db.Column(db.String(225))
     name = db.Column(db.String(225))
     status_code = db.Column(db.Integer())
 
-    def __init__(self, description, name, status_code):
-        self.description = description
+    def __init__(self, name, status_code):
         self.name = name
         self.status_code = status_code
 
