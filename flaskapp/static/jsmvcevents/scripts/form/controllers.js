@@ -5,22 +5,25 @@ angular.module('form.controllers', [])
   //$scope.direction = 0;
   $scope.longStage = 0;
   $scope.formValid = false;
+  $scope.rowId = 0;
 
   $scope.params = {
-    title: "",
     address: "",
     city: "",
-    state: "",
-    zip_code: "",
     country: "",
+    end_date: "",
+    guestEmail: "",
+    guests: [],
     start_date: "",
-    end_date: ""
+    state: "",
+    title: "",
+    zip_code: "",
   };
 
   $scope.next = function (stage) {
     $scope.direction = 1;
     $scope.stage = stage;
-    if (stage=="stage4") {
+    if (stage=="stage5") {
       $scope.longStage = 1;
     }
   };
@@ -75,4 +78,28 @@ angular.module('form.controllers', [])
     // This method is kind of experimental at the moment.
     $timeout(changeRoute, 1000);
   }
+
+  $scope.addGuestEmail = function () {
+    $scope.rowId++;
+    var guestEmail = $scope.params.guestEmail;
+
+    var guest = {
+      email: guestEmail,
+      'row_id': $scope.rowId,
+    };
+
+    $scope.params.guests.push(guest);
+
+    $scope.params.guestEmail = "";
+  };
+
+  $scope.removeGuestEmail = function (row_id) {
+    for (var i = 0; i < $scope.params.guests.length; i++) {
+      if ($scope.params.guests[i].row_id === row_id) {
+        $scope.params.guests.splice(i, 1);
+        break;
+      }
+    }
+  };
+
 }]);

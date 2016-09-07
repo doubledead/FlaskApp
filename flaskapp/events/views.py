@@ -54,7 +54,7 @@ def create_event():
 
         return redirect(url_for('events.display_events'))
 
-    return render_template("events/create_event.html", form=form)
+    return render_template("events/create.html", form=form)
 
 @events.route('/<event_id>', methods=['GET', 'POST'])
 @login_required
