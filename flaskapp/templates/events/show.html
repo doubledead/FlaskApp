@@ -23,4 +23,16 @@
     </div>
     <div class="col-sm-3 col-md-1">&nbsp;</div>
   </div>
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12"><strong>Guests:</strong></div>
+  </div>
+  {% for g in guests %}
+    <div class="row">
+      <div class="col-sm-5 col-md-12">{{ g.email }}</div>
+    </div>
+  {% endfor %}
+
 {% endblock %}

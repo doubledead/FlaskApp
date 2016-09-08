@@ -86,7 +86,7 @@ angular.module('form.controllers', [])
 
     var guest = {
       email: guestEmail,
-      'row_id': $scope.rowId,
+      row_id: $scope.rowId
     };
 
     $scope.params.guests.push(guest);

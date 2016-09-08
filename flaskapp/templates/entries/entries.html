@@ -11,18 +11,18 @@
     </p>
   </div>
   <div class="row">
-    <div class="col-sm-3 col-md-2">Title</div>
-    <div class="col-sm-3 col-md-2">Post Date</div>
-    <div class="col-sm-3 col-md-1">&nbsp;</div>
+    <div class="col-sm-4 col-md-3">Title</div>
+    <div class="col-sm-4 col-md-3">Post Date</div>
+    <div class="col-sm-2 col-md-1">&nbsp;</div>
   </div>
   <div class="row">
     <div class="col-md-12">&nbsp;</div>
   </div>
   {% for data in entries %}
     <div class="row">
-      <div class="col-sm-3 col-md-2">{{ data.title }}</div>
-      <div class="col-sm-3 col-md-2">{{ data.post_date }}</div>
-      <div class="col-sm-3 col-md-1">
+      <div class="col-sm-4 col-md-3">{{ data.title }}</div>
+      <div class="col-sm-4 col-md-3">{{ data.post_date }}</div>
+      <div class="col-sm-2 col-md-1">
         <a href="{{ url_for('entries.show', entry_id=data.id) }}" class="btn btn-xs btn-info">
           View
         </a>

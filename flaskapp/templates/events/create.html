@@ -126,11 +126,18 @@
               No guest email addresses added, yet.
             </div>
           </div>
+          <!--
           <div ng-repeat="e in params.guests">
             <div class="row">
               <div class="col-sm-5 col-md-6">
                 {{ e.email }} <button type="button" class="btn btn-danger btn-xs" ng-click="removeGuestEmail(e.row_id)">Remove</button>
               </div>
+            </div>
+          </div>
+          -->
+          <div class="row">
+            <div class="col-md-12">
+              <pre> {{ params.guests | json }}</pre>
             </div>
           </div>
           <div class="row">

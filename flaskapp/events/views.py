@@ -4,7 +4,7 @@ from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import NewEventForm, UpdateEventForm
-from .models import Event, Category, Status
+from .models import Category, Event, Guest, Status
 from sqlalchemy import exc
 
 events = Blueprint('events', __name__, template_folder='templates')
@@ -56,12 +56,14 @@ def create_event():
 
     return render_template("events/create.html", form=form)
 
-@events.route('/<event_id>', methods=['GET', 'POST'])
+@events.route('/<event_id>', methods=['GET'])
 @login_required
 def show(event_id):
     event = Event.query.filter_by(id=event_id).first_or_404()
 
-    return render_template("events/show.html", event=event)
+    guests = event.guests
+
+    return render_template("events/show.html", event=event, guests=guests)
 
 @events.route('/edit/<event_id>', methods=['GET', 'POST'])
 @login_required
@@ -126,10 +128,11 @@ def create():
     category = Category(name='Test', status_code=100)
     city = data["city"]
     country = data["country"]
-    # start_date = data["start_date"]
     # end_date = data["end_date"]
     end_date = datetime.utcnow()
+    guests_data = data["guests"]
     last_edit_date = datetime.utcnow()
+    # start_date = data["start_date"]
     start_date = datetime.utcnow()
     state = data["state"]
     status = Status(name='active', status_code=100)
@@ -140,6 +143,18 @@ def create():
                   country=country,end_date=end_date, last_edit_date=last_edit_date,
                   start_date=start_date,state=state, status=status, title=title,
                   user_id=user_id, zip_code=zip_code)
+
+    for g in guests_data:
+        gg = g.items()
+
+        # print(gg)
+        print(gg[0][1])
+        print(gg[1][1])
+
+        e = gg[1][1]
+
+        guest = Guest(email=e)
+        event.guests.append(guest)
 
     try:
         db.session.add(event)
