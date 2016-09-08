@@ -114,29 +114,28 @@ def create():
     entry = Entry(title=title, post_date=post_date, body=body, user_id=user_id)
 
     # current_app.logger.info('Tags %s.', (tags))
+    # print(data)
     # print(tags_data)
 
     # tags is a list of dict objects, a dictionary list
 
-    for t in tags_data:
-        tt = t.items()
-
-        print(tt)
-        # print(tt[0][1])
-        # print(tt[1][1])
-        # print(tt[2][1])
-
-        c = tt[0][1]
-        # description = tt[1][1]
-        d = tt[1][1]
-        n = tt[2][1]
-        tag = Tag(category=c,description=d,name=n)
-        entry.tags.append(tag)
-
+    # This does not work consistently because dictionaries
+    # are unordered
     # for t in tags_data:
-    #     for k, v in t.items():
-    #         tag = Tag(description=v)
-    #         entry.tags.append(tag)
+    #     tt = t.items()
+    #
+    #     c = tt[0][1]
+    #     d = tt[1][1]
+    #     n = tt[2][1]
+    #     tag = Tag(category=c,description=d,name=n)
+    #     entry.tags.append(tag)
+
+    for ttt in tags_data:
+        cat = ttt['category']
+        des = ttt['description']
+        nam = ttt['name']
+        tag = Tag(category=cat, description=des, name=nam)
+        entry.tags.append(tag)
 
 
     try:
