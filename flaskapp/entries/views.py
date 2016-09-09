@@ -126,15 +126,13 @@ def create():
     #
     #     c = tt[0][1]
     #     d = tt[1][1]
-    #     n = tt[2][1]
-    #     tag = Tag(category=c,description=d,name=n)
+    #     tag = Tag(category=c,description=d)
     #     entry.tags.append(tag)
 
     for ttt in tags_data:
         cat = ttt['category']
         des = ttt['description']
-        nam = ttt['name']
-        tag = Tag(category=cat, description=des, name=nam)
+        tag = Tag(category=cat, description=des)
         entry.tags.append(tag)
 
 

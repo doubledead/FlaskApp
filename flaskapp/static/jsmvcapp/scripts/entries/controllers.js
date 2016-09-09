@@ -61,8 +61,7 @@ angular.module('entries.controllers', [])
     // var id = _.uniqueId();
     var tag = {
       category: "social",
-      description: d,
-      name: "name1"
+      description: d
     };
 
     $scope.params.tags.push(tag);

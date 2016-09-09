@@ -14,12 +14,10 @@ class Tag(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     category = db.Column(db.String(225))
     description = db.Column(db.String(225))
-    name = db.Column(db.String(225))
 
-    def __init__(self, category, description, name):
+    def __init__(self, category, description):
         self.category = category
         self.description = description
-        self.name = name
 
     def __repr__(self):
         return 'Tag %r>' % (self.description)

@@ -145,13 +145,13 @@ def create():
                   user_id=user_id, zip_code=zip_code)
 
     for g in guests_data:
-        gg = g.items()
+        # gg = g.items()
 
-        # print(gg)
-        print(gg[0][1])
-        print(gg[1][1])
+        # print(gg[0][1])
+        # print(gg[1][1])
 
-        e = gg[1][1]
+        # e = gg[1][1]
+        e = g['email']
 
         guest = Guest(email=e)
         event.guests.append(guest)
