@@ -48,7 +48,7 @@ angular.module('entries.controllers', [])
   }
 
   function reset() {
-    // Clean up scope before destorying
+    // Clean up scope before destroying
     $scope.params = {};
 
     // Send the app back to a Flask route

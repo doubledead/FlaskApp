@@ -17,6 +17,7 @@
       <div class="animate-switch-container" ng-switch on="stage" ng-class="{forward: direction, backward:!direction,longStage: longStage}">
         <div class="animate-switch" ng-switch-default>
           <p>Welcome to the form.</p>
+          <p>Validation is disabled for this test app so please add data to every field.</p>
           <button type="button" class="btn btn-primary" ng-click="next('stage1')">Next</button>
         </div>
         <div class="animate-switch" ng-switch-when="stage1">

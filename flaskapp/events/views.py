@@ -119,51 +119,46 @@ def delete(event_id):
     return redirect(url_for('events.display_events'))
 
 # Endpoint for JSMVCApp to hit
-@events.route('/createjs', methods=['GET', 'POST'])
+@events.route('/createjs', methods=['POST'])
 @login_required
 def create():
-    data = request.get_json()
+    if request.method == "POST":
+        data = request.get_json()
 
-    address = data["address"]
-    category = Category(name='Test', status_code=100)
-    city = data["city"]
-    country = data["country"]
-    # end_date = data["end_date"]
-    end_date = datetime.utcnow()
-    guests_data = data["guests"]
-    last_edit_date = datetime.utcnow()
-    # start_date = data["start_date"]
-    start_date = datetime.utcnow()
-    state = data["state"]
-    status = Status(name='active', status_code=100)
-    title = data["title"]
-    user_id = current_user.id
-    zip_code = data["zip_code"]
-    event = Event(address=address, category=category, city=city,
-                  country=country,end_date=end_date, last_edit_date=last_edit_date,
-                  start_date=start_date,state=state, status=status, title=title,
-                  user_id=user_id, zip_code=zip_code)
+        address = data["address"]
+        category = Category(name='Test', status_code=100)
+        city = data["city"]
+        country = data["country"]
+        # end_date = data["end_date"]
+        end_date = datetime.utcnow()
+        guests_data = data["guests"]
+        last_edit_date = datetime.utcnow()
+        # start_date = data["start_date"]
+        start_date = datetime.utcnow()
+        state = data["state"]
+        status = Status(name='active', status_code=100)
+        title = data["title"]
+        user_id = current_user.id
+        zip_code = data["zip_code"]
+        event = Event(address=address, category=category, city=city,
+                      country=country,end_date=end_date, last_edit_date=last_edit_date,
+                      start_date=start_date,state=state, status=status, title=title,
+                      user_id=user_id, zip_code=zip_code)
 
-    for g in guests_data:
-        # gg = g.items()
+        for g in guests_data:
+            e = g['email']
 
-        # print(gg[0][1])
-        # print(gg[1][1])
+            guest = Guest(email=e)
+            event.guests.append(guest)
 
-        # e = gg[1][1]
-        e = g['email']
+        try:
+            db.session.add(event)
+            db.session.commit()
+            return json.dumps({'status':'OK'})
+        except exc.SQLAlchemyError as e:
+            current_app.logger.error(e)
 
-        guest = Guest(email=e)
-        event.guests.append(guest)
-
-    try:
-        db.session.add(event)
-        db.session.commit()
-        return json.dumps({'status':'OK'})
-    except exc.SQLAlchemyError as e:
-        current_app.logger.error(e)
-
-        return redirect(url_for('events.create_event'))
-        return json.dumps({'status':'Error'})
+            return redirect(url_for('events.create_event'))
+            return json.dumps({'status':'Error'})
 
     return redirect(url_for('events.display_events'))
