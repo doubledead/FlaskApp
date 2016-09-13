@@ -35,6 +35,8 @@ def update():
 
     if request.method == "POST" and form.validate():
         user.email = form.email.data
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
         user.last_edit_date = datetime.utcnow()
 
         try:
