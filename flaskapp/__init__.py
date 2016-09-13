@@ -9,7 +9,7 @@ from flaskapp.cache import cache
 from .core import db, mail, security
 from .models import User, Role
 
-from .users.forms import ExtendedRegisterForm
+from .users.forms import ExtendedRegisterForm, ExtendedConfirmRegisterForm
 
 app = Flask(__name__,
             instance_path=get_instance_folder_path(),
@@ -24,7 +24,8 @@ cache.init_app(app)
 db.init_app(app)
 mail.init_app(app)
 security.init_app(app, SQLAlchemyUserDatastore(db, User, Role),
-                  register_form=ExtendedRegisterForm)
+                  register_form=ExtendedRegisterForm,
+                  confirm_register_form=ExtendedConfirmRegisterForm)
 
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
