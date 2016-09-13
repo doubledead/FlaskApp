@@ -17,11 +17,11 @@ SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39a'
 # Flask-Mail
 # Required for Flask-Security registration to function properly
 MAIL_DEFAULT_SENDER = 'info@flaskapp.us'
-MAIL_SERVER = 'smtp.postmarkapp.com'
+MAIL_SERVER = 'smtp.mailgun.org'
 MAIL_PORT = 25
 MAIL_USE_TLS = True
-MAIL_USERNAME = 'username'
-MAIL_PASSWORD = 'password'
+MAIL_USERNAME = 'postmaster@app612f53d0a96248fdab12a8ad2f5cc871.mailgun.org'
+MAIL_PASSWORD = '9115f88eef5f0426f65301afc351d97e'
 
 # Flask-Security
 SECURITY_CONFIRMABLE = False
