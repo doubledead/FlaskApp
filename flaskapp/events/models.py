@@ -37,9 +37,9 @@ class Event(db.Model):
     country = db.Column(db.String(225))
     end_date = db.Column(db.DateTime())
     last_edit_date = db.Column(db.DateTime())
+    name = db.Column(db.String(225))
     start_date = db.Column(db.DateTime())
     state = db.Column(db.String(225))
-    title = db.Column(db.String(225))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     zip_code = db.Column(db.String(225))
 
@@ -59,8 +59,8 @@ class Event(db.Model):
                                backref=db.backref('events', lazy='joined'))
 
     def __init__(self, address, category, city, country,
-                 end_date, last_edit_date, start_date, state, status,
-                 title, user_id, zip_code, create_date=None):
+                 end_date, last_edit_date, name, start_date, state,
+                 status, user_id, zip_code, create_date=None):
         self.address = address
         self.category = category
         self.city = city
@@ -70,15 +70,15 @@ class Event(db.Model):
         self.create_date = create_date
         self.end_date = end_date
         self.last_edit_date = last_edit_date
+        self.name = name
         self.start_date = start_date
         self.state = state
         self.status = status
-        self.title = title
         self.user_id = user_id
         self.zip_code = zip_code
 
     def __repr__(self):
-        return '<Event %r>' % (self.title)
+        return '<Event %r>' % (self.name)
 
 class Category(db.Model):
     id = db.Column(db.Integer(), primary_key=True)

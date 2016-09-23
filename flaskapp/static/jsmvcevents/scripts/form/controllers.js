@@ -1,30 +1,30 @@
 angular.module('form.controllers', [])
 .controller('formCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
   $scope.params = {};
-  $scope.stage = "";
+  $scope.stage = '';
   //$scope.direction = 0;
   $scope.longStage = 0;
   $scope.formValid = false;
   $scope.rowId = 0;
 
   $scope.params = {
-    address: "",
-    category: "event",
-    city: "",
-    country: "",
-    end_date: "",
-    guestEmail: "",
+    address: '',
+    category: 'event',
+    city: '',
+    country: '',
+    end_date: '',
+    guestEmail: '',
     guests: [],
-    start_date: "",
-    state: "",
-    title: "",
-    zip_code: "",
+    name: '',
+    start_date: '',
+    state: '',
+    zip_code: '',
   };
 
   $scope.next = function (stage) {
     $scope.direction = 1;
     $scope.stage = stage;
-    if (stage=="stage5") {
+    if (stage=='stage5') {
       $scope.longStage = 1;
     }
   };
@@ -73,7 +73,7 @@ angular.module('form.controllers', [])
   function reset() {
     // Clean up scope before destorying
     $scope.params = {};
-    $scope.stage = "";
+    $scope.stage = '';
 
     // Send the app back to a Flask route
     // This method is kind of experimental at the moment.
@@ -91,7 +91,7 @@ angular.module('form.controllers', [])
 
     $scope.params.guests.push(guest);
 
-    $scope.params.guestEmail = "";
+    $scope.params.guestEmail = '';
   };
 
   $scope.removeGuestEmail = function (row_id) {

@@ -37,7 +37,6 @@ def create_event():
     form = NewEventForm(request.form)
 
     if request.method == 'POST' and form.validate():
-        title = form.title.data
         address = form.address.data
         city = form.city.data
         state = form.state.data
@@ -46,11 +45,12 @@ def create_event():
         start_date = form.start_date.data
         end_date = form.end_date.data
         last_edit_date = datetime.utcnow()
+        name = form.name.data
         user_id = current_user.id
         category = Category(name='event', status_code=100)
         status = Status(name='active', status_code=100)
-        event = Event(title, address, city, state, zip_code, country,
-                      start_date, end_date, last_edit_date, user_id, status, category)
+        event = Event(address, city, state, zip_code, country, start_date,
+                      end_date, last_edit_date, name, user_id, status, category)
 
         try:
             db.session.add(event)
@@ -139,16 +139,16 @@ def create():
         end_date = datetime.utcnow()
         guests_data = data["guests"]
         last_edit_date = datetime.utcnow()
+        name = data["name"]
         # start_date = data["start_date"]
         start_date = datetime.utcnow()
         state = data["state"]
         status = Status(name='active', status_code=100)
-        title = data["title"]
         user_id = current_user.id
         zip_code = data["zip_code"]
         event = Event(address=address, category=category, city=city,
                       country=country,end_date=end_date, last_edit_date=last_edit_date,
-                      start_date=start_date,state=state, status=status, title=title,
+                      name=name, start_date=start_date, state=state, status=status,
                       user_id=user_id, zip_code=zip_code)
 
         for g in guests_data:

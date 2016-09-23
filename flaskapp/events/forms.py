@@ -10,7 +10,7 @@ from wtforms import StringField, DateField, DateTimeField
 from wtforms import validators
 
 class NewEventForm(Form):
-    title = StringField('Title', [
+    name = StringField('Name', [
         validators.DataRequired(),
         validators.Length(min=1, max=30)
     ])
@@ -38,7 +38,7 @@ class NewEventForm(Form):
     end_date = DateField('End Date', [validators.DataRequired()], format='%m-%d-%Y')
 
 class UpdateEventForm(Form):
-    title = StringField('Title', [
+    name = StringField('name', [
         validators.DataRequired(),
         validators.Length(min=1, max=30)
     ])
