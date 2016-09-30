@@ -14,6 +14,17 @@ events_guests = db.Table(
     db.Column('event_id', db.Integer(), db.ForeignKey('events.id')),
     db.Column('guest_id', db.Integer(), db.ForeignKey('guests.id')))
 
+events_items = db.Table(
+    'events_items',
+    db.Column('event_id', db.Integer(), db.ForeignKey('events.id')),
+    db.Column('item_id', db.Integer(), db.ForeignKey('items.id')))
+
+events_claimed_items = db.Table(
+    'events_claimed_items',
+    db.Column('event_id', db.Integer(), db.ForeignKey('events.id')),
+    db.Column('item_id', db.Integer(), db.ForeignKey('items.id')),
+    db.Column('user_id', db.Integer(), db.ForeignKey('users.id')))
+
 class Guest(db.Model):
     __tablename__ = 'guests'
 
@@ -26,6 +37,23 @@ class Guest(db.Model):
     def __repr__(self):
         return 'Guest %r>' % (self.email)
 
+class Item(db.Model):
+    __tablename__ = 'items'
+
+    id = db.Column(db.Integer(), primary_key=True)
+    category = db.Column(db.String(225))
+    name = db.Column(db.String(225))
+    quantity = db.Column(db.Integer())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, category, name, quantity, user_id):
+        self.category = category
+        self.name = name
+        self.quantity = quantity
+        self.user_id = user_id
+
+    def __repr__(self):
+        return 'Item %r>' % (self.name)
 
 class Event(db.Model):
     __tablename__ = 'events'
@@ -57,6 +85,13 @@ class Event(db.Model):
     # https://github.com/mattupstate/overholt/blob/master/overholt/stores/models.py
     guests = db.relationship('Guest', secondary=events_guests,
                                backref=db.backref('events', lazy='joined'))
+
+    # Many-to-many
+    items = db.relationship('Item', secondary=events_items,
+                            backref=db.backref('events', lazy='joined'))
+
+    claimed_items = db.relationship('Item', secondary=events_claimed_items,
+                            backref=db.backref('events', lazy='joined'))
 
     def __init__(self, address, category, city, country,
                  end_date, last_edit_date, name, start_date, state,

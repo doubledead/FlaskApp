@@ -127,7 +127,6 @@
               No guest email addresses added, yet.
             </div>
           </div>
-          <!--
           <div ng-repeat="e in params.guests">
             <div class="row">
               <div class="col-sm-5 col-md-6">
@@ -135,12 +134,13 @@
               </div>
             </div>
           </div>
-          -->
+          <!--
           <div class="row">
             <div class="col-md-12">
               <pre> {{ params.guests | json }}</pre>
             </div>
           </div>
+          -->
           <div class="row">
             <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
@@ -152,6 +152,70 @@
           </div>
         </div>
         <div class="animate-switch" ng-switch-when="stage5">
+          <div class="row">
+            <div class="col-sm-5 col-md-6">
+              <div class="form-group">
+                <label for="tb-item-name">Item Name</label>
+                <input type="text"
+                       id="tb-item-name"
+                       class="form-control"
+                       ng-model="params.itemName" />
+              </div>
+            </div>
+            <div class="col-sm-5 col-md-3">
+              <div class="form-group">
+                <label for="tb-item-quantity">Quantity</label>
+                <input type="text"
+                       id="tb-item-quantity"
+                       class="form-control"
+                       ng-model="params.itemQuantity" />
+              </div>
+            </div>
+            <!--
+            <div class="col-sm-7 col-md-6">
+              <div>&nbsp;</div>
+              <button type="button" class="btn btn-xs btn-warning" ng-click="addItem()">Add</button>
+            </div>
+            -->
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <div>&nbsp;</div>
+              <button type="button" class="btn btn-xs btn-warning" ng-click="addItem()">Add</button>
+            </div>
+          </div>
+          <div class="row" ng-hide="params.items.length > 0">
+            <div class="col-sm-5 col-md-6">
+              No event items added, yet.
+            </div>
+          </div>
+          <div ng-repeat="i in params.items">
+            <div class="row">
+              <div class="col-sm-5 col-md-3">
+                {{ i.name }}
+              </div>
+              <div class="col-sm-5 col-md-3">
+                {{ i.quantity }}
+              </div>
+              <div class="col-sm-2 col-md-6">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="removeItem(i.itemId)">Remove</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12">&nbsp;</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 col-md-12">
+              <button type="button" class="btn btn-info" ng-click="back('stage4')">Back</button>
+              <button type="button" class="btn btn-primary" ng-click="next('stage6')">Next</button>
+            </div>
+          </div>
+        </div>
+        <div class="animate-switch" ng-switch-when="stage6">
           <div class="row">
             <div class="col-sm-6 col-md-6">
               Event name: {{ params.name }}
@@ -165,7 +229,7 @@
             <pre> {{ params | json }}</pre>
           </div>
           -->
-          <button type="button" class="btn btn-info" ng-click="back('stage4')">Back</button>
+          <button type="button" class="btn btn-info" ng-click="back('stage5')">Back</button>
           <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
         </div>
       </div>

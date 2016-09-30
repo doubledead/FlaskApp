@@ -15,16 +15,20 @@ angular.module('form.controllers', [])
     end_date: '',
     guestEmail: '',
     guests: [],
+    items: [],
+    itemName: '',
+    itemQuantity: '',
     name: '',
     start_date: '',
     state: '',
     zip_code: '',
   };
 
+  // Navigation functions
   $scope.next = function (stage) {
     $scope.direction = 1;
     $scope.stage = stage;
-    if (stage=='stage5') {
+    if (stage=='stage6') {
       $scope.longStage = 1;
     }
   };
@@ -34,7 +38,7 @@ angular.module('form.controllers', [])
     $scope.stage = stage;
   };
 
-
+  // Form submission functions
 	$scope.submitForm = function () {
     var
       deferred = $.Deferred(),
@@ -80,6 +84,7 @@ angular.module('form.controllers', [])
     $timeout(changeRoute, 1000);
   }
 
+  // Guest item functions
   $scope.addGuestEmail = function () {
     $scope.rowId++;
     var guestEmail = $scope.params.guestEmail;
@@ -98,6 +103,34 @@ angular.module('form.controllers', [])
     for (var i = 0; i < $scope.params.guests.length; i++) {
       if ($scope.params.guests[i].row_id === row_id) {
         $scope.params.guests.splice(i, 1);
+        break;
+      }
+    }
+  };
+
+  // Item functions
+  $scope.addItem = function () {
+    $scope.itemId++;
+    var itemName = $scope.params.itemName;
+    var itemQuantity = $scope.params.itemQuantity;
+
+    var item = {
+      itemId: $scope.itemId,
+      category: 'Item',
+      name: itemName,
+      quantity: itemQuantity
+    };
+
+    $scope.params.items.push(item);
+
+    $scope.params.itemName = '';
+    $scope.params.itemQuantity = '';
+  };
+
+  $scope.removeItem = function (itemId) {
+    for (var i = 0; i < $scope.params.items.length; i++) {
+      if ($scope.params.items[i].itemId === itemId) {
+        $scope.params.items.splice(i, 1);
         break;
       }
     }

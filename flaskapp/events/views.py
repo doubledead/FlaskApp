@@ -3,8 +3,8 @@ from flask import request, redirect, url_for, json, current_app
 from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
-from .forms import NewEventForm, UpdateEventForm
-from .models import Category, Event, Guest, Status
+from .forms import ClaimItemForm, NewEventForm, UpdateEventForm
+from .models import Category, Event, Guest, Item, Status
 from sqlalchemy import exc
 
 events = Blueprint('events', __name__, template_folder='templates')
@@ -69,7 +69,33 @@ def show(event_id):
 
     guests = event.guests
 
-    return render_template("events/show.html", event=event, guests=guests)
+    items = event.items
+
+    claimed_items = event.claimed_items
+
+    return render_template("events/show.html", claimed_items=claimed_items,
+                           event=event, guests=guests, items=items)
+
+@events.route('/<item_id>', methods=['GET', 'POST'])
+@login_required
+def claim(item_id):
+    item = Item.query.filter_by(id=item_id).first_or_404()
+
+    form = ClaimItemForm()
+    if request.method == "POST" and form.validate():
+        item.quantity = form.quantity.data
+        item.user_id = current_user.id
+
+        try:
+            db.session.commit()
+        except exc.SQLAlchemyError as e:
+            current_app.logger.error(e)
+
+        return redirect(url_for('events.claim', item_id=item.id))
+    elif request.method != "POST":
+        form.quantity.data = item.quantity
+
+    return render_template("events/claim.html", item=item, form=form)
 
 @events.route('/edit/<event_id>', methods=['GET', 'POST'])
 @login_required
@@ -138,6 +164,7 @@ def create():
         # end_date = data["end_date"]
         end_date = datetime.utcnow()
         guests_data = data["guests"]
+        items_data = data["items"]
         last_edit_date = datetime.utcnow()
         name = data["name"]
         # start_date = data["start_date"]
@@ -156,6 +183,14 @@ def create():
 
             guest = Guest(email=e)
             event.guests.append(guest)
+
+        for i in items_data:
+            item_category = i['category']
+            item_name = i['name']
+            item_quantity = i['quantity']
+
+            item = Item(category=item_category,name=item_name, quantity=item_quantity)
+            event.items.append(item)
 
         try:
             db.session.add(event)

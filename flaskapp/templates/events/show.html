@@ -1,7 +1,7 @@
 {% extends 'layouts/boilerplate.html' %}
 {% block container %}
   <div class="jumbotron">
-    <h1>Event {{ event.name }}</h1>
+    <h4>Event {{ event.name }}</h4>
   </div>
   <div class="row">
     <div class="col-sm-3 col-md-3">Name</div>
@@ -27,11 +27,40 @@
     <div class="col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-md-12"><strong>Guests:</strong></div>
+    <div class="col-md-12"><strong>Guests</strong></div>
   </div>
   {% for g in guests %}
     <div class="row">
       <div class="col-sm-5 col-md-12">{{ g.email }}</div>
+    </div>
+  {% endfor %}
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12"><strong>Items</strong></div>
+  </div>
+  {% for item in items %}
+    <div class="row">
+      <div class="col-sm-5 col-md-3">Name: {{ item.name }}</div>
+      <div class="col-sm-5 col-md-2">Quantity: {{ item.quantity }}</div>
+    </div>
+  {% endfor %}
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12"><strong>Claimed Items</strong></div>
+  </div>
+  {% for c in claimed_items %}
+    <div class="row">
+      <div class="col-sm-5 col-md-3">Name: {{ c.name }}</div>
+      <div class="col-sm-5 col-md-2">Quantity: {{ c.quantity }}</div>
+      <div class="col-sm-3 col-md-1">
+        <a href="{{ url_for('events.claim', item_id=c.id) }}" class="btn btn-xs btn-info">
+          Claim
+        </a>
+      </div>
     </div>
   {% endfor %}
 
