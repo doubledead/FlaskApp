@@ -67,7 +67,12 @@ class UpdateEventForm(Form):
     # birthdate = DateTimeField('Birth Date', format='%m/%d/%Y %I:%M:%S %p')
     # birthdate = DateField('Birth Date', format='%Y-%m-%d')
 
-class ClaimItemForm(Form):
+class UpdateItemForm(Form):
+    quantity = IntegerField('quantity', [
+        validators.DataRequired(),
+        validators.Length(min=1, max=4)])
+
+class UpdateSubItemForm(Form):
     quantity = IntegerField('quantity', [
         validators.DataRequired(),
         validators.Length(min=1, max=4)])

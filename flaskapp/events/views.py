@@ -3,7 +3,7 @@ from flask import request, redirect, url_for, json, current_app
 from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
-from .forms import ClaimItemForm, NewEventForm, UpdateEventForm
+from .forms import NewEventForm, UpdateEventForm, UpdateItemForm, UpdateSubItemForm
 from .models import Category, Event, Guest, Item, Status, Subitem
 from sqlalchemy import exc
 
@@ -200,15 +200,15 @@ def updateitem(item_id):
     item = Item.query.filter_by(id=item_id).first_or_404()
 
 
-    return render_template("events/items/edit.html", item=item)
+    return render_template("events/items/update.html", item=item)
 
 @events.route('item/subitem/update/<subitem_id>', methods=['GET', 'POST'])
 @login_required
 def updatesubitem(subitem_id):
-    submitem = Subitem.query.filter_by(id=subitem_id).first_or_404()
-    subitems = item.subitems
+    subitem = Subitem.query.filter_by(id=subitem_id).first_or_404()
+    subitems = subitem.subitems
 
-    form = ClaimItemForm()
+    form = UpdateSubItemForm()
     if request.method == "POST" and form.validate():
 
         for subitem in subitems:
@@ -224,8 +224,8 @@ def updatesubitem(subitem_id):
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
 
-        return redirect(url_for('events.claim', item_id=item.id))
+        return redirect(url_for('events.claim', subitem_id=subitem.id))
     elif request.method != "POST":
-        form.quantity.data = item.quantity
+        form.quantity.data = subitem.quantity
 
-    return render_template("events/claim.html", item=item, form=form)
+    return render_template("events/items/subitems/update.html", subitem=subitem, form=form)
