@@ -19,11 +19,10 @@ events_items = db.Table(
     db.Column('event_id', db.Integer(), db.ForeignKey('events.id')),
     db.Column('item_id', db.Integer(), db.ForeignKey('items.id')))
 
-events_claimed_items = db.Table(
-    'events_claimed_items',
-    db.Column('event_id', db.Integer(), db.ForeignKey('events.id')),
+items_subitems = db.Table(
+    'items_subitems',
     db.Column('item_id', db.Integer(), db.ForeignKey('items.id')),
-    db.Column('user_id', db.Integer(), db.ForeignKey('users.id')))
+    db.Column('subitem_id', db.Integer(), db.ForeignKey('subitems.id')))
 
 class Guest(db.Model):
     __tablename__ = 'guests'
@@ -34,8 +33,17 @@ class Guest(db.Model):
     def __init__(self, email):
         self.email = email
 
-    def __repr__(self):
-        return 'Guest %r>' % (self.email)
+class Subitem(db.Model):
+    __tablename__ = 'subitems'
+
+    id = db.Column(db.Integer(), primary_key=True)
+    quantity = db.Column(db.Integer())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, quantity, user_id):
+        self.quantity = quantity
+        self.user_id = user_id
+
 
 class Item(db.Model):
     __tablename__ = 'items'
@@ -44,13 +52,17 @@ class Item(db.Model):
     category = db.Column(db.String(225))
     name = db.Column(db.String(225))
     quantity = db.Column(db.Integer())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    quantity_claimed = db.Column(db.Integer())
 
-    def __init__(self, category, name, quantity, user_id):
+    # Many-to-many
+    subitems = db.relationship('Subitem', secondary=items_subitems,
+                            backref=db.backref('items', lazy='joined'))
+
+    def __init__(self, category, name, quantity, quantity_claimed):
         self.category = category
         self.name = name
         self.quantity = quantity
-        self.user_id = user_id
+        self.quantity_claimed = quantity_claimed
 
     def __repr__(self):
         return 'Item %r>' % (self.name)
@@ -88,9 +100,6 @@ class Event(db.Model):
 
     # Many-to-many
     items = db.relationship('Item', secondary=events_items,
-                            backref=db.backref('events', lazy='joined'))
-
-    claimed_items = db.relationship('Item', secondary=events_claimed_items,
                             backref=db.backref('events', lazy='joined'))
 
     def __init__(self, address, category, city, country,

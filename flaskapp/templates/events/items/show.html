@@ -1,0 +1,44 @@
+{% extends 'layouts/boilerplate.html' %}
+{% block container %}
+  <div class="jumbotron">
+    <h4>Item {{ item.name }}</h4>
+  </div>
+  <div class="row">
+    <div class="col-sm-3 col-md-3">Name</div>
+    <div class="col-sm-9 col-md-2">Category</div>
+    <div class="col-sm-3 col-md-2">Quantity</div>
+    <div class="col-sm-3 col-md-1">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3 col-md-3">{{ item.name }}</div>
+    <div class="col-sm-3 col-md-2">{{ item.category }}</div>
+    <div class="col-sm-3 col-md-2">{{ item.quantity }}</div>
+    <div class="col-sm-3 col-md-1">
+      <a href="{{ url_for('events.updateitem', item_id=item.id) }}" class="btn btn-xs btn-info">
+        Edit
+      </a>
+    </div>
+    <div class="col-sm-3 col-md-1">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12"><strong>Amount Claimed</strong></div>
+  </div>
+    {% for subitem in subitems %}
+      <div class="row">
+        <div class="col-sm-5 col-md-2">User: {{ subitem.user_id }}</div>
+        <div class="col-sm-5 col-md-2">Quantity: {{ subitem.quantity }}</div>
+        <div class="col-sm-3 col-md-1">
+          <a href="#" class="btn btn-xs btn-info">
+            Edit
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+
+{% endblock %}

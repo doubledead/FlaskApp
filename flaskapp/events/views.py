@@ -4,7 +4,7 @@ from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import ClaimItemForm, NewEventForm, UpdateEventForm
-from .models import Category, Event, Guest, Item, Status
+from .models import Category, Event, Guest, Item, Status, Subitem
 from sqlalchemy import exc
 
 events = Blueprint('events', __name__, template_folder='templates')
@@ -71,31 +71,7 @@ def show(event_id):
 
     items = event.items
 
-    claimed_items = event.claimed_items
-
-    return render_template("events/show.html", claimed_items=claimed_items,
-                           event=event, guests=guests, items=items)
-
-@events.route('/<item_id>', methods=['GET', 'POST'])
-@login_required
-def claim(item_id):
-    item = Item.query.filter_by(id=item_id).first_or_404()
-
-    form = ClaimItemForm()
-    if request.method == "POST" and form.validate():
-        item.quantity = form.quantity.data
-        item.user_id = current_user.id
-
-        try:
-            db.session.commit()
-        except exc.SQLAlchemyError as e:
-            current_app.logger.error(e)
-
-        return redirect(url_for('events.claim', item_id=item.id))
-    elif request.method != "POST":
-        form.quantity.data = item.quantity
-
-    return render_template("events/claim.html", item=item, form=form)
+    return render_template("events/show.html", event=event, guests=guests, items=items)
 
 @events.route('/edit/<event_id>', methods=['GET', 'POST'])
 @login_required
@@ -189,7 +165,11 @@ def create():
             item_name = i['name']
             item_quantity = i['quantity']
 
-            item = Item(category=item_category,name=item_name, quantity=item_quantity)
+            item = Item(category=item_category,name=item_name, quantity=item_quantity, quantity_claimed=0)
+
+            subitem = Subitem(quantity=3,user_id=current_user.id)
+            item.subitems.append(subitem)
+
             event.items.append(item)
 
         try:
@@ -203,3 +183,49 @@ def create():
             return json.dumps({'status':'Error'})
 
     return redirect(url_for('events.display_events'))
+
+#################### Items ################
+@events.route('/item/<item_id>', methods=['GET'])
+@login_required
+def showitem(item_id):
+    item = Item.query.filter_by(id=item_id).first_or_404()
+
+    subitems = item.subitems
+
+    return render_template("events/items/show.html", item=item, subitems=subitems)
+
+@events.route('/item/update/<item_id>', methods=['GET', 'POST'])
+@login_required
+def updateitem(item_id):
+    item = Item.query.filter_by(id=item_id).first_or_404()
+
+
+    return render_template("events/items/edit.html", item=item)
+
+@events.route('item/subitem/update/<subitem_id>', methods=['GET', 'POST'])
+@login_required
+def updatesubitem(subitem_id):
+    submitem = Subitem.query.filter_by(id=subitem_id).first_or_404()
+    subitems = item.subitems
+
+    form = ClaimItemForm()
+    if request.method == "POST" and form.validate():
+
+        for subitem in subitems:
+            subitem.quantity = form.quantity.data
+            subitem.user_id = current_user.id
+
+
+        # item.quantity = form.quantity.data
+        # item.user_id = current_user.id
+
+        try:
+            db.session.commit()
+        except exc.SQLAlchemyError as e:
+            current_app.logger.error(e)
+
+        return redirect(url_for('events.claim', item_id=item.id))
+    elif request.method != "POST":
+        form.quantity.data = item.quantity
+
+    return render_template("events/claim.html", item=item, form=form)
