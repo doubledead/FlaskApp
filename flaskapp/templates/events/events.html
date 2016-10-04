@@ -24,22 +24,23 @@
   <div class="row">
     <div class="col-md-12">&nbsp;</div>
   </div>
-  <div class="row">
-    <div class="col-sm-3 col-md-4"><strong>Name</strong></div>
-    <div class="col-sm-3 col-md-3"><strong>Start</strong></div>
-    <div class="col-sm-3 col-md-3"><strong>End</strong></div>
-    <div class="col-sm-3 col-md-1">&nbsp;</div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">&nbsp;</div>
-  </div>
-    {% for data in events %}
+  {% if events_count > 0 %}
+    <div class="row">
+      <div class="col-sm-3 col-md-4"><strong>Name</strong></div>
+      <div class="col-sm-3 col-md-3"><strong>Start</strong></div>
+      <div class="col-sm-3 col-md-3"><strong>End</strong></div>
+      <div class="col-sm-3 col-md-1">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    {% for event in events %}
       <div class="row">
-        <div class="col-sm-3 col-md-4">{{ data.name }}</div>
-        <div class="col-sm-3 col-md-3">{{ data.start_date }}</div>
-        <div class="col-sm-3 col-md-3">{{ data.end_date }}</div>
+        <div class="col-sm-3 col-md-4">{{ event.name }}</div>
+        <div class="col-sm-3 col-md-3">{{ event.start_date.strftime('%m-%d-%Y') }}</div>
+        <div class="col-sm-3 col-md-3">{{ event.end_date.strftime('%m-%d-%Y') }}</div>
         <div class="col-sm-3 col-md-1">
-          <a href="{{ url_for('events.show', event_id=data.id) }}" class="btn btn-xs btn-info">
+          <a href="{{ url_for('events.show', event_id=event.id) }}" class="btn btn-xs btn-info">
             View
           </a>
         </div>
@@ -48,6 +49,13 @@
         <div class="col-md-12">&nbsp;</div>
       </div>
     {% endfor %}
+  {% else %}
+    <div class="row">
+      <div class="col-md-12">
+        You have no active events.
+      </div>
+    </div>
+  {% endif %}
   <div class="row">
     <div class="col-md-12">&nbsp;</div>
   </div>
@@ -59,22 +67,23 @@
   <div class="row">
     <div class="col-md-12">&nbsp;</div>
   </div>
-  <div class="row">
-    <div class="col-sm-3 col-md-4"><strong>Name</strong></div>
-    <div class="col-sm-3 col-md-3"><strong>Start</strong></div>
-    <div class="col-sm-3 col-md-3"><strong>End</strong></div>
-    <div class="col-sm-3 col-md-1">&nbsp;</div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">&nbsp;</div>
-  </div>
-    {% for data in events_invited %}
+  {% if events_invited_count > 0 %}
+    <div class="row">
+      <div class="col-sm-3 col-md-4"><strong>Name</strong></div>
+      <div class="col-sm-3 col-md-3"><strong>Start</strong></div>
+      <div class="col-sm-3 col-md-3"><strong>End</strong></div>
+      <div class="col-sm-3 col-md-1">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    {% for event in events_invited %}
       <div class="row">
-        <div class="col-sm-3 col-md-4">{{ data.name }}</div>
-        <div class="col-sm-3 col-md-3">{{ data.start_date }}</div>
-        <div class="col-sm-3 col-md-3">{{ data.end_date }}</div>
+        <div class="col-sm-3 col-md-4">{{ event.name }}</div>
+        <div class="col-sm-3 col-md-3">{{ event.start_date.strftime('%m-%d-%Y') }}</div>
+        <div class="col-sm-3 col-md-3">{{ event.end_date.strftime('%m-%d-%Y') }}</div>
         <div class="col-sm-3 col-md-1">
-          <a href="{{ url_for('events.guestview', event_id=data.id) }}" class="btn btn-xs btn-info">
+          <a href="{{ url_for('events.guestview', event_id=event.id) }}" class="btn btn-xs btn-info">
             View
           </a>
         </div>
@@ -83,4 +92,17 @@
         <div class="col-md-12">&nbsp;</div>
       </div>
     {% endfor %}
+  {% else %}
+    <div class="row">
+      <div class="col-md-12">
+        You have not been invited to any events.
+      </div>
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
 {% endblock %}

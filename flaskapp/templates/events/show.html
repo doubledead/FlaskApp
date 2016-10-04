@@ -16,9 +16,9 @@
     <div class="col-sm-3 col-md-3">{{ event.name }}</div>
     <div class="col-sm-3 col-md-2">{{ event.start_date.strftime('%m-%d-%Y') }}</div>
     <div class="col-sm-3 col-md-2">{{ event.end_date.strftime('%m-%d-%Y') }}</div>
-    <div class="col-sm-3 col-md-1">
+    <div class="col-sm-3 col-md-2">
       <a href="{{ url_for('events.update', event_id=event.id) }}" class="btn btn-xs btn-info">
-        Edit
+        Edit Details
       </a>
     </div>
     <div class="col-sm-3 col-md-1">&nbsp;</div>

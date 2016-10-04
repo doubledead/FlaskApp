@@ -15,13 +15,17 @@ def index():
     user_id = current_user.id
     events = Event.query.filter_by(user_id=user_id)
 
+    events_count = events.count()
+
 
     events_invited = Event.query.filter(Event.guests.any(Guest.email.contains(current_user.email)))
+    events_invited_count = events_invited.count()
     # events_invited = Guest.query.filter(Guest.events.any(email=current_user.email)).all()
 
     # events_invited = Event.query.filter_by(id=user_id).first().guests
 
-    return render_template('events/events.html', events=events, events_invited=events_invited)
+    return render_template('events/events.html', events=events, events_count=events_count,
+                           events_invited=events_invited, events_invited_count=events_invited_count)
 
 @events.route('/')
 @login_required

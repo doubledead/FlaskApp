@@ -38,7 +38,7 @@ class NewEventForm(Form):
     end_date = DateField('End Date', [validators.DataRequired()], format='%m-%d-%Y')
 
 class UpdateEventForm(Form):
-    name = StringField('name', [
+    name = StringField('Name', [
         validators.DataRequired(),
         validators.Length(min=1, max=30)
     ])
