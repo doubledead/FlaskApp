@@ -27,29 +27,59 @@
     <div class="col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-md-12"><strong>Guests</strong></div>
+    <div class="col-md-12"><h4><strong>Guests</strong></h4></div>
   </div>
   {% for g in guests %}
     <div class="row">
       <div class="col-sm-5 col-md-12">{{ g.email }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
     </div>
   {% endfor %}
   <div class="row">
     <div class="col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-md-12"><strong>Items</strong></div>
+    <div class="col-md-12"><h4><strong>Items</strong></h4></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
   </div>
   {% for item in items %}
     <div class="row">
       <div class="col-sm-5 col-md-3">Name: {{ item.name }}</div>
       <div class="col-sm-5 col-md-2">Quantity: {{ item.quantity }}</div>
+      <div class="col-sm-5 col-md-2">Quantity: {{ item.quantity_claimed }}</div>
       <div class="col-sm-3 col-md-1">
         <a href="{{ url_for('events.showitem', item_id=item.id) }}" class="btn btn-xs btn-info">
           View
         </a>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12"><strong>Claimed Amount</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
+    {% for subitem in item.subitems %}
+      <div class="row">
+        <div class="col-sm-5 col-md-2">User: {{ subitem.user_id }}</div>
+        <div class="col-sm-5 col-md-2">Quantity: {{ subitem.quantity }}</div>
+        <div class="col-sm-3 col-md-1">
+          <a href="#" class="btn btn-xs btn-info">
+            Edit
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+      </div>
+    {% endfor %}
     <div class="row">
       <div class="col-md-12">&nbsp;</div>
     </div>

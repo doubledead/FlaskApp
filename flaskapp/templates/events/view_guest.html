@@ -1,0 +1,56 @@
+{% extends 'layouts/boilerplate.html' %}
+{% block container %}
+  <div class="jumbotron">
+    <h4>Event {{ event.name }}</h4>
+  </div>
+  <div class="row">
+    <div class="col-sm-3 col-md-3">Name</div>
+    <div class="col-sm-3 col-md-2">Start Date</div>
+    <div class="col-sm-9 col-md-2">End Date</div>
+    <div class="col-sm-3 col-md-1">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3 col-md-3">{{ event.name }}</div>
+    <div class="col-sm-3 col-md-2">{{ event.start_date.strftime('%m-%d-%Y') }}</div>
+    <div class="col-sm-3 col-md-2">{{ event.end_date.strftime('%m-%d-%Y') }}</div>
+    <div class="col-sm-3 col-md-1">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12"><strong>Guests</strong></div>
+  </div>
+    {% for g in guests %}
+      <div class="row">
+        <div class="col-sm-5 col-md-12">{{ g.email }}</div>
+      </div>
+    {% endfor %}
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12"><strong>Items</strong></div>
+  </div>
+    {% for item in items %}
+      <div class="row">
+        <div class="col-sm-5 col-md-3">Name: {{ item.name }}</div>
+        <div class="col-sm-5 col-md-2">Quantity: {{ item.quantity }}</div>
+        <div class="col-sm-3 col-md-1">
+          <a href="{{ url_for('events.showitem', item_id=item.id) }}" class="btn btn-xs btn-info">
+            View
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+      </div>
+    {% endfor %}
+  <div class="row">
+    <div class="col-md-12">&nbsp;</div>
+  </div>
+
+{% endblock %}

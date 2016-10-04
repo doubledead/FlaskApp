@@ -73,7 +73,18 @@ def show(event_id):
 
     return render_template("events/show.html", event=event, guests=guests, items=items)
 
-@events.route('/edit/<event_id>', methods=['GET', 'POST'])
+@events.route('/guest/<event_id>', methods=['GET'])
+@login_required
+def guestview(event_id):
+    event = Event.query.filter_by(id=event_id).first_or_404()
+
+    guests = event.guests
+
+    items = event.items
+
+    return render_template("events/view_guest.html", event=event, guests=guests, items=items)
+
+@events.route('/update/<event_id>', methods=['GET', 'POST'])
 @login_required
 def update(event_id):
     event = Event.query.filter_by(id=event_id).first_or_404()
@@ -81,16 +92,16 @@ def update(event_id):
     user_id = current_user.id
     form = UpdateEventForm()
     if request.method == "POST" and form.validate():
-        event.title = form.title.data
         event.address = form.address.data
         event.city = form.city.data
-        event.state = form.state.data
-        event.zip_code = form.zip_code.data
         event.country = form.country.data
-        event.start_date = form.start_date.data
         event.end_date = form.end_date.data
         event.last_edit_date = datetime.utcnow()
+        event.name = form.name.data
+        event.start_date = form.start_date.data
+        event.state = form.state.data
         event.user_id = user_id
+        event.zip_code = form.zip_code.data
 
         try:
             db.session.commit()
@@ -99,16 +110,16 @@ def update(event_id):
 
         return redirect(url_for('events.show', event_id=event.id))
     elif request.method != "POST":
-        form.title.data = event.title
         form.address.data = event.address
         form.city.data = event.city
+        form.country.data = event.country
+        form.end_date.data = event.end_date
+        form.name.data = event.name
+        form.start_date.data = event.start_date
         form.state.data = event.state
         form.zip_code.data = event.zip_code
-        form.country.data = event.country
-        form.start_date.data = event.start_date
-        form.end_date.data = event.end_date
 
-    return render_template("events/edit.html", event=event, form=form)
+    return render_template("events/update.html", event=event, form=form)
 
 @events.route('/delete/<event_id>', methods=['GET', 'POST'])
 @login_required
@@ -168,7 +179,9 @@ def create():
             item = Item(category=item_category,name=item_name, quantity=item_quantity, quantity_claimed=0)
 
             subitem = Subitem(quantity=3,user_id=current_user.id)
+            subitem2 = Subitem(quantity=6,user_id=current_user.id)
             item.subitems.append(subitem)
+            item.subitems.append(subitem2)
 
             event.items.append(item)
 

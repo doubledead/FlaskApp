@@ -18,7 +18,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <h4>Your Events</h4>
+      <h4><strong>Your Events</strong></h4>
     </div>
   </div>
   <div class="row">
@@ -53,7 +53,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <h4>Invited To</h4>
+      <h4><strong>Invited To</strong></h4>
     </div>
   </div>
   <div class="row">
@@ -74,7 +74,7 @@
         <div class="col-sm-3 col-md-3">{{ data.start_date }}</div>
         <div class="col-sm-3 col-md-3">{{ data.end_date }}</div>
         <div class="col-sm-3 col-md-1">
-          <a href="{{ url_for('events.show', event_id=data.id) }}" class="btn btn-xs btn-info">
+          <a href="{{ url_for('events.guestview', event_id=data.id) }}" class="btn btn-xs btn-info">
             View
           </a>
         </div>
