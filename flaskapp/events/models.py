@@ -72,6 +72,7 @@ class Event(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     address = db.Column(db.String(225))
+    address_line_two = db.Column(db.String(225))
     city = db.Column(db.String(225))
     create_date = db.Column(db.DateTime())
     country = db.Column(db.String(225))
@@ -102,10 +103,11 @@ class Event(db.Model):
     items = db.relationship('Item', secondary=events_items,
                             backref=db.backref('events', lazy='joined'))
 
-    def __init__(self, address, category, city, country,
+    def __init__(self, address, address_line_two, category, city, country,
                  end_date, last_edit_date, name, start_date, state,
                  status, user_id, zip_code, create_date=None):
         self.address = address
+        self.address_line_two = address_line_two
         self.category = category
         self.city = city
         self.country = country

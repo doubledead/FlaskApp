@@ -83,7 +83,7 @@
         <div class="col-sm-3 col-md-3">{{ event.start_date.strftime('%m-%d-%Y') }}</div>
         <div class="col-sm-3 col-md-3">{{ event.end_date.strftime('%m-%d-%Y') }}</div>
         <div class="col-sm-3 col-md-1">
-          <a href="{{ url_for('events.guestview', event_id=event.id) }}" class="btn btn-xs btn-info">
+          <a href="{{ url_for('events.show', event_id=event.id) }}" class="btn btn-xs btn-info">
             View
           </a>
         </div>

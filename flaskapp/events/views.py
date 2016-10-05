@@ -69,13 +69,14 @@ def create_event():
 @events.route('/<event_id>', methods=['GET'])
 @login_required
 def show(event_id):
+    user_id = current_user.id
     event = Event.query.filter_by(id=event_id).first_or_404()
 
     guests = event.guests
 
     items = event.items
 
-    return render_template("events/show.html", event=event, guests=guests, items=items)
+    return render_template("events/show.html", event=event, guests=guests, items=items, user_id=user_id)
 
 @events.route('/guest/<event_id>', methods=['GET'])
 @login_required
@@ -149,6 +150,7 @@ def create():
         data = request.get_json()
 
         address = data["address"]
+        address_line_two = data["address_line_two"]
         category = Category(name='Test', status_code=100)
         city = data["city"]
         country = data["country"]
@@ -164,7 +166,7 @@ def create():
         status = Status(name='active', status_code=100)
         user_id = current_user.id
         zip_code = data["zip_code"]
-        event = Event(address=address, category=category, city=city,
+        event = Event(address=address, address_line_two=address_line_two, category=category, city=city,
                       country=country,end_date=end_date, last_edit_date=last_edit_date,
                       name=name, start_date=start_date, state=state, status=status,
                       user_id=user_id, zip_code=zip_code)
