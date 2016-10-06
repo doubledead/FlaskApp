@@ -1,0 +1,57 @@
+<!Doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+    <meta name="description" content="Flask App">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/jquery.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/vendor/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  </head>
+  <body>
+    {% include "layouts/_menu.html" %}
+    <div class="container">
+        {% block container %}{% endblock %}
+    </div>
+    <footer class="footer"></footer>
+
+    <script>
+      $(document).ready(function(){
+
+        var
+          deferred = $.Deferred(),
+          url = location.pathname;
+
+        var data = {
+          testId: 1
+        }
+
+        console.log(url);
+
+        $.ajax({
+          cache: false,
+          contentType: 'application/json; charset=utf-8',
+          accepts: 'application/json',
+          url: '/events/gettest',
+          data: JSON.stringify(data),
+          method: 'POST'
+        }).success(function(response) {
+          deferred.resolve(response);
+          console.log(response);
+          console.log("Success");
+
+        }).fail(function(response) {
+          console.log(response);
+          console.log("Fail");
+        }).done(function(response) {
+          console.log("Done");
+        });
+      });
+    </script>
+  </body>
+</html>

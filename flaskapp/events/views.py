@@ -69,25 +69,15 @@ def create_event():
 @events.route('/<event_id>', methods=['GET'])
 @login_required
 def show(event_id):
-    user_id = current_user.id
-    event = Event.query.filter_by(id=event_id).first_or_404()
+    if request.method =="GET":
+        user_id = current_user.id
+        event = Event.query.filter_by(id=event_id).first_or_404()
 
-    guests = event.guests
+        guests = event.guests
 
-    items = event.items
+        items = event.items
 
-    return render_template("events/show.html", event=event, guests=guests, items=items, user_id=user_id)
-
-@events.route('/guest/<event_id>', methods=['GET'])
-@login_required
-def guestview(event_id):
-    event = Event.query.filter_by(id=event_id).first_or_404()
-
-    guests = event.guests
-
-    items = event.items
-
-    return render_template("events/view_guest.html", event=event, guests=guests, items=items)
+        return render_template("events/show.html", event=event, guests=guests, items=items, user_id=user_id)
 
 @events.route('/update/<event_id>', methods=['GET', 'POST'])
 @login_required
@@ -141,6 +131,18 @@ def delete(event_id):
         return redirect(url_for('events.display_events'))
 
     return redirect(url_for('events.display_events'))
+
+@events.route('/gettest', methods=['GET', 'POST'])
+@login_required
+def gettest():
+    if request.method == "POST":
+        data = request.get_json()
+
+        testId = data["testId"]
+
+        event = Event.query.filter_by(id=testId).first_or_404()
+
+        return json.dumps(event.name)
 
 # Endpoint for JSMVCApp to hit
 @events.route('/createjs', methods=['POST'])
