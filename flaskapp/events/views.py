@@ -6,6 +6,7 @@ from datetime import datetime
 from .forms import NewEventForm, UpdateEventForm, UpdateItemForm, UpdateSubItemForm
 from .models import Category, Event, Guest, Item, Status, Subitem
 from sqlalchemy import exc
+from ..helpers import JsonSerializer
 
 events = Blueprint('events', __name__, template_folder='templates')
 
@@ -142,7 +143,11 @@ def gettest():
 
         event = Event.query.filter_by(id=testId).first_or_404()
 
-        return json.dumps(event.name)
+        # guests = MyEncoder().encode(event)
+        guests = json.load(event.guests)
+
+        # return json.dumps(event.name)
+        return json.dumps(guests)
 
 # Endpoint for JSMVCApp to hit
 @events.route('/createjs', methods=['POST'])
