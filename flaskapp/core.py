@@ -5,9 +5,12 @@
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security
+from flask_marshmallow import Marshmallow
 
 #: Flask-SQLAlchemy extension instance
 db = SQLAlchemy()
+
+ma = Marshmallow()
 
 #: Flask-Mail extension instance
 mail = Mail()

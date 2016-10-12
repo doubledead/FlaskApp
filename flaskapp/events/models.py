@@ -5,7 +5,7 @@
     Event models
 """
 
-from ..core import db
+from ..core import db, ma
 from datetime import datetime
 
 
@@ -33,6 +33,11 @@ class Guest(db.Model):
     def __init__(self, email):
         self.email = email
 
+class GuestSchema(ma.ModelSchema):
+    class Meta:
+        model = Guest
+
+
 class Subitem(db.Model):
     __tablename__ = 'subitems'
 
@@ -44,6 +49,9 @@ class Subitem(db.Model):
         self.quantity = quantity
         self.user_id = user_id
 
+class SubitemSchema(ma.ModelSchema):
+    class Meta:
+        model = Subitem
 
 class Item(db.Model):
     __tablename__ = 'items'
@@ -67,6 +75,10 @@ class Item(db.Model):
     def __repr__(self):
         return 'Item %r>' % (self.name)
 
+class ItemSchema(ma.ModelSchema):
+    class Meta:
+        model = Item
+
 class Event(db.Model):
     __tablename__ = 'events'
 
@@ -86,9 +98,10 @@ class Event(db.Model):
 
     # Status and Category - Simple Relationship
     # http://flask-sqlalchemy.pocoo.org/2.1/quickstart/
-    status_id = db.Column(db.ForeignKey('status.id'))
-    status = db.relationship('Status',
-                             backref=db.backref('events', lazy='dynamic'))
+    # status_id = db.Column(db.ForeignKey('status.id'))
+    # status = db.relationship('Status',
+    #                          backref=db.backref('events', lazy='dynamic'))
+    status_id = db.Column(db.Integer())
 
     category_id = db.Column(db.ForeignKey('category.id'))
     category = db.relationship('Category',
@@ -105,7 +118,7 @@ class Event(db.Model):
 
     def __init__(self, address, address_line_two, category, city, country,
                  end_date, last_edit_date, name, start_date, state,
-                 status, user_id, zip_code, create_date=None):
+                 status_id, user_id, zip_code, create_date=None):
         self.address = address
         self.address_line_two = address_line_two
         self.category = category
@@ -119,12 +132,16 @@ class Event(db.Model):
         self.name = name
         self.start_date = start_date
         self.state = state
-        self.status = status
+        self.status_id = status_id
         self.user_id = user_id
         self.zip_code = zip_code
 
     def __repr__(self):
         return '<Event %r>' % (self.name)
+
+class EventSchema(ma.ModelSchema):
+    class Meta:
+        model = Event
 
 class Category(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -138,14 +155,18 @@ class Category(db.Model):
         def __repr__(self):
             return 'Category %r>' % self.name
 
-class Status(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(225))
-    status_code = db.Column(db.Integer())
+class CategorySchema(ma.ModelSchema):
+    class Meta:
+        model = Category
 
-    def __init__(self, name, status_code):
-        self.name = name
-        self.status_code = status_code
-
-        def __repr__(self):
-            return 'Status %r>' % self.name
+# class Status(db.Model):
+#     id = db.Column(db.Integer(), primary_key=True)
+#     name = db.Column(db.String(225))
+#     status_code = db.Column(db.Integer())
+#
+#     def __init__(self, name, status_code):
+#         self.name = name
+#         self.status_code = status_code
+#
+#         def __repr__(self):
+#             return 'Status %r>' % self.name

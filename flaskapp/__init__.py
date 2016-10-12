@@ -6,7 +6,7 @@ from flask_security import SQLAlchemyUserDatastore, current_user
 from flaskapp.utils import get_instance_folder_path
 from flaskapp.cache import cache
 
-from .core import db, mail, security
+from .core import db, ma, mail, security
 from .models import User, Role
 
 from .users.forms import ExtendedRegisterForm, ExtendedConfirmRegisterForm
@@ -22,6 +22,7 @@ app.config.from_pyfile('config.cfg', silent=True)
 cache.init_app(app)
 
 db.init_app(app)
+ma.init_app(app)
 mail.init_app(app)
 security.init_app(app, SQLAlchemyUserDatastore(db, User, Role),
                   register_form=ExtendedRegisterForm,
