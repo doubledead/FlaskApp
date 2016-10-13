@@ -102,7 +102,7 @@ def delete(entry_id):
 @entries.route('/createjs', methods=['GET', 'POST'])
 @login_required
 def create():
-    # data = request.json
+    # http://flask.pocoo.org/docs/0.11/api/#flask.Request.get_json
     data = request.get_json()
 
     title = data['title']
@@ -129,6 +129,7 @@ def create():
     #     tag = Tag(category=c,description=d)
     #     entry.tags.append(tag)
 
+    # tags_data is JSON format
     for ttt in tags_data:
         cat = ttt['category']
         des = ttt['description']

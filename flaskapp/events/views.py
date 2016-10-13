@@ -4,7 +4,7 @@ from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import NewEventForm, UpdateEventForm, UpdateItemForm, UpdateSubItemForm
-from .models import Category, Event, Guest, Item, Status, Subitem
+from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem, subitem_schema
 from sqlalchemy import exc
 from ..helpers import JsonSerializer
 
@@ -52,10 +52,12 @@ def create_event():
         last_edit_date = datetime.utcnow()
         name = form.name.data
         user_id = current_user.id
-        category = Category(name='event', status_code=100)
-        status = Status(name='active', status_code=100)
+        # category = Category(name='event', status_code=100)
+        # status = Status(name='active', status_code=100)
+        category_id = 100
+        status_id = 100
         event = Event(address, city, state, zip_code, country, start_date,
-                      end_date, last_edit_date, name, user_id, status, category)
+                      end_date, last_edit_date, name, user_id, status_id, category_id)
 
         try:
             db.session.add(event)
@@ -142,12 +144,20 @@ def gettest():
         testId = data["testId"]
 
         event = Event.query.filter_by(id=testId).first_or_404()
+        guests = event.guests
+        # dict_data = event.__dict__
+        print(guests)
 
-        # guests = MyEncoder().encode(event)
-        guests = json.load(event.guests)
+        # for e in dict_data:
+        #     # ee = e.items()
+        #     print(e)
+
+        # Serialize SQLAlchemy object to JSON
+        dump_data = event_schema.dump(event).data
+        # dump_data = guest_schema.dump(event.guests).data
 
         # return json.dumps(event.name)
-        return json.dumps(guests)
+        return json.dumps(dump_data)
 
 # Endpoint for JSMVCApp to hit
 @events.route('/createjs', methods=['POST'])
@@ -158,7 +168,8 @@ def create():
 
         address = data["address"]
         address_line_two = data["address_line_two"]
-        category = Category(name='Test', status_code=100)
+        # category = Category(name='Test', status_code=100)
+        category_id = 100
         city = data["city"]
         country = data["country"]
         # end_date = data["end_date"]
@@ -170,12 +181,13 @@ def create():
         # start_date = data["start_date"]
         start_date = datetime.utcnow()
         state = data["state"]
-        status = Status(name='active', status_code=100)
+        # status = Status(name='active', status_code=100)
+        status_id = 100
         user_id = current_user.id
         zip_code = data["zip_code"]
-        event = Event(address=address, address_line_two=address_line_two, category=category, city=city,
+        event = Event(address=address, address_line_two=address_line_two, category_id=category_id, city=city,
                       country=country,end_date=end_date, last_edit_date=last_edit_date,
-                      name=name, start_date=start_date, state=state, status=status,
+                      name=name, start_date=start_date, state=state, status_id=status_id,
                       user_id=user_id, zip_code=zip_code)
 
         for g in guests_data:

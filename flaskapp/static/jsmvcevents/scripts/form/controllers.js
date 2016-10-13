@@ -117,7 +117,7 @@ angular.module('form.controllers', [])
 
     var item = {
       itemId: $scope.itemId,
-      category: 'Item',
+      category: 100,
       name: itemName,
       quantity: itemQuantity
     };

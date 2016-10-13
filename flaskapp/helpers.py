@@ -7,13 +7,6 @@
 
 from flask.json import JSONEncoder as BaseJSONEncoder
 
-# class MyEncoder(JSONEncoder):
-#     def default(self, obj):
-#         if isinstance(obj, JSONEncoder):
-#             return obj.to_json()
-#
-#         return JSONEncoder.default(self, obj)
-
 class JSONEncoder(BaseJSONEncoder):
     """Custom :class:`JSONEncoder` which respects objects that include the
     :class:`JsonSerializer` mixin.

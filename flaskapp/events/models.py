@@ -37,6 +37,7 @@ class GuestSchema(ma.ModelSchema):
     class Meta:
         model = Guest
 
+guest_schema = GuestSchema()
 
 class Subitem(db.Model):
     __tablename__ = 'subitems'
@@ -52,6 +53,8 @@ class Subitem(db.Model):
 class SubitemSchema(ma.ModelSchema):
     class Meta:
         model = Subitem
+
+subitem_schema = SubitemSchema()
 
 class Item(db.Model):
     __tablename__ = 'items'
@@ -79,6 +82,8 @@ class ItemSchema(ma.ModelSchema):
     class Meta:
         model = Item
 
+item_schema = ItemSchema()
+
 class Event(db.Model):
     __tablename__ = 'events'
 
@@ -103,9 +108,10 @@ class Event(db.Model):
     #                          backref=db.backref('events', lazy='dynamic'))
     status_id = db.Column(db.Integer())
 
-    category_id = db.Column(db.ForeignKey('category.id'))
-    category = db.relationship('Category',
-                               backref=db.backref('events', lazy='dynamic'))
+    # category_id = db.Column(db.ForeignKey('category.id'))
+    # category = db.relationship('Category',
+    #                            backref=db.backref('events', lazy='dynamic'))
+    category_id = db.Column(db.Integer())
 
     # Many-to-many
     # https://github.com/mattupstate/overholt/blob/master/overholt/stores/models.py
@@ -116,12 +122,12 @@ class Event(db.Model):
     items = db.relationship('Item', secondary=events_items,
                             backref=db.backref('events', lazy='joined'))
 
-    def __init__(self, address, address_line_two, category, city, country,
+    def __init__(self, address, address_line_two, category_id, city, country,
                  end_date, last_edit_date, name, start_date, state,
                  status_id, user_id, zip_code, create_date=None):
         self.address = address
         self.address_line_two = address_line_two
-        self.category = category
+        self.category_id = category_id
         self.city = city
         self.country = country
         if create_date is None:
@@ -143,21 +149,19 @@ class EventSchema(ma.ModelSchema):
     class Meta:
         model = Event
 
-class Category(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(225))
-    status_code = db.Column(db.Integer())
+event_schema = EventSchema()
 
-    def __init__(self, name, status_code):
-        self.name = name
-        self.status_code = status_code
-
-        def __repr__(self):
-            return 'Category %r>' % self.name
-
-class CategorySchema(ma.ModelSchema):
-    class Meta:
-        model = Category
+# class Category(db.Model):
+#     id = db.Column(db.Integer(), primary_key=True)
+#     name = db.Column(db.String(225))
+#     status_code = db.Column(db.Integer())
+#
+#     def __init__(self, name, status_code):
+#         self.name = name
+#         self.status_code = status_code
+#
+#         def __repr__(self):
+#             return 'Category %r>' % self.name
 
 # class Status(db.Model):
 #     id = db.Column(db.Integer(), primary_key=True)

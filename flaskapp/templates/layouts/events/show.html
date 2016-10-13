@@ -31,8 +31,6 @@
           testId: 1
         }
 
-        console.log(url);
-
         $.ajax({
           cache: false,
           contentType: 'application/json; charset=utf-8',
@@ -49,7 +47,7 @@
           console.log(response);
           console.log("Fail");
         }).done(function(response) {
-          console.log("Done");
+
         });
       });
     </script>
