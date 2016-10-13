@@ -7,6 +7,7 @@
 
 from ..core import db, ma
 from datetime import datetime
+from marshmallow import fields
 
 
 events_guests = db.Table(
@@ -37,7 +38,7 @@ class GuestSchema(ma.ModelSchema):
     class Meta:
         model = Guest
 
-guest_schema = GuestSchema()
+guest_schema = GuestSchema(many=True)
 
 class Subitem(db.Model):
     __tablename__ = 'subitems'
@@ -79,10 +80,11 @@ class Item(db.Model):
         return 'Item %r>' % (self.name)
 
 class ItemSchema(ma.ModelSchema):
+    # subitems = fields.Nested('SubitemSchema', default=None, many=True)
     class Meta:
         model = Item
 
-item_schema = ItemSchema()
+item_schema = ItemSchema(many=True)
 
 class Event(db.Model):
     __tablename__ = 'events'
@@ -146,6 +148,7 @@ class Event(db.Model):
         return '<Event %r>' % (self.name)
 
 class EventSchema(ma.ModelSchema):
+    # guests = fields.Nested('GuestSchema', default=None, many=True)
     class Meta:
         model = Event
 

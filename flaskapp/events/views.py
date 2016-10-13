@@ -141,20 +141,16 @@ def gettest():
     if request.method == "POST":
         data = request.get_json()
 
-        testId = data["testId"]
+        testid = data["testId"]
 
-        event = Event.query.filter_by(id=testId).first_or_404()
+        event = Event.query.filter_by(id=testid).first_or_404()
         guests = event.guests
-        # dict_data = event.__dict__
-        print(guests)
-
-        # for e in dict_data:
-        #     # ee = e.items()
-        #     print(e)
+        # print(guests)
 
         # Serialize SQLAlchemy object to JSON
-        dump_data = event_schema.dump(event).data
+        # dump_data = event_schema.dump(event).data
         # dump_data = guest_schema.dump(event.guests).data
+        dump_data = item_schema.dump(event.items).data
 
         # return json.dumps(event.name)
         return json.dumps(dump_data)
