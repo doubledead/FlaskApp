@@ -36,7 +36,8 @@ def display_events():
 
     return render_template("events/events.html", events=events)
 
-@events.route('/create', methods=['GET', 'POST'])
+# Flask WTForms Create endpoint
+@events.route('/create_event', methods=['GET', 'POST'])
 @login_required
 def create_event():
     form = NewEventForm(request.form)
@@ -67,7 +68,7 @@ def create_event():
 
         return redirect(url_for('events.display_events'))
 
-    return render_template("events/create.html", form=form)
+    return render_template("events/create_event.html", form=form)
 
 @events.route('/<event_id>', methods=['GET'])
 @login_required
@@ -138,7 +139,23 @@ def delete(event_id):
 @events.route('/gettest', methods=['GET', 'POST'])
 @login_required
 def gettest():
-    if request.method == "POST":
+    if request.method == "GET":
+        data = request.get_json()
+
+        testid = data["testId"]
+
+        event = Event.query.filter_by(id=testid).first_or_404()
+        guests = event.guests
+        # print(guests)
+
+        # Serialize SQLAlchemy object to JSON
+        # dump_data = event_schema.dump(event).data
+        # dump_data = guest_schema.dump(event.guests).data
+        dump_data = item_schema.dump(event.items).data
+
+        # return json.dumps(event.name)
+        return json.dumps(dump_data)
+    elif request.method == "POST":
         data = request.get_json()
 
         testid = data["testId"]
@@ -155,8 +172,8 @@ def gettest():
         # return json.dumps(event.name)
         return json.dumps(dump_data)
 
-# Endpoint for JSMVCApp to hit
-@events.route('/createjs', methods=['POST'])
+# JSMVCApp form Create endpoint
+@events.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
     if request.method == "POST":
@@ -213,20 +230,25 @@ def create():
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
 
-            return redirect(url_for('events.create_event'))
+            return redirect(url_for('events.create'))
             return json.dumps({'status':'Error'})
 
-    return redirect(url_for('events.display_events'))
+        return redirect(url_for('events.display_events'))
+
+    # return redirect(url_for('events.display_events'))
+    return render_template("events/create.html")
 
 #################### Items ################
 @events.route('/item/<item_id>', methods=['GET'])
 @login_required
 def showitem(item_id):
-    item = Item.query.filter_by(id=item_id).first_or_404()
+    if request.method == "GET":
+        user_id = current_user.id
+        item = Item.query.filter_by(id=item_id).first_or_404()
 
-    subitems = item.subitems
+        subitems = item.subitems
 
-    return render_template("events/items/show.html", item=item, subitems=subitems)
+        return render_template("events/items/show.html", item=item, subitems=subitems, user_id=user_id)
 
 @events.route('/item/update/<item_id>', methods=['GET', 'POST'])
 @login_required

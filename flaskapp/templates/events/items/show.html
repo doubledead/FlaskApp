@@ -4,32 +4,36 @@
     <h4>Item {{ item.name }}</h4>
   </div>
   <div class="row">
-    <div class="col-sm-3 col-md-3">Name</div>
-    <div class="col-sm-9 col-md-2">Category</div>
-    <div class="col-sm-3 col-md-2">Quantity</div>
-    <div class="col-sm-3 col-md-1">&nbsp;</div>
+    <div class="col-sm-2 col-md-3">Name</div>
+    <div class="col-sm-2 col-md-2">Category</div>
+    <div class="col-sm-1 col-md-2">Quantity</div>
+    <div class="col-sm-1 col-md-2">Claimed</div>
+    <div class="col-sm-1 col-md-1">&nbsp;</div>
+    <div class="col-sm-3 col-md-2">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-md-12">&nbsp;</div>
+    <div class="col-md-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-sm-3 col-md-3">{{ item.name }}</div>
-    <div class="col-sm-3 col-md-2">{{ item.category }}</div>
-    <div class="col-sm-3 col-md-2">{{ item.quantity }}</div>
-    <div class="col-sm-3 col-md-1">
+    <div class="col-sm-2 col-md-3">{{ item.name }}</div>
+    <div class="col-sm-2 col-md-2">{{ item.category }}</div>
+    <div class="col-sm-1 col-md-2">{{ item.quantity }}</div>
+    <div class="col-sm-1 col-md-2">{{ item.quantity_claimed }}</div>
+    <div class="col-sm-1 col-md-1">
       <a href="{{ url_for('events.updateitem', item_id=item.id) }}" class="btn btn-xs btn-info">
         Edit
       </a>
     </div>
-    <div class="col-sm-3 col-md-1">&nbsp;</div>
+    <div class="col-sm-3 col-md-2">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-md-12">&nbsp;</div>
+    <div class="col-md-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-md-12"><strong>Amount Claimed</strong></div>
+    <div class="col-md-12"><strong>You Claimed Amount</strong></div>
   </div>
-    {% for subitem in subitems %}
+  {% for subitem in subitems %}
+    {% if subitem.user_id == user_id %}
       <div class="row">
         <div class="col-sm-5 col-md-2">User: {{ subitem.user_id }}</div>
         <div class="col-sm-5 col-md-2">Quantity: {{ subitem.quantity }}</div>
@@ -39,6 +43,10 @@
           </a>
         </div>
       </div>
-    {% endfor %}
+      <div class="row">
+        <div class="col-sm-12 col-md-12">&nbsp;</div>
+      </div>
+    {% endif %}
+  {% endfor %}
 
 {% endblock %}
