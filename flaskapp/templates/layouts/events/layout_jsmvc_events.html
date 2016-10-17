@@ -40,9 +40,12 @@
   <!-- AngularJS Project files -->
   <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/templates.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/main.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/form/form.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/form/controllers.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/form/directives.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/create/create.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/create/controllers.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/create/directives.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/events/events.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/events/controllers.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jsmvcevents/scripts/events/directives.js') }}"></script>
 
 
   <script>
@@ -50,6 +53,35 @@
 
       $('.datepicker').datepicker({
         format: 'mm-dd-yyyy'
+      });
+    });
+  </script>
+
+  <script>
+    $(document).ready(function(){
+
+      var
+        deferred = $.Deferred(),
+        url = location.pathname;
+
+      console.log(url);
+
+      $.ajax({
+        cache: false,
+        contentType: 'application/json; charset=utf-8',
+        accepts: 'application/json',
+        url: url,
+        method: 'POST'
+      }).success(function(response) {
+        deferred.resolve(response);
+        console.log(response);
+        console.log("Success");
+
+      }).fail(function(response) {
+        console.log(response);
+        console.log("Fail");
+      }).done(function(response) {
+
       });
     });
   </script>

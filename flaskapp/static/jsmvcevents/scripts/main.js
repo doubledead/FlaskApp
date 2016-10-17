@@ -2,6 +2,7 @@
 
 angular.module('eventsApp', [
 	'templates',
-	'eventsApp.form',
+	'eventsApp.create',
+  'eventsApp.events',
 	'ngAnimate'
 ]);

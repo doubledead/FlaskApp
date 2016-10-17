@@ -70,7 +70,7 @@ def create_event():
 
     return render_template("events/create_event.html", form=form)
 
-@events.route('/<event_id>', methods=['GET'])
+@events.route('/<event_id>', methods=['GET', 'POST'])
 @login_required
 def show(event_id):
     if request.method =="GET":
@@ -82,6 +82,18 @@ def show(event_id):
         items = event.items
 
         return render_template("events/show.html", event=event, guests=guests, items=items, user_id=user_id)
+    elif request.method == "POST":
+        # data = request.get_json()
+
+        event = Event.query.filter_by(id=event_id).first_or_404()
+
+        # Serialize SQLAlchemy object to JSON
+        # dump_data = event_schema.dump(event).data
+        # dump_data = guest_schema.dump(event.guests).data
+        dump_data = item_schema.dump(event.items).data
+
+        # return json.dumps(event.name)
+        return json.dumps(dump_data)
 
 @events.route('/update/<event_id>', methods=['GET', 'POST'])
 @login_required
@@ -145,8 +157,6 @@ def gettest():
         testid = data["testId"]
 
         event = Event.query.filter_by(id=testid).first_or_404()
-        guests = event.guests
-        # print(guests)
 
         # Serialize SQLAlchemy object to JSON
         # dump_data = event_schema.dump(event).data
@@ -161,8 +171,6 @@ def gettest():
         testid = data["testId"]
 
         event = Event.query.filter_by(id=testid).first_or_404()
-        guests = event.guests
-        # print(guests)
 
         # Serialize SQLAlchemy object to JSON
         # dump_data = event_schema.dump(event).data

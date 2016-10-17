@@ -1,5 +1,5 @@
-angular.module('form.directives', [])
-.directive('formRow', function () {
+angular.module('events.directives', [])
+.directive('itemRow', function () {
   return {
     restrict: 'E',
       template:
@@ -27,7 +27,7 @@ angular.module('form.directives', [])
 .directive('entryRow', function () {
   return {
     restrict: 'E',
-    templateUrl: 'form/row.html',
+    templateUrl: 'events/row.html',
     link: function (scope, element, attrs) {
 
     }
