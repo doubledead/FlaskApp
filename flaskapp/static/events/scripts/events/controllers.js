@@ -22,6 +22,30 @@ angular.module('events.controllers', [])
     zip_code: '',
   };
 
+  var
+    deferred = $.Deferred(),
+    url = location.pathname;
+
+  console.log(url);
+
+  $.ajax({
+    cache: false,
+    contentType: 'application/json; charset=utf-8',
+    accepts: 'application/json',
+    url: url,
+    method: 'POST'
+  }).success(function(response) {
+    deferred.resolve(response);
+    console.log(response);
+    console.log("Success");
+
+  }).fail(function(response) {
+    console.log(response);
+    console.log("Fail");
+  }).done(function(response) {
+
+  });
+
   // Form submission functions
 	$scope.submitForm = function () {
     var

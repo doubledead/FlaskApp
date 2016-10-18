@@ -11,6 +11,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/jquery.min.js') }}"></script>
     <link href="{{ url_for('static', filename='css/vendor/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/angular_form.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
   <body>
@@ -32,36 +33,46 @@
       </div>
     </footer>
 
-    <script>
-      $(document).ready(function(){
+    <!-- JS libraries -->
+    {% include "assets/_angular_vendor_js.html" %}
 
-        var
-          deferred = $.Deferred(),
-          url = location.pathname;
+    <!-- AngularJS Project files -->
+    <script type="text/javascript" src="{{ url_for('static', filename='events/scripts/templates.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='events/scripts/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='events/scripts/events/events.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='events/scripts/events/controllers.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='events/scripts/events/directives.js') }}"></script>
 
-        var data = {
-          testId: 1
-        }
-
-        $.ajax({
-          cache: false,
-          contentType: 'application/json; charset=utf-8',
-          accepts: 'application/json',
-          url: '/events/gettest',
-          data: JSON.stringify(data),
-          method: 'POST'
-        }).success(function(response) {
-          deferred.resolve(response);
-          console.log(response);
-          console.log("Success");
-
-        }).fail(function(response) {
-          console.log(response);
-          console.log("Fail");
-        }).done(function(response) {
-
-        });
-      });
-    </script>
+{#    <script>#}
+{#      $(document).ready(function(){#}
+{##}
+{#        var#}
+{#          deferred = $.Deferred(),#}
+{#          url = location.pathname;#}
+{##}
+{#        var data = {#}
+{#          testId: 1#}
+{#        }#}
+{##}
+{#        $.ajax({#}
+{#          cache: false,#}
+{#          contentType: 'application/json; charset=utf-8',#}
+{#          accepts: 'application/json',#}
+{#          url: '/events/gettest',#}
+{#          data: JSON.stringify(data),#}
+{#          method: 'POST'#}
+{#        }).success(function(response) {#}
+{#          deferred.resolve(response);#}
+{#          console.log(response);#}
+{#          console.log("Success");#}
+{##}
+{#        }).fail(function(response) {#}
+{#          console.log(response);#}
+{#          console.log("Fail");#}
+{#        }).done(function(response) {#}
+{##}
+{#        });#}
+{#      });#}
+{#    </script>#}
   </body>
 </html>

@@ -1,4 +1,4 @@
-{% extends 'layouts/events/layout_jsmvc_events.html' %}
+{% extends 'layouts/events/show.html' %}
 {% block title %}Events - {{ event.name }}{% endblock %}
 {% block container %}
   <div class="jumbotron">
@@ -126,8 +126,16 @@
       <div class="col-sm-12 col-md-12">&nbsp;</div>
     </div>
   {% endfor %}
+  {# End Items #}
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
+  {% raw %}
+    <div class="top-pad" ng-app="eventsApp" ng-controller="formCtrl">
+      <form name="eventsForm" role="form" novalidate ng-cloak>
+
+      </form>
+    </div>
+  {% endraw %}
 
 {% endblock %}
