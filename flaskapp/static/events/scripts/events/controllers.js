@@ -40,7 +40,7 @@ angular.module('events.controllers', [])
   }).then(function successCallback(response) {
     if (response && response.data) {
       console.log(response.data)
-      $scope.params = JSON.stringify(response.data);
+      $scope.params = response.data;
     } else {
       if (response && response.data) {
         console.log(response)
@@ -51,7 +51,10 @@ angular.module('events.controllers', [])
   });
 
   $scope.testParams = function () {
-    console.log($scope.params);
+    // console.log($scope.params);
+    for (var i = 0; i < $scope.params.length; i++) {
+      console.log($scope.params[i].name);
+    }
   };
 
   // Form submission functions
