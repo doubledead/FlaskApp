@@ -1,50 +1,58 @@
 angular.module('events.controllers', [])
 .controller('formCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
-  $scope.params = {};
+  $scope.params = [];
   $scope.formValid = false;
   $scope.rowId = 0;
 
-  $scope.params = {
-    address: '',
-    address_line_two: '',
-    category: 'event',
-    city: '',
-    country: '',
-    end_date: '',
-    guestEmail: '',
-    guests: [],
-    items: [],
-    itemName: '',
-    itemQuantity: '',
-    name: '',
-    start_date: '',
-    state: '',
-    zip_code: '',
-  };
+  var url = location.pathname;
+  var deferred = $.Deferred();
 
-  var
-    deferred = $.Deferred(),
-    url = location.pathname;
+  // function ajaxCall($scope) {
+  //   $.ajax({
+  //     cache: false,
+  //     contentType: 'application/json; charset=utf-8',
+  //     accepts: 'application/json',
+  //     url: url,
+  //     method: 'POST'
+  //   }).success(function(response) {
+  //     deferred.resolve(response);
+  //     // console.log(response);
+  //     console.log("Success");
+  //     responseParams = JSON.parse(response);
+  //     $scope.$apply(function () {
+  //       $scope.params = responseParams;
+  //     });
+  //
+  //   }).fail(function(response) {
+  //     deferred.reject(response)
+  //     console.log(response);
+  //     console.log("Fail");
+  //   }).done(function(response) {
+  //
+  //   });
+  // }
 
-  console.log(url);
+  // ajaxCall($scope);
 
-  $.ajax({
-    cache: false,
-    contentType: 'application/json; charset=utf-8',
-    accepts: 'application/json',
-    url: url,
-    method: 'POST'
-  }).success(function(response) {
-    deferred.resolve(response);
+  $http({
+    method: 'POST',
+    url: url
+  }).then(function successCallback(response) {
+    if (response && response.data) {
+      console.log(response.data)
+      $scope.params = JSON.stringify(response.data);
+    } else {
+      if (response && response.data) {
+        console.log(response)
+      }
+    }
+  }, function errorCallback(response) {
     console.log(response);
-    console.log("Success");
-
-  }).fail(function(response) {
-    console.log(response);
-    console.log("Fail");
-  }).done(function(response) {
-
   });
+
+  $scope.testParams = function () {
+    console.log($scope.params);
+  };
 
   // Form submission functions
 	$scope.submitForm = function () {
@@ -90,33 +98,5 @@ angular.module('events.controllers', [])
     // This method is kind of experimental at the moment.
     $timeout(changeRoute, 1000);
   }
-
-  // Item functions
-  $scope.addItem = function () {
-    $scope.itemId++;
-    var itemName = $scope.params.itemName;
-    var itemQuantity = $scope.params.itemQuantity;
-
-    var item = {
-      itemId: $scope.itemId,
-      category: 100,
-      name: itemName,
-      quantity: itemQuantity
-    };
-
-    $scope.params.items.push(item);
-
-    $scope.params.itemName = '';
-    $scope.params.itemQuantity = '';
-  };
-
-  $scope.removeItem = function (itemId) {
-    for (var i = 0; i < $scope.params.items.length; i++) {
-      if ($scope.params.items[i].itemId === itemId) {
-        $scope.params.items.splice(i, 1);
-        break;
-      }
-    }
-  };
 
 }]);

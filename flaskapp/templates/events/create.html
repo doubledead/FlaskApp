@@ -10,11 +10,6 @@
   {% raw %}
   <div class="top-pad" ng-app="eventsApp" ng-controller="formCtrl">
     <form name="baseForm" role="form" novalidate ng-cloak>
-      <!--
-      <h3>Directive Form</h3>
-      <entry-row></entry-row>
-      <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
-      -->
       <div class="animate-switch-container" ng-switch on="stage" ng-class="{forward: direction, backward:!direction,longStage: longStage}">
         <div class="animate-switch" ng-switch-default>
           <p>Welcome to the form.</p>

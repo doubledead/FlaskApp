@@ -159,9 +159,9 @@ def gettest():
         event = Event.query.filter_by(id=testid).first_or_404()
 
         # Serialize SQLAlchemy object to JSON
-        # dump_data = event_schema.dump(event).data
+        dump_data = event_schema.dump(event).data
         # dump_data = guest_schema.dump(event.guests).data
-        dump_data = item_schema.dump(event.items).data
+        # dump_data = item_schema.dump(event.items).data
 
         # return json.dumps(event.name)
         return json.dumps(dump_data)
