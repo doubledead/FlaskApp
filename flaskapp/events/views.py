@@ -189,8 +189,7 @@ def create():
 
         address = data["address"]
         address_line_two = data["address_line_two"]
-        # category = Category(name='Test', status_code=100)
-        category_id = 100
+        category_id = data["category_id"]
         city = data["city"]
         country = data["country"]
         # end_date = data["end_date"]
@@ -202,8 +201,7 @@ def create():
         # start_date = data["start_date"]
         start_date = datetime.utcnow()
         state = data["state"]
-        # status = Status(name='active', status_code=100)
-        status_id = 100
+        status_id = 100 # New event status
         user_id = current_user.id
         zip_code = data["zip_code"]
         event = Event(address=address, address_line_two=address_line_two, category_id=category_id, city=city,

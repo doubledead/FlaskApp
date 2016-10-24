@@ -225,7 +225,7 @@
         </div>
         <div class="animate-switch" ng-switch-when="stage6">
           <div class="row">
-            <div class="col-sm-6 col-md-6">
+            <div class="col-sm-12 col-md-12">
               Event name: {{ params.name }}
             </div>
           </div>
@@ -239,6 +239,32 @@
           -->
           <button type="button" class="btn btn-info" ng-click="back('stage5')">Back</button>
           <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
+        </div>
+        <div class="animate-switch" ng-switch-when="createSuccess">
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <h4>Success!</h4>
+            </div>
+          </div>
+          <div class="row">
+            &nbsp;
+          </div>
+          <div class="col-sm-12 col-md-12">
+            <p>Redirecting to your events...</p>
+          </div>
+        </div>
+        <div class="animate-switch" ng-switch-when="createError">
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <h4>Error</h4>
+            </div>
+          </div>
+          <div class="row">
+            &nbsp;
+          </div>
+          <div class="col-sm-12 col-md-12">
+            <p>Redirecting to your events...</p>
+          </div>
         </div>
       </div>
       <div class="row">

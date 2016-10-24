@@ -10,7 +10,7 @@ angular.module('create.controllers', [])
   $scope.params = {
     address: '',
     address_line_two: '',
-    category: 'event',
+    category_id: 100,
     city: '',
     country: '',
     end_date: '',
@@ -47,26 +47,43 @@ angular.module('create.controllers', [])
 
     if ($scope.baseForm.$valid) {}
 
-      // jQuery Ajax is used to reach Flask endpoints
-      // because AngularJS routes are not used.
-      $.ajax({
-        cache: false,
-        contentType: 'application/json; charset=utf-8',
-        accepts: 'application/json',
-        url: '/events/create',
-        data: data,
-        dataType: 'json',
-        type: 'POST'
-      }).success(function(response) {
-        deferred.resolve(response);
-        console.log(response);
-        $scope.$apply(reset());
-      }).fail(function(response) {
+    // jQuery Ajax is used to reach Flask endpoints
+    // because AngularJS routes are not used.
+    // $.ajax({
+    //   cache: false,
+    //   contentType: 'application/json; charset=utf-8',
+    //   accepts: 'application/json',
+    //   url: '/events/create',
+    //   data: data,
+    //   dataType: 'json',
+    //   type: 'POST'
+    // }).success(function(response) {
+    //   deferred.resolve(response);
+    //   console.log(response);
+    //   $scope.$apply(reset());
+    // }).fail(function(response) {
+    //
+    // }).done(function(response) {
+    //
+    // });
+    // return deferred.promise();
 
-      }).done(function(response) {
-
-      });
-      return deferred.promise();
+    $http({
+      method: 'POST',
+      url: '/events/create',
+      data: data
+    }).then(function successCallback(response) {
+      if (response && response.data) {
+        console.log(response.data)
+        reset();
+      } else {
+        if (response && response.data) {
+          console.log(response)
+        }
+      }
+    }, function errorCallback(response) {
+      console.log(response);
+    });
   };
 
   function changeRoute() {
@@ -77,7 +94,7 @@ angular.module('create.controllers', [])
   function reset() {
     // Clean up scope before destorying
     $scope.params = {};
-    $scope.stage = '';
+    $scope.stage = 'createSuccess';
 
     // Send the app back to a Flask route
     // This method is kind of experimental at the moment.
