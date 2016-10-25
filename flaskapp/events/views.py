@@ -154,7 +154,7 @@ def gettest():
     if request.method == "GET":
         data = request.get_json()
 
-        testid = data["testId"]
+        testid = data["id"]
 
         event = Event.query.filter_by(id=testid).first_or_404()
 
@@ -168,7 +168,7 @@ def gettest():
     elif request.method == "POST":
         data = request.get_json()
 
-        testid = data["testId"]
+        testid = data["id"]
 
         event = Event.query.filter_by(id=testid).first_or_404()
 

@@ -10,10 +10,11 @@ angular.module('events.controllers', [])
     $timeout,
     EventService
   ){
-    $scope.params = [];
+    $scope.params = {};
     $scope.formValid = false;
     $scope.rowId = 0;
 
+    var url = location.pathname;
 
     // $http({
     //   method: 'POST',
@@ -32,44 +33,58 @@ angular.module('events.controllers', [])
     // });
 
     $scope.params = EventService.getEvent();
-
     console.log($scope.params);
+
 
     $scope.testParams = function () {
       // console.log($scope.params);
-      for (var i = 0; i < $scope.params.length; i++) {
-        console.log($scope.params[i].name);
-      }
-    };
-
-    // Form submission functions
-    $scope.submitForm = function () {
+      // for (var i = 0; i < $scope.params.length; i++) {
+      //   console.log($scope.params[i].name);
+      // }
       var
         deferred = $.Deferred(),
-        data = JSON.stringify($scope.params);
+        url = location.pathname;
 
-      if ($scope.baseForm.$valid) {}
+      var paramId = url.split("/events/", 2)[1];
 
-        // jQuery Ajax is used to reach Flask endpoints
-        // because AngularJS routes are not used.
-        $.ajax({
-          cache: false,
-          contentType: 'application/json; charset=utf-8',
-          accepts: 'application/json',
-          url: '/events/create',
-          data: data,
-          dataType: 'json',
-          type: 'POST'
-        }).success(function(response) {
-          deferred.resolve(response);
-          console.log(response);
-          $scope.$apply(reset());
-        }).fail(function(response) {
+      var data = {
+        id: paramId
+      };
 
-        }).done(function(response) {
+      // console.log(url.split("/events/", 2)[1]);
 
-        });
-        return deferred.promise();
+      $http({
+        method: 'POST',
+        url: '/events/gettest',
+        data: JSON.stringify(data)
+      }).then(function successCallback(response) {
+        if (response && response.data) {
+          // console.log(response.data)
+          console.log(response)
+        }
+      }, function errorCallback(response) {
+        console.log(response);
+      });
+
+      // $.ajax({
+      //   cache: false,
+      //   contentType: 'application/json; charset=utf-8',
+      //   accepts: 'application/json',
+      //   url: '/events/gettest',
+      //   data: JSON.stringify(data),
+      //   method: 'POST'
+      // }).success(function(response) {
+      //   deferred.resolve(response);
+      //   console.log(response);
+      //   console.log("Success");
+      //
+      // }).fail(function(response) {
+      //   console.log(response);
+      //   console.log("Fail");
+      // }).done(function(response) {
+      //
+      // });
+
     };
 
     function changeRoute() {
