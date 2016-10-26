@@ -17,11 +17,9 @@ angular.module('events.services', [])
             url: '/events/gettest',
             data: JSON.stringify(data)
           }).then(function successCallback(response) {
-            if (response && response.data) {
-              // console.log(response.data)
-              console.log(response)
-              return response.data;
-            }
+            // console.log(response)
+            return response;
+            // return response;
           }, function errorCallback(response) {
             console.log(response);
           });

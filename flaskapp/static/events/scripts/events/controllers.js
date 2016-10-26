@@ -10,30 +10,33 @@ angular.module('events.controllers', [])
     $timeout,
     EventService
   ){
-    $scope.params = {};
+    $scope.params = [];
     $scope.formValid = false;
     $scope.rowId = 0;
 
     var url = location.pathname;
 
-    // $http({
-    //   method: 'POST',
-    //   url: url
-    // }).then(function successCallback(response) {
-    //   if (response && response.data) {
-    //     console.log(response.data)
-    //     $scope.params = response.data;
-    //   } else {
-    //     if (response && response.data) {
-    //       console.log(response)
-    //     }
-    //   }
-    // }, function errorCallback(response) {
-    //   console.log(response);
-    // });
+    // This method of calling the service initializes the response
+    // as an object in the controller on load.
+    // $scope.params = EventService.getEvent();
+    // console.log($scope.params);
 
-    $scope.params = EventService.getEvent();
+    // This method initializes the object after everything else loads
+    // and makes the object available to routes/views. ng-repeat, etc.
+    EventService
+      .getEvent()
+      .then(function (res) {
+        $scope.params = res.data;
+        console.log($scope.params);
+      });
     console.log($scope.params);
+
+    // $scope.params = EventService
+    //   .getEvent()
+    //   .then(function (res) {
+    //     return res.data;
+    //   });
+    // console.log($scope.params);
 
 
     $scope.testParams = function () {
@@ -41,9 +44,7 @@ angular.module('events.controllers', [])
       // for (var i = 0; i < $scope.params.length; i++) {
       //   console.log($scope.params[i].name);
       // }
-      var
-        deferred = $.Deferred(),
-        url = location.pathname;
+      var url = location.pathname;
 
       var paramId = url.split("/events/", 2)[1];
 
@@ -65,25 +66,6 @@ angular.module('events.controllers', [])
       }, function errorCallback(response) {
         console.log(response);
       });
-
-      // $.ajax({
-      //   cache: false,
-      //   contentType: 'application/json; charset=utf-8',
-      //   accepts: 'application/json',
-      //   url: '/events/gettest',
-      //   data: JSON.stringify(data),
-      //   method: 'POST'
-      // }).success(function(response) {
-      //   deferred.resolve(response);
-      //   console.log(response);
-      //   console.log("Success");
-      //
-      // }).fail(function(response) {
-      //   console.log(response);
-      //   console.log("Fail");
-      // }).done(function(response) {
-      //
-      // });
 
     };
 
