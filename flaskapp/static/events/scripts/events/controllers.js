@@ -29,7 +29,7 @@ angular.module('events.controllers', [])
         $scope.params = res.data;
         console.log($scope.params);
       });
-    console.log($scope.params);
+    // console.log($scope.params);
 
     // $scope.params = EventService
     //   .getEvent()
@@ -56,7 +56,7 @@ angular.module('events.controllers', [])
 
       $http({
         method: 'POST',
-        url: '/events/gettest',
+        url: url,
         data: JSON.stringify(data)
       }).then(function successCallback(response) {
         if (response && response.data) {
@@ -67,6 +67,18 @@ angular.module('events.controllers', [])
         console.log(response);
       });
 
+    };
+
+    $scope.claimItem = function (item) {
+      $http({
+        method: 'POST',
+        url: '/events/updateitem',
+        data: JSON.stringify(item)
+      }).then(function successCallback(response) {
+        console.log(response)
+      }, function errorCallback(response) {
+        console.log(response);
+      });
     };
 
     function changeRoute() {

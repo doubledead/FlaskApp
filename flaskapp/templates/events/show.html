@@ -42,9 +42,9 @@
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-sm-3 col-md-2">Start Date</div>
-    <div class="col-sm-9 col-md-2">End Date</div>
-    <div class="col-sm-3 col-md-2">&nbsp;</div>
+    <div class="col-sm-2 col-md-2">Start Date</div>
+    <div class="col-sm-2 col-md-2">End Date</div>
+    <div class="col-sm-2 col-md-2">&nbsp;</div>
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
@@ -88,10 +88,10 @@
   </div>
   {% for item in items %}
     <div class="row">
-      <div class="col-sm-5 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
-      <div class="col-sm-5 col-md-2">Quantity: {{ item.quantity }}</div>
-      <div class="col-sm-5 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
-      <div class="col-sm-3 col-md-1">
+      <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
+      <div class="col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
+      <div class="col-sm-2 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
+      <div class="col-sm-1 col-md-1">
         <a href="{{ url_for('events.showitem', item_id=item.id) }}" class="btn btn-xs btn-info">
           View
         </a>
@@ -109,9 +109,9 @@
       </div>
       {% for subitem in item.subitems %}
         <div class="row">
-          <div class="col-sm-5 col-md-2">User: {{ subitem.user_id }}</div>
-          <div class="col-sm-5 col-md-2">Quantity: {{ subitem.quantity }}</div>
-          <div class="col-sm-3 col-md-1">
+          <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
+          <div class="col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
+          <div class="col-sm-1 col-md-1">
             <a href="#" class="btn btn-xs btn-info">
               Edit
             </a>
@@ -133,9 +133,22 @@
   {% raw %}
     <div class="top-pad" ng-app="eventsApp" ng-controller="eventsCtrl">
       <form name="eventsForm" role="form" novalidate ng-cloak>
-
+        <div ng-repeat="item in params">
+          <div class="row">
+            <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
+            <div class="col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
+            <div class="col-sm-2 col-md-2">
+              <div class="form-group">
+                <label for="{{'tb-item-quantity-claimed-' + item.id}}">Claimed</label>
+                <input type="text" id="{{'tb-item-quantity-claimed-' + item.id}}" class="form-control" ng-model="item.quantity_claimed">
+              </div>
+            </div>
+            <div class="col-sm-1 col-md-1">
+              <button type="button" class="btn btn-primary" ng-click="claimItem(item)">Claim</button>
+            </div>
+          </div>
+        </div>
       </form>
-      <button type="button" class="btn btn-primary" ng-click="testParams()">Test</button>
     </div>
   {% endraw %}
 

@@ -154,9 +154,9 @@ def gettest():
     if request.method == "GET":
         data = request.get_json()
 
-        testid = data["id"]
+        paramId = data["paramId"]
 
-        event = Event.query.filter_by(id=testid).first_or_404()
+        event = Event.query.filter_by(id=paramId).first_or_404()
 
         # Serialize SQLAlchemy object to JSON
         dump_data = event_schema.dump(event).data
@@ -168,9 +168,41 @@ def gettest():
     elif request.method == "POST":
         data = request.get_json()
 
-        testid = data["id"]
+        paramId = data["paramId"]
 
-        event = Event.query.filter_by(id=testid).first_or_404()
+        event = Event.query.filter_by(id=paramId).first_or_404()
+
+        # Serialize SQLAlchemy object to JSON
+        # dump_data = event_schema.dump(event).data
+        # dump_data = guest_schema.dump(event.guests).data
+        dump_data = item_schema.dump(event.items).data
+
+        # return json.dumps(event.name)
+        return json.dumps(dump_data)
+
+@events.route('/getitems', methods=['GET', 'POST'])
+@login_required
+def getitems():
+    if request.method == "GET":
+        data = request.get_json()
+
+        paramId = data["paramId"]
+
+        event = Event.query.filter_by(id=paramId).first_or_404()
+
+        # Serialize SQLAlchemy object to JSON
+        dump_data = event_schema.dump(event).data
+        # dump_data = guest_schema.dump(event.guests).data
+        # dump_data = item_schema.dump(event.items).data
+
+        # return json.dumps(event.name)
+        return json.dumps(dump_data)
+    elif request.method == "POST":
+        data = request.get_json()
+
+        paramId = data["paramId"]
+
+        event = Event.query.filter_by(id=paramId).first_or_404()
 
         # Serialize SQLAlchemy object to JSON
         # dump_data = event_schema.dump(event).data
@@ -256,13 +288,41 @@ def showitem(item_id):
 
         return render_template("events/items/show.html", item=item, subitems=subitems, user_id=user_id)
 
-@events.route('/item/update/<item_id>', methods=['GET', 'POST'])
+@events.route('/updateitem', methods=['GET', 'POST'])
 @login_required
-def updateitem(item_id):
-    item = Item.query.filter_by(id=item_id).first_or_404()
+def updateitem():
+    if request.method == "POST":
+        data = request.get_json()
+
+        item_id = data['id']
+        item = Item.query.filter_by(id=item_id).first_or_404()
+
+        subitem_quantity = data['quantity_claimed']
+
+        subitem = Subitem(quantity=subitem_quantity,user_id=current_user.id)
+
+        item.subitems.append(subitem)
 
 
-    return render_template("events/items/update.html", item=item)
+        # for i in data:
+        #     item_id = i['id']
+        #     item = Item.query.filter_by(id=item_id).first_or_404()
+        #
+        #     subitem_quantity = i['quantity_claimed']
+        #
+        #     subitem = Subitem(quantity=subitem_quantity,user_id=current_user.id)
+        #
+        #     item.subitems.append(subitem)
+        #     db.session.add(item)
+
+        try:
+            db.session.add(item)
+            db.session.commit()
+            return json.dumps({'status':'OK'})
+        except exc.SQLAlchemyError as e:
+            current_app.logger.error(e)
+
+            return json.dumps({'status':'Error'})
 
 @events.route('item/subitem/update/<subitem_id>', methods=['GET', 'POST'])
 @login_required

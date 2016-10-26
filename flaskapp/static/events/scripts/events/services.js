@@ -7,14 +7,14 @@ angular.module('events.services', [])
           var paramId = url.split("/events/", 2)[1];
 
           var data = {
-            id: paramId
+            paramId: paramId
           };
 
           // console.log(url.split("/events/", 2)[1]);
 
           return $http({
             method: 'POST',
-            url: '/events/gettest',
+            url: '/events/getitems',
             data: JSON.stringify(data)
           }).then(function successCallback(response) {
             // console.log(response)
