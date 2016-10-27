@@ -254,10 +254,10 @@ def create():
 
             item = Item(category=item_category,name=item_name, quantity=item_quantity, quantity_claimed=0)
 
-            subitem = Subitem(quantity=3,user_id=current_user.id)
-            subitem2 = Subitem(quantity=6,user_id=current_user.id)
-            item.subitems.append(subitem)
-            item.subitems.append(subitem2)
+            # subitem = Subitem(quantity=3,user_id=current_user.id)
+            # subitem2 = Subitem(quantity=6,user_id=current_user.id)
+            # item.subitems.append(subitem)
+            # item.subitems.append(subitem2)
 
             event.items.append(item)
 
@@ -299,11 +299,22 @@ def updateitem():
 
         subitem_quantity = data['quantity_claimed']
 
-        subitem = Subitem(quantity=subitem_quantity,user_id=current_user.id)
+        # for i in item.subitems:
+        #     if i.user_id:
+        #         subitem = i
+        #         subitem.quantity = subitem_quantity
+        #         item.subitems.append(subitem)
+        #         print("test")
 
+        subitem = Subitem(quantity=subitem_quantity,user_id=current_user.id)
         item.subitems.append(subitem)
 
+        # Update Item claimed quantity
+        item_claimed_quantity = int(subitem_quantity) + item.quantity_claimed
+        item.quantity_claimed = item_claimed_quantity
 
+
+        # This will be for handling multiple items at once.
         # for i in data:
         #     item_id = i['id']
         #     item = Item.query.filter_by(id=item_id).first_or_404()

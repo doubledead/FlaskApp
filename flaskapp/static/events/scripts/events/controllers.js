@@ -27,15 +27,8 @@ angular.module('events.controllers', [])
       .getEvent()
       .then(function (res) {
         $scope.params = res.data;
-        console.log($scope.params);
+        // console.log($scope.params);
       });
-    // console.log($scope.params);
-
-    // $scope.params = EventService
-    //   .getEvent()
-    //   .then(function (res) {
-    //     return res.data;
-    //   });
     // console.log($scope.params);
 
 
@@ -69,7 +62,15 @@ angular.module('events.controllers', [])
 
     };
 
-    $scope.claimItem = function (item) {
+    $scope.claimItem = function (id) {
+      var item;
+      for (var i = 0; i < $scope.params.length; i++) {
+        if ($scope.params[i].id === id) {
+          // console.log($scope.params[i]);
+          item = $scope.params[i];
+        }
+      }
+
       $http({
         method: 'POST',
         url: '/events/updateitem',
