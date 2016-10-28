@@ -295,23 +295,80 @@ def updateitem():
         data = request.get_json()
 
         item_id = data['id']
-        item = Item.query.filter_by(id=item_id).first_or_404()
+        subitem_quantity = int(data['quantity_claimed'])
 
-        subitem_quantity = data['quantity_claimed']
+        item = Item.query.filter_by(id=item_id).first_or_404()
+        item_max = item.quantity
+        item_claimed = item.quantity_claimed
+
+        # This logic might need to be turned into helper functions
+
+        if subitem_quantity < item_max:
+            print("Test0")
+
+            # This might need to be on per user base.
+            # Why am I getting the difference?
+            if subitem_quantity > item_claimed:
+                print("Test1")
+                claimed_amount_difference = item_claimed + (subitem_quantity - item_claimed)
+            elif subitem_quantity < item_claimed:# May not need this check.
+                print("Test2")
+                # Work on this math
+                claimed_amount_difference = item_claimed - subitem_quantity
+            else:
+                print("Test3")
+
+            # Check for Subitem belonging to current user.
+            for i in item.subitems:
+                if i.user_id == current_user.id:
+                    subitem = i
+                    # Update Subitem quantity with new amount
+                    subitem.quantity = subitem_quantity
+
+                    # Start here.
+                    # if subitem_quantity > item_claimed:
+                    #     item.quantity_claimed = item_claimed + (subitem_quantity - item_claimed)
+                    # else:
+
+
+                    # Update Item claimed amount with difference
+                    # item.quantity_claimed = claimed_amount_difference
+                    item.subitems.append(subitem)
+                    print("Subitem updated.")
+                    break
+            else:
+                subitem = Subitem(quantity=subitem_quantity,user_id=current_user.id)
+                item.subitems.append(subitem)
+                # Update Item claimed quantity
+                # item_claimed_quantity = subitem_quantity + item_claimed
+                # item.quantity_claimed = item_claimed_quantity
+                item.quantity_claimed = claimed_amount_difference
+                print("Subitem added.")
+        else:
+            print("Quantity being claimed exceeds max.")
 
         # for i in item.subitems:
-        #     if i.user_id:
+        #     if i.user_id == current_user.id:
         #         subitem = i
+        #         # Update Subitem quantity with new amount
         #         subitem.quantity = subitem_quantity
+        #         # Update Item claimed amount with difference
         #         item.subitems.append(subitem)
-        #         print("test")
+        #         print("Subitem updated.")
+        #         break
+        # else:
+        #     subitem = Subitem(quantity=subitem_quantity,user_id=current_user.id)
+        #     item.subitems.append(subitem)
+        #     # Update Item claimed quantity
+        #     item_claimed_quantity = subitem_quantity + item_claimed
+        #     item.quantity_claimed = item_claimed_quantity
 
-        subitem = Subitem(quantity=subitem_quantity,user_id=current_user.id)
-        item.subitems.append(subitem)
+        # subitem = Subitem(quantity=subitem_quantity,user_id=current_user.id)
+        # item.subitems.append(subitem)
 
-        # Update Item claimed quantity
-        item_claimed_quantity = int(subitem_quantity) + item.quantity_claimed
-        item.quantity_claimed = item_claimed_quantity
+        # # Update Item claimed quantity
+        # item_claimed_quantity = int(subitem_quantity) + item.quantity_claimed
+        # item.quantity_claimed = item_claimed_quantity
 
 
         # This will be for handling multiple items at once.

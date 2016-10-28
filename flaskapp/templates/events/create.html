@@ -131,23 +131,13 @@
           </div>
           <div ng-repeat="e in params.guests">
             <div class="row">
-              <div class="col-sm-5 col-md-6">
+              <div class="col-sm-12 col-md-12">
                 {{ e.email }} <button type="button" class="btn btn-danger btn-xs" ng-click="removeGuestEmail(e.row_id)">Remove</button>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-12 col-md-12">&nbsp;</div>
             </div>
-          </div>
-          <!--
-          <div class="row">
-            <div class="col-md-12">
-              <pre> {{ params.guests | json }}</pre>
-            </div>
-          </div>
-          -->
-          <div class="row">
-            <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
           <div class="row">
             <div class="col-sm-6 col-md-12">
@@ -158,7 +148,7 @@
         </div>
         <div class="animate-switch" ng-switch-when="stage5">
           <div class="row">
-            <div class="col-sm-5 col-md-6">
+            <div class="col-sm-3 col-md-4">
               <div class="form-group">
                 <label for="tb-item-name">Item Name</label>
                 <input type="text"
@@ -167,7 +157,7 @@
                        ng-model="params.itemName" />
               </div>
             </div>
-            <div class="col-sm-5 col-md-3">
+            <div class="col-sm-2 col-md-3">
               <div class="form-group">
                 <label for="tb-item-quantity">Quantity</label>
                 <input type="text"
@@ -176,19 +166,19 @@
                        ng-model="params.itemQuantity" />
               </div>
             </div>
-            <!--
-            <div class="col-sm-7 col-md-6">
+            <div class="col-sm-2 col-md-2">
               <div>&nbsp;</div>
               <button type="button" class="btn btn-xs btn-warning" ng-click="addItem()">Add</button>
             </div>
-            -->
           </div>
+          <!--
           <div class="row">
             <div class="col-sm-12 col-md-12">
               <div>&nbsp;</div>
               <button type="button" class="btn btn-xs btn-warning" ng-click="addItem()">Add</button>
             </div>
           </div>
+          -->
           <div class="row">
             <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
@@ -199,13 +189,13 @@
           </div>
           <div ng-repeat="i in params.items">
             <div class="row">
-              <div class="col-sm-5 col-md-3">
+              <div class="col-sm-2 col-md-3">
                 {{ i.name }}
               </div>
-              <div class="col-sm-5 col-md-3">
+              <div class="col-sm-1 col-md-2">
                 {{ i.quantity }}
               </div>
-              <div class="col-sm-2 col-md-6">
+              <div class="col-sm-1 col-md-2">
                 <button type="button" class="btn btn-danger btn-xs" ng-click="removeItem(i.itemId)">Remove</button>
               </div>
             </div>
