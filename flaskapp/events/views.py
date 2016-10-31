@@ -295,44 +295,55 @@ def updateitem():
         data = request.get_json()
 
         item_id = data['id']
-        subitem_quantity = int(data['quantity_claimed'])
+        subitem_qty_data = int(data['quantity_claimed'])
 
         item = Item.query.filter_by(id=item_id).first_or_404()
-        item_max = item.quantity
-        item_claimed = item.quantity_claimed
+        item_max_qty = item.quantity
+        item_claimed_current = item.quantity_claimed
 
-        # This logic might need to be turned into helper functions
+        # if subitem_quantity > item_claimed:
+        #     subitem_quantity_difference = (subitem_quantity - item_claimed)
+        #     if (subitem_quantity_difference + item_claimed) < item_max:
+        #         difference_max_check = True
 
-        if subitem_quantity < item_max:
-            # Check if Subitem belongs to a user. Else, create new Subitem
-            for i in item.subitems:
-                if i.user_id == current_user.id:
-                    subitem = i
-                    # Update Subitem quantity with new amount
-                    subitem.quantity = subitem_quantity
+        # Update existing Subitem.
+        # Else, create new Subitem
+        for i in item.subitems:
+            if i.user_id == current_user.id:
+                subitem = i
+                subitem_qty_current = subitem.quantity
 
-                    if subitem_quantity < item_claimed:
-                        # Work on this math. Almost there
-                        # Add Subitem with one user then add Subitem with second user.
-                        # With second user, lower amount. Math doesn't add up.
-                        claimed_amount_difference = item_claimed - subitem_quantity
-                        item.quantity_claimed = item_claimed - claimed_amount_difference
+                if subitem_qty_data < subitem_qty_current:
+                    subitem_qty_difference = (subitem_qty_current - subitem_qty_data)
+                    subitem.quantity = subitem_qty_data
+
+                    item.quantity_claimed = item_claimed_current - subitem_qty_difference
+                elif subitem_qty_data > subitem_qty_current:
+                    # Rework the logic for this check.
+                    if (item_claimed_current + subitem_qty_data) <= item_max_qty:
+                        # subitem.quantity = (subitem_qty_current + subitem_qty_data)
+                        # subitem.quantity = subitem_qty_data
+                        subitem_qty_difference = (subitem_qty_data - subitem_qty_current)
+                        subitem.quantity = subitem_qty_current + subitem_qty_difference
+                        # item.quantity_claimed = (item_claimed_current + subitem_qty_data)
+                        item.quantity_claimed = (item_claimed_current + subitem_qty_difference)
                     else:
-                        item.quantity_claimed = item_claimed + subitem_quantity
+                        print("Quantity being claimed exceeds max.")
 
-                    # Append updated Subitem to Item's Subitems
-                    item.subitems.append(subitem)
-                    print("Subitem updated.")
-                    break
-            else:
-                # Create new Subitem
-                subitem = Subitem(quantity=subitem_quantity,user_id=current_user.id)
+
+                # Append updated Subitem to Item's Subitems
                 item.subitems.append(subitem)
-                # Update empty Item claimed quantity to match new claimed amount
-                item.quantity_claimed = item_claimed + subitem_quantity
-                print("Subitem added.")
+                print("Subitem updated.")
+                break
         else:
-            print("Quantity being claimed exceeds max.")
+            # Create new Subitem
+            if (item_claimed_current + subitem_qty_data) <= item_max_qty:
+                subitem = Subitem(quantity=subitem_qty_data,user_id=current_user.id)
+                item.subitems.append(subitem)
+                item.quantity_claimed = item_claimed_current + subitem_qty_data
+                print("Subitem added.")
+            else:
+                print("Quantity being claimed exceeds max.")
 
 
         # This will be for handling multiple items at once.
