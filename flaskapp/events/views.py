@@ -325,14 +325,31 @@ def updateitem():
 
                 # Append updated Subitem to Item's Subitems
                 item.subitems.append(subitem)
-                print("Subitem updated.")
+                try:
+                    db.session.add(item)
+                    db.session.commit()
+                    print("Subitem updated.")
+                    return json.dumps({'status':'OK'})
+                except exc.SQLAlchemyError as e:
+                    current_app.logger.error(e)
+                    return json.dumps({'status':'Error'})
+
+                # print("Subitem updated.")
                 break
         else:
             if (item_claimed_current + subitem_qty_data) <= item_max_qty:
                 subitem = Subitem(quantity=subitem_qty_data,user_id=current_user.id)
                 item.subitems.append(subitem)
                 item.quantity_claimed = item_claimed_current + subitem_qty_data
-                print("Subitem added.")
+                # print("Subitem added.")
+                try:
+                    db.session.add(item)
+                    db.session.commit()
+                    print("Subitem added.")
+                    return json.dumps({'status':'OK'})
+                except exc.SQLAlchemyError as e:
+                    current_app.logger.error(e)
+                    return json.dumps({'status':'Error'})
             else:
                 print("Quantity being claimed exceeds max. Item not created.")
 
@@ -349,14 +366,14 @@ def updateitem():
         #     item.subitems.append(subitem)
         #     db.session.add(item)
 
-        try:
-            db.session.add(item)
-            db.session.commit()
-            return json.dumps({'status':'OK'})
-        except exc.SQLAlchemyError as e:
-            current_app.logger.error(e)
-
-            return json.dumps({'status':'Error'})
+        # try:
+        #     db.session.add(item)
+        #     db.session.commit()
+        #     return json.dumps({'status':'OK'})
+        # except exc.SQLAlchemyError as e:
+        #     current_app.logger.error(e)
+        #
+        #     return json.dumps({'status':'Error'})
 
 @events.route('item/subitem/update/<subitem_id>', methods=['GET', 'POST'])
 @login_required

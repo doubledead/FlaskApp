@@ -55,7 +55,7 @@ class SubitemSchema(ma.ModelSchema):
     class Meta:
         model = Subitem
 
-subitem_schema = SubitemSchema()
+subitem_schema = SubitemSchema(many=True)
 
 class Item(db.Model):
     __tablename__ = 'items'

@@ -27,7 +27,7 @@ angular.module('events.controllers', [])
       .getEvent()
       .then(function (res) {
         $scope.params = res.data;
-        // console.log($scope.params);
+        console.log($scope.params);
       });
     // console.log($scope.params);
 
@@ -66,7 +66,6 @@ angular.module('events.controllers', [])
       var item;
       for (var i = 0; i < $scope.params.length; i++) {
         if ($scope.params[i].id === id) {
-          // console.log($scope.params[i]);
           item = $scope.params[i];
         }
       }
@@ -76,6 +75,9 @@ angular.module('events.controllers', [])
         url: '/events/updateitem',
         data: JSON.stringify(item)
       }).then(function successCallback(response) {
+        if (response.data && response.data.status === 'OK') {
+          console.log('Success.')
+        }
         console.log(response)
       }, function errorCallback(response) {
         console.log(response);
@@ -83,7 +85,7 @@ angular.module('events.controllers', [])
     };
 
     function changeRoute() {
-      var returnRoute = location.origin + "/events/";
+      var returnRoute = location.origin + '/events/';
       location.assign(returnRoute);
     }
 

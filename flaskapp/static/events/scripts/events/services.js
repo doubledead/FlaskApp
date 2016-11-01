@@ -4,7 +4,8 @@ angular.module('events.services', [])
       return {
         getEvent: function() {
           var url = location.pathname;
-          var paramId = url.split("/events/", 2)[1];
+          // var paramId = url.split("/events/", 2)[1];
+          var paramId = url.split('/events/', 2)[1];
 
           var data = {
             paramId: paramId
