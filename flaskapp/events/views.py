@@ -148,37 +148,6 @@ def delete(event_id):
 
     return redirect(url_for('events.display_events'))
 
-@events.route('/gettest', methods=['GET', 'POST'])
-@login_required
-def gettest():
-    if request.method == "GET":
-        data = request.get_json()
-
-        paramId = data["paramId"]
-
-        event = Event.query.filter_by(id=paramId).first_or_404()
-
-        # Serialize SQLAlchemy object to JSON
-        dump_data = event_schema.dump(event).data
-        # dump_data = guest_schema.dump(event.guests).data
-        # dump_data = item_schema.dump(event.items).data
-
-        # return json.dumps(event.name)
-        return json.dumps(dump_data)
-    elif request.method == "POST":
-        data = request.get_json()
-
-        paramId = data["paramId"]
-
-        event = Event.query.filter_by(id=paramId).first_or_404()
-
-        # Serialize SQLAlchemy object to JSON
-        # dump_data = event_schema.dump(event).data
-        # dump_data = guest_schema.dump(event.guests).data
-        dump_data = item_schema.dump(event.items).data
-
-        # return json.dumps(event.name)
-        return json.dumps(dump_data)
 
 @events.route('/getitems', methods=['GET', 'POST'])
 @login_required
@@ -212,7 +181,7 @@ def getitems():
         # return json.dumps(event.name)
         return json.dumps(dump_data)
 
-# JSMVCApp form Create endpoint
+
 @events.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
@@ -276,6 +245,7 @@ def create():
     # return redirect(url_for('events.display_events'))
     return render_template("events/create.html")
 
+
 #################### Items ################
 @events.route('/item/<item_id>', methods=['GET'])
 @login_required
@@ -287,6 +257,7 @@ def showitem(item_id):
         subitems = item.subitems
 
         return render_template("events/items/show.html", item=item, subitems=subitems, user_id=user_id)
+
 
 @events.route('/updateitem', methods=['GET', 'POST'])
 @login_required
@@ -368,14 +339,6 @@ def updateitem():
         #     item.subitems.append(subitem)
         #     db.session.add(item)
 
-        # try:
-        #     db.session.add(item)
-        #     db.session.commit()
-        #     return json.dumps({'status':'OK'})
-        # except exc.SQLAlchemyError as e:
-        #     current_app.logger.error(e)
-        #
-        #     return json.dumps({'status':'Error'})
 
 @events.route('item/subitem/update/<subitem_id>', methods=['GET', 'POST'])
 @login_required

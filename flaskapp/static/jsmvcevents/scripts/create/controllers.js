@@ -81,13 +81,14 @@ angular.module('create.controllers', [])
         url: '/events/create',
         data: data
       }).then(function successCallback(response) {
-        if (response && response.data) {
-          console.log(response.data)
+        if (response
+          && response.data
+          && response.data.status === 'OK') {
           reset();
-        } else {
-          if (response && response.data) {
-            console.log(response)
-          }
+        } else if (response
+          && response.data
+          && response.data.status === 'Error') {
+          console.log(response.data)
         }
       }, function errorCallback(response) {
         console.log(response);
@@ -95,12 +96,12 @@ angular.module('create.controllers', [])
     };
 
     function changeRoute() {
-      var returnRoute = location.origin + "/events/";
+      var returnRoute = location.origin + '/events/';
       location.assign(returnRoute);
     }
 
     function reset() {
-      // Clean up scope before destorying
+      // Clean up scope before destroying
       $scope.params = {};
       $scope.stage = 'createSuccess';
 
