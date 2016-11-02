@@ -152,7 +152,7 @@ class EventSchema(ma.ModelSchema):
     class Meta:
         model = Event
 
-event_schema = EventSchema()
+event_schema = EventSchema(many=True)
 
 # class Category(db.Model):
 #     id = db.Column(db.Integer(), primary_key=True)

@@ -77,8 +77,10 @@ angular.module('events.controllers', [])
       }).then(function successCallback(response) {
         if (response.data && response.data.status === 'OK') {
           console.log('Success.')
+        } else if (response.data && response.data.status === 'code:3') {
+          console.log('Quantity being claimed exceeds max. Value will remain unchanged.')
         }
-        console.log(response)
+        // console.log(response)
       }, function errorCallback(response) {
         console.log(response);
       });

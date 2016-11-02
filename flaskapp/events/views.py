@@ -321,6 +321,7 @@ def updateitem():
                         item.quantity_claimed = (item_claimed_current + subitem_qty_difference)
                     else:
                         print("Quantity being claimed exceeds max. Value will remain unchanged.")
+                        return json.dumps({'status':'code:3'})
 
 
                 # Append updated Subitem to Item's Subitems
@@ -352,6 +353,7 @@ def updateitem():
                     return json.dumps({'status':'Error'})
             else:
                 print("Quantity being claimed exceeds max. Item not created.")
+                return json.dumps({'status':'code:3'})
 
 
         # This will be for handling multiple items at once.
