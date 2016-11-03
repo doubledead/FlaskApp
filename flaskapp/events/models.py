@@ -92,6 +92,7 @@ class Event(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     address = db.Column(db.String(225))
     address_line_two = db.Column(db.String(225))
+    category_id = db.Column(db.Integer())
     city = db.Column(db.String(225))
     create_date = db.Column(db.DateTime())
     country = db.Column(db.String(225))
@@ -102,18 +103,7 @@ class Event(db.Model):
     state = db.Column(db.String(225))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     zip_code = db.Column(db.String(225))
-
-    # Status and Category - Simple Relationship
-    # http://flask-sqlalchemy.pocoo.org/2.1/quickstart/
-    # status_id = db.Column(db.ForeignKey('status.id'))
-    # status = db.relationship('Status',
-    #                          backref=db.backref('events', lazy='dynamic'))
     status_id = db.Column(db.Integer())
-
-    # category_id = db.Column(db.ForeignKey('category.id'))
-    # category = db.relationship('Category',
-    #                            backref=db.backref('events', lazy='dynamic'))
-    category_id = db.Column(db.Integer())
 
     # Many-to-many
     # https://github.com/mattupstate/overholt/blob/master/overholt/stores/models.py

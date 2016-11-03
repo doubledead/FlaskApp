@@ -162,4 +162,41 @@ angular.module('create.controllers', [])
       }
     };
 
+    $scope.endDateBeforeRender = endDateBeforeRender
+    $scope.endDateOnSetTime = endDateOnSetTime
+    $scope.startDateBeforeRender = startDateBeforeRender
+    $scope.startDateOnSetTime = startDateOnSetTime
+
+    function startDateOnSetTime () {
+      $scope.$broadcast('start-date-changed');
+    }
+
+    function endDateOnSetTime () {
+      $scope.$broadcast('end-date-changed');
+    }
+
+    function startDateBeforeRender ($dates) {
+      if ($scope.params.end_date) {
+        var activeDate = moment($scope.params.end_date);
+
+        $dates.filter(function (date) {
+          return date.localDateValue() >= activeDate.valueOf()
+        }).forEach(function (date) {
+          date.selectable = false;
+        })
+      }
+    }
+
+    function endDateBeforeRender ($view, $dates) {
+      if ($scope.params.start_date) {
+        var activeDate = moment($scope.params.start_date).subtract(1, $view).add(1, 'minute');
+
+        $dates.filter(function (date) {
+          return date.localDateValue() <= activeDate.valueOf()
+        }).forEach(function (date) {
+          date.selectable = false;
+        })
+      }
+    }
+
 }]);

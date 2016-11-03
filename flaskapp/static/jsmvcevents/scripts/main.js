@@ -3,5 +3,7 @@
 angular.module('eventsApp', [
 	'templates',
 	'eventsApp.create',
-	'ngAnimate'
+	'ngAnimate',
+  'ui.bootstrap.datetimepicker',
+  'ui.dateTimeInput'
 ]);
