@@ -80,23 +80,15 @@
         <div class="animate-switch" ng-switch-when="stage3">
           <div class="row">
             <div class="col-sm-5 col-md-6">
-              <!--
-              <div class="form-group">
-                <label for="tb-start-date">Start Date:</label>
-                <input type="text" class="form-control" id="tb-start-date"
-                       placeholder="Disabled for now. Filler used."
-                       ng-model="params.start_date"
-                       disabled>
-              </div>
-              -->
               <div class="dropdown form-group">
                 <label>Start Date</label>
                 <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="#"
                    href="#">
                   <div class="input-group date">
                     <input type="text" class="form-control"
-                           data-ng-model="params.start_date"
-                           >
+                           data-date-time-input="YYYY/MM/DD hh:mm A"
+                           data-date-formats="['YYYY/MM/DD', 'MMM DD YYYY']"
+                           data-ng-model="params.start_date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                   </div>
                 </a>
@@ -112,23 +104,15 @@
           </div>
           <div class="row">
             <div class="col-sm-5 col-md-6">
-              <!--
-              <div class="form-group">
-                <label for="tb-end-date">End Date:</label>
-                <input type="text" class="form-control" id="tb-end-date"
-                       placeholder="Disabled for now. Click Next."
-                       ng-model="params.end_date"
-                       disabled>
-              </div>
-              -->
               <div class="dropdown form-group">
                 <label>End Date</label>
                 <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#"
                    href="#">
                   <div class="input-group date">
                     <input type="text" class="form-control"
-                           data-ng-model="params.end_date"
-                           >
+                           data-date-time-input="YYYY/MM/DD hh:mm A"
+                           data-date-formats="['YYYY/MM/DD', 'MMM DD YYYY']"
+                           data-ng-model="params.end_date">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                   </div>
                 </a>

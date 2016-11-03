@@ -6,7 +6,7 @@ from flask_security import SQLAlchemyUserDatastore, current_user
 from flaskapp.utils import get_instance_folder_path
 from flaskapp.cache import cache
 
-from .core import db, ma, mail, security
+from .core import db, ma, mail, security, moment
 from .models import User, Role
 
 from .users.forms import ExtendedRegisterForm, ExtendedConfirmRegisterForm
@@ -27,6 +27,7 @@ mail.init_app(app)
 security.init_app(app, SQLAlchemyUserDatastore(db, User, Role),
                   register_form=ExtendedRegisterForm,
                   confirm_register_form=ExtendedConfirmRegisterForm)
+moment.init_app(app)
 
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 

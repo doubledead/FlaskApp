@@ -6,6 +6,7 @@ from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security
 from flask_marshmallow import Marshmallow
+from flask.ext.moment import Moment
 
 #: Flask-SQLAlchemy extension instance
 db = SQLAlchemy()
@@ -17,6 +18,10 @@ mail = Mail()
 
 #: Flask-Security extension instance
 security = Security()
+
+#: Moment.js integration within Jinja2
+# https://blog.miguelgrinberg.com/post/flask-moment-flask-and-jinja2-integration-with-momentjs
+moment = Moment()
 
 
 class FlaskAppError(Exception):
