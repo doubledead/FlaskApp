@@ -15,15 +15,18 @@ events_guests = db.Table(
     db.Column('event_id', db.Integer(), db.ForeignKey('events.id')),
     db.Column('guest_id', db.Integer(), db.ForeignKey('guests.id')))
 
+
 events_items = db.Table(
     'events_items',
     db.Column('event_id', db.Integer(), db.ForeignKey('events.id')),
     db.Column('item_id', db.Integer(), db.ForeignKey('items.id')))
 
+
 items_subitems = db.Table(
     'items_subitems',
     db.Column('item_id', db.Integer(), db.ForeignKey('items.id')),
     db.Column('subitem_id', db.Integer(), db.ForeignKey('subitems.id')))
+
 
 class Guest(db.Model):
     __tablename__ = 'guests'
@@ -34,11 +37,13 @@ class Guest(db.Model):
     def __init__(self, email):
         self.email = email
 
+
 class GuestSchema(ma.ModelSchema):
     class Meta:
         model = Guest
 
 guest_schema = GuestSchema(many=True)
+
 
 class Subitem(db.Model):
     __tablename__ = 'subitems'
@@ -51,11 +56,13 @@ class Subitem(db.Model):
         self.quantity = quantity
         self.user_id = user_id
 
+
 class SubitemSchema(ma.ModelSchema):
     class Meta:
         model = Subitem
 
 subitem_schema = SubitemSchema(many=True)
+
 
 class Item(db.Model):
     __tablename__ = 'items'
@@ -79,12 +86,14 @@ class Item(db.Model):
     def __repr__(self):
         return 'Item %r>' % (self.name)
 
+
 class ItemSchema(ma.ModelSchema):
     # subitems = fields.Nested('SubitemSchema', default=None, many=True)
     class Meta:
         model = Item
 
 item_schema = ItemSchema(many=True)
+
 
 class Event(db.Model):
     __tablename__ = 'events'
@@ -137,6 +146,7 @@ class Event(db.Model):
     def __repr__(self):
         return '<Event %r>' % (self.name)
 
+
 class EventSchema(ma.ModelSchema):
     # guests = fields.Nested('GuestSchema', default=None, many=True)
     class Meta:
@@ -144,26 +154,41 @@ class EventSchema(ma.ModelSchema):
 
 event_schema = EventSchema(many=True)
 
-# class Category(db.Model):
-#     id = db.Column(db.Integer(), primary_key=True)
-#     name = db.Column(db.String(225))
-#     status_code = db.Column(db.Integer())
-#
-#     def __init__(self, name, status_code):
-#         self.name = name
-#         self.status_code = status_code
-#
-#         def __repr__(self):
-#             return 'Category %r>' % self.name
 
-# class Status(db.Model):
-#     id = db.Column(db.Integer(), primary_key=True)
-#     name = db.Column(db.String(225))
-#     status_code = db.Column(db.Integer())
-#
-#     def __init__(self, name, status_code):
-#         self.name = name
-#         self.status_code = status_code
-#
-#         def __repr__(self):
-#             return 'Status %r>' % self.name
+class Category(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(225))
+    status_code = db.Column(db.Integer())
+
+    def __init__(self, name, status_code):
+        self.name = name
+        self.status_code = status_code
+
+        def __repr__(self):
+            return 'Category %r>' % self.name
+
+
+class CategorySchema(ma.ModelSchema):
+    class Meta:
+        model = Category
+
+category_schema = CategorySchema()
+
+class Status(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(225))
+    status_code = db.Column(db.Integer())
+
+    def __init__(self, name, status_code):
+        self.name = name
+        self.status_code = status_code
+
+        def __repr__(self):
+            return 'Status %r>' % self.name
+
+
+class StatusSchema(ma.ModelSchema):
+    class Meta:
+        model = Status
+
+status_schema = StatusSchema()

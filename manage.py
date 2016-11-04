@@ -9,7 +9,9 @@ from flask.ext.script import Manager
 
 from flaskapp import app
 from flaskapp.core import db
-from flaskapp.events.models import Event, Category, Status
+from flaskapp.users.models import User
+from flaskapp.events.models import Category, Event, Status
+from datetime import datetime, date
 
 manager = Manager(app)
 
@@ -25,6 +27,14 @@ def populate():
     db.session.add(status_active)
     db.session.add(status_inactive)
     db.session.commit()
+
+@manager.command
+def create_test_users():
+    test_user = User(email='user@test.com', password='123456', active=True, birth_date=date.today())
+
+    db.session.add(test_user)
+    db.session.commit()
+
 
 if __name__ == "__main__":
     manager.run()

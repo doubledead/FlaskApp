@@ -6,7 +6,8 @@
 """
 
 from flask_security import UserMixin, RoleMixin
-from ..core import db
+from ..core import db, ma
+from marshmallow import fields
 
 roles_users = db.Table(
     'roles_users',
@@ -20,6 +21,14 @@ class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
+
+    def __eq__(self, other):
+        return (self.name == other or
+                self.name == getattr(other, 'name', None))
+
+    def __ne__(self, other):
+        return (self.name != other or
+                self.name != getattr(other, 'name', None))
 
     def __init__(self, name):
         self.name = name
@@ -49,3 +58,10 @@ class User(db.Model, UserMixin):
 
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
+
+
+class UserSchema(ma.ModelSchema):
+    class Meta:
+        model = User
+
+user_schema = UserSchema()
