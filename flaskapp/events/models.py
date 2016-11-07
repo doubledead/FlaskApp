@@ -50,7 +50,8 @@ class Subitem(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     quantity = db.Column(db.Integer())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer())
 
     def __init__(self, quantity, user_id):
         self.quantity = quantity
@@ -61,7 +62,7 @@ class SubitemSchema(ma.ModelSchema):
     class Meta:
         model = Subitem
 
-# subitem_schema = SubitemSchema(many=True)
+subitem_schema = SubitemSchema(many=True)
 
 
 class Item(db.Model):

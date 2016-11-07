@@ -33,9 +33,9 @@ angular.module('events.controllers', [])
 
     $scope.claimItem = function (id) {
       var item;
-      for (var i = 0; i < $scope.params.length; i++) {
-        if ($scope.params[i].id === id) {
-          item = $scope.params[i];
+      for (var i = 0; i < $scope.params.event_data.items.length; i++) {
+        if ($scope.params.event_data.items[i].id === id) {
+          item = $scope.params.event_data.items[i];
         }
       }
 

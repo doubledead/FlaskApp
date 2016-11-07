@@ -147,14 +147,14 @@ def getitems():
 
         event = Event.query.filter_by(id=paramId).first_or_404()
 
-        json_result = event_schema.dump(event).data
-
         # Serialize SQLAlchemy object to JSON
-        dump_data = event_schema.dump(event).data
-        # dump_data = item_schema.dump(event.items).data
+        serialized_event = event_schema.dump(event).data
 
-        # return json.dumps(event.name)
-        return json.dumps(dump_data)
+        # Package data payload into a Python dictionary
+        payload = {"current_user_id" : current_user.id, "event_data" : serialized_event}
+
+        # return dictionary as JSON object
+        return json.dumps(payload)
 
 
 @events.route('/create', methods=['GET', 'POST'])
@@ -281,7 +281,6 @@ def updateitem():
                     current_app.logger.error(e)
                     return json.dumps({'status':'Error'})
 
-                # print("Subitem updated.")
                 break
         else:
             if (item_claimed_current + subitem_qty_data) <= item_max_qty:

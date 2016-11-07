@@ -91,11 +91,13 @@
       <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
       <div class="col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
       <div class="col-sm-2 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
+      <!--
       <div class="col-sm-1 col-md-1">
         <a href="{{ url_for('events.showitem', item_id=item.id) }}" class="btn btn-xs btn-info">
           View
         </a>
       </div>
+      -->
     </div>
     {% if event.user_id == user_id %}
       <div class="row">
@@ -111,7 +113,6 @@
         <div class="row">
           <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
           <div class="col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
-{#          <div class="col-sm-1 col-md-1"><a href="#" class="btn btn-xs btn-info">Edit</a></div>#}
         </div>
         <div class="row">
           <div class="col-sm-12 col-md-12">&nbsp;</div>
@@ -135,10 +136,11 @@
   {% raw %}
     <div class="top-pad" ng-app="eventsApp" ng-controller="eventsCtrl">
       <form name="eventsForm" role="form" novalidate ng-cloak>
-        <div ng-repeat="item in params.items">
+        <div ng-repeat="item in params.event_data.items">
           <div class="row">
             <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
             <div class="col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
+            <div class="col-sm-2 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
             <div class="col-sm-2 col-md-2">
               <div class="form-group">
                 <label for="{{'tb-item-quantity-claimed-' + item.id}}">Claimed</label>
@@ -148,6 +150,30 @@
             <div class="col-sm-1 col-md-1">
               <div>&nbsp;</div>
               <button type="button" class="btn btn-primary btn-xs" ng-click="claimItem(item.id)">Claim</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12"><strong>Claimed By Guests</strong></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+          <div ng-repeat="subitem in item.subitems">
+            <div class="row">
+              <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
+              <div class="col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+              <hr >
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12">&nbsp;</div>
             </div>
           </div>
         </div>
