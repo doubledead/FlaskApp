@@ -3,10 +3,9 @@ from flask import request, redirect, url_for, json, current_app
 from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
-from .forms import NewEventForm, UpdateEventForm, UpdateItemForm, UpdateSubItemForm
-from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem, subitem_schema
+from .forms import NewEventForm, UpdateEventForm, UpdateItemForm
+from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem
 from sqlalchemy import exc
-from ..helpers import JsonSerializer
 
 events = Blueprint('events', __name__, template_folder='templates')
 
@@ -82,18 +81,7 @@ def show(event_id):
         items = event.items
 
         return render_template("events/show.html", event=event, guests=guests, items=items, user_id=user_id)
-    elif request.method == "POST":
-        # data = request.get_json()
 
-        event = Event.query.filter_by(id=event_id).first_or_404()
-
-        # Serialize SQLAlchemy object to JSON
-        # dump_data = event_schema.dump(event).data
-        # dump_data = guest_schema.dump(event.guests).data
-        dump_data = item_schema.dump(event.items).data
-
-        # return json.dumps(event.name)
-        return json.dumps(dump_data)
 
 @events.route('/update/<event_id>', methods=['GET', 'POST'])
 @login_required
@@ -152,21 +140,7 @@ def delete(event_id):
 @events.route('/getitems', methods=['GET', 'POST'])
 @login_required
 def getitems():
-    if request.method == "GET":
-        data = request.get_json()
-
-        paramId = data["paramId"]
-
-        event = Event.query.filter_by(id=paramId).first_or_404()
-
-        # Serialize SQLAlchemy object to JSON
-        dump_data = event_schema.dump(event).data
-        # dump_data = guest_schema.dump(event.guests).data
-        # dump_data = item_schema.dump(event.items).data
-
-        # return json.dumps(event.name)
-        return json.dumps(dump_data)
-    elif request.method == "POST":
+    if request.method == "POST":
         data = request.get_json()
 
         paramId = data["paramId"]
@@ -340,30 +314,3 @@ def updateitem():
         #     db.session.add(item)
 
 
-@events.route('item/subitem/update/<subitem_id>', methods=['GET', 'POST'])
-@login_required
-def updatesubitem(subitem_id):
-    subitem = Subitem.query.filter_by(id=subitem_id).first_or_404()
-    subitems = subitem.subitems
-
-    form = UpdateSubItemForm()
-    if request.method == "POST" and form.validate():
-
-        for subitem in subitems:
-            subitem.quantity = form.quantity.data
-            subitem.user_id = current_user.id
-
-
-        # item.quantity = form.quantity.data
-        # item.user_id = current_user.id
-
-        try:
-            db.session.commit()
-        except exc.SQLAlchemyError as e:
-            current_app.logger.error(e)
-
-        return redirect(url_for('events.claim', subitem_id=subitem.id))
-    elif request.method != "POST":
-        form.quantity.data = subitem.quantity
-
-    return render_template("events/items/subitems/update.html", subitem=subitem, form=form)

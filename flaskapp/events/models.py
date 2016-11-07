@@ -61,7 +61,7 @@ class SubitemSchema(ma.ModelSchema):
     class Meta:
         model = Subitem
 
-subitem_schema = SubitemSchema(many=True)
+# subitem_schema = SubitemSchema(many=True)
 
 
 class Item(db.Model):
@@ -88,7 +88,7 @@ class Item(db.Model):
 
 
 class ItemSchema(ma.ModelSchema):
-    # subitems = fields.Nested('SubitemSchema', default=None, many=True)
+    subitems = fields.Nested('SubitemSchema', default=None, many=True)
     class Meta:
         model = Item
 
