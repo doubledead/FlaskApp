@@ -135,7 +135,7 @@
   {% raw %}
     <div class="top-pad" ng-app="eventsApp" ng-controller="eventsCtrl">
       <form name="eventsForm" role="form" novalidate ng-cloak>
-        <div ng-repeat="item in params">
+        <div ng-repeat="item in params.items">
           <div class="row">
             <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
             <div class="col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>

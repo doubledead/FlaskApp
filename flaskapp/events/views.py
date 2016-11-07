@@ -4,7 +4,7 @@ from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import NewEventForm, UpdateEventForm, UpdateItemForm
-from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem
+from .models import Event, event_schema, Guest, Item, item_schema, Subitem
 from sqlalchemy import exc
 
 events = Blueprint('events', __name__, template_folder='templates')
@@ -147,10 +147,11 @@ def getitems():
 
         event = Event.query.filter_by(id=paramId).first_or_404()
 
+        json_result = event_schema.dump(event).data
+
         # Serialize SQLAlchemy object to JSON
-        # dump_data = event_schema.dump(event).data
-        # dump_data = guest_schema.dump(event.guests).data
-        dump_data = item_schema.dump(event.items).data
+        dump_data = event_schema.dump(event).data
+        # dump_data = item_schema.dump(event.items).data
 
         # return json.dumps(event.name)
         return json.dumps(dump_data)

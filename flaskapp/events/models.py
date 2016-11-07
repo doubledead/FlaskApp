@@ -42,7 +42,7 @@ class GuestSchema(ma.ModelSchema):
     class Meta:
         model = Guest
 
-guest_schema = GuestSchema(many=True)
+# guest_schema = GuestSchema(many=True)
 
 
 class Subitem(db.Model):
@@ -148,11 +148,12 @@ class Event(db.Model):
 
 
 class EventSchema(ma.ModelSchema):
-    # guests = fields.Nested('GuestSchema', default=None, many=True)
+    guests = fields.Nested('GuestSchema', default=None, many=True)
+    items = fields.Nested('ItemSchema', default=None, many=True)
     class Meta:
         model = Event
 
-event_schema = EventSchema(many=True)
+event_schema = EventSchema()
 
 
 class Category(db.Model):

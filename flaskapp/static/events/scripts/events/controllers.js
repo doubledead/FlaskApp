@@ -29,38 +29,7 @@ angular.module('events.controllers', [])
         $scope.params = res.data;
         console.log($scope.params);
       });
-    // console.log($scope.params);
 
-
-    $scope.testParams = function () {
-      // console.log($scope.params);
-      // for (var i = 0; i < $scope.params.length; i++) {
-      //   console.log($scope.params[i].name);
-      // }
-      var url = location.pathname;
-
-      var paramId = url.split("/events/", 2)[1];
-
-      var data = {
-        id: paramId
-      };
-
-      // console.log(url.split("/events/", 2)[1]);
-
-      $http({
-        method: 'POST',
-        url: url,
-        data: JSON.stringify(data)
-      }).then(function successCallback(response) {
-        if (response && response.data) {
-          // console.log(response.data)
-          console.log(response)
-        }
-      }, function errorCallback(response) {
-        console.log(response);
-      });
-
-    };
 
     $scope.claimItem = function (id) {
       var item;
