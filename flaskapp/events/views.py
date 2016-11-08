@@ -157,6 +157,7 @@ def getitems():
         return json.dumps(payload)
 
 
+# JSON format endpoint
 @events.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
@@ -169,13 +170,11 @@ def create():
         city = data["city"]
         country = data["country"]
         end_date = data["end_date"]
-        # end_date = datetime.utcnow()
         guests_data = data["guests"]
         items_data = data["items"]
         last_edit_date = datetime.utcnow()
         name = data["name"]
         start_date = data["start_date"]
-        # start_date = datetime.utcnow()
         state = data["state"]
         status_id = 100 # New event status
         user_id = current_user.id
@@ -197,11 +196,6 @@ def create():
             item_quantity = i['quantity']
 
             item = Item(category=item_category,name=item_name, quantity=item_quantity, quantity_claimed=0)
-
-            # subitem = Subitem(quantity=3,user_id=current_user.id)
-            # subitem2 = Subitem(quantity=6,user_id=current_user.id)
-            # item.subitems.append(subitem)
-            # item.subitems.append(subitem2)
 
             event.items.append(item)
 
@@ -266,7 +260,7 @@ def updateitem():
                         subitem.quantity = subitem_qty_current + subitem_qty_difference
                         item.quantity_claimed = (item_claimed_current + subitem_qty_difference)
                     else:
-                        print("Quantity being claimed exceeds max. Value will remain unchanged.")
+                        print('Quantity being claimed exceeds max. Value will remain unchanged.')
                         return json.dumps({'status':'code:3'})
 
 
@@ -275,7 +269,7 @@ def updateitem():
                 try:
                     db.session.add(item)
                     db.session.commit()
-                    print("Subitem updated.")
+                    print('Subitem updated.')
                     return json.dumps({'status':'OK'})
                 except exc.SQLAlchemyError as e:
                     current_app.logger.error(e)
@@ -291,13 +285,13 @@ def updateitem():
                 try:
                     db.session.add(item)
                     db.session.commit()
-                    print("Subitem added.")
+                    print('Subitem added.')
                     return json.dumps({'status':'OK'})
                 except exc.SQLAlchemyError as e:
                     current_app.logger.error(e)
                     return json.dumps({'status':'Error'})
             else:
-                print("Quantity being claimed exceeds max. Item not created.")
+                print('Quantity being claimed exceeds max. Item not created.')
                 return json.dumps({'status':'code:3'})
 
 

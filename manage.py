@@ -6,12 +6,14 @@
 """
 
 from flask.ext.script import Manager
+from flask import json, current_app
 
 from flaskapp import app
 from flaskapp.core import db
 from flaskapp.users.models import User
-from flaskapp.events.models import Category, Event, Status
+from flaskapp.events.models import Category, Event, event_schema, Status
 from datetime import datetime, date
+from sqlalchemy import exc
 
 manager = Manager(app)
 
@@ -38,6 +40,63 @@ def create_test_users():
 
     db.session.add(test_user)
     db.session.commit()
+
+@manager.command
+def events_test():
+    # event = Event.query.filter_by(status_id=100).first_or_404()
+    # event.status_id = 400
+
+    # db.session.add(event)
+    # db.session.commit()
+
+    events = Event.query.filter_by(status_id=100).first_or_404()
+
+    ## events = Event.query.all()
+
+    ## events = Event.query.filter_by(status_id=100).all()
+
+    ## events = [event for event in Event.query.all()]
+
+    serialized_events = json.dumps(event_schema.dump(events).data)
+    # serialized_events = event_schema.dump(events).data
+    json_dict = {"events" : serialized_events, "text" : "Some text."}
+
+    print json_dict["events"]
+
+    for i in serialized_events:
+        # if i["status_id"] == 100:
+        #     event = i
+        #
+        #     event["status_id"] = 400
+        #
+        #     deserialized_event = event_schema.load(event).data
+        #
+        #     try:
+        #         db.session.add(deserialized_event)
+        #         db.session.commit()
+        #         print('Event status updated.')
+        #     except exc.SQLAlchemyError as e:
+        #         current_app.logger.error(e)
+        #         break
+        print i
+
+    # for i in json_dict["events"]:
+    #     if i["status_id"] == 100:
+    #         event = i
+    #
+    #         # event.status_id = 400
+    #         event["status_id"] == 400
+    #
+    #         deserialized_event = event_schema.load(event).data
+    #
+    #         try:
+    #             db.session.add(deserialized_event)
+    #             db.session.commit()
+    #             print('Event status updated.')
+    #         except exc.SQLAlchemyError as e:
+    #             current_app.logger.error(e)
+    #             break
+
 
 
 if __name__ == "__main__":
