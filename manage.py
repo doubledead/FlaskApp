@@ -43,12 +43,11 @@ def create_test_users():
 
 @manager.command
 def event_status_check():
-
     # Check for events with status_id 100, active status.
     events = Event.query.filter_by(status_id=100).all()
 
     for event in events:
-        # If the event end date has expired, change its status_id
+        # If the event end_date has expired, change its status_id
         # to 400, completed status.
         if event.end_date <= datetime.utcnow():
             event.status_id = 400

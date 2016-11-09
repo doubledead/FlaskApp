@@ -234,7 +234,8 @@ def updateitem():
         data = request.get_json()
 
         item_id = data['id']
-        subitem_qty_data = int(data['quantity_claimed'])
+        # subitem_qty_data = int(data['quantity_claimed'])
+        subitem_qty_data = int(data['quantity_claimed_new'])
 
         item = Item.query.filter_by(id=item_id).first_or_404()
         item_max_qty = item.quantity
