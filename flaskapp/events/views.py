@@ -69,6 +69,62 @@ def create_event():
 
     return render_template("events/create_event.html", form=form)
 
+# JSON format endpoint
+@events.route('/create', methods=['GET', 'POST'])
+@login_required
+def create():
+    if request.method == "POST":
+        data = request.get_json()
+
+        address = data["address"]
+        address_line_two = data["address_line_two"]
+        category_id = data["category_id"]
+        city = data["city"]
+        country = data["country"]
+        end_date = data["end_date"]
+        guests_data = data["guests"]
+        items_data = data["items"]
+        last_edit_date = datetime.utcnow()
+        name = data["name"]
+        start_date = data["start_date"]
+        state = data["state"]
+        status_id = 100 # New event status
+        user_id = current_user.id
+        zip_code = data["zip_code"]
+        event = Event(address=address, address_line_two=address_line_two, category_id=category_id, city=city,
+                      country=country,end_date=end_date, last_edit_date=last_edit_date,
+                      name=name, start_date=start_date, state=state, status_id=status_id,
+                      user_id=user_id, zip_code=zip_code)
+
+        for g in guests_data:
+            e = g['email']
+
+            guest = Guest(email=e)
+            event.guests.append(guest)
+
+        for i in items_data:
+            item_category = i['category']
+            item_name = i['name']
+            item_quantity = i['quantity']
+
+            item = Item(category=item_category,name=item_name, quantity=item_quantity, quantity_claimed=0)
+
+            event.items.append(item)
+
+        try:
+            db.session.add(event)
+            db.session.commit()
+            return json.dumps({'status':'OK'})
+        except exc.SQLAlchemyError as e:
+            current_app.logger.error(e)
+
+            return redirect(url_for('events.create'))
+            return json.dumps({'status':'Error'})
+
+        return redirect(url_for('events.display_events'))
+
+    return render_template("events/create.html")
+
 @events.route('/<event_id>', methods=['GET', 'POST'])
 @login_required
 def show(event_id):
@@ -137,6 +193,8 @@ def delete(event_id):
     return redirect(url_for('events.display_events'))
 
 
+#################### Items ################
+
 @events.route('/getitems', methods=['GET', 'POST'])
 @login_required
 def getitems():
@@ -157,65 +215,6 @@ def getitems():
         return json.dumps(payload)
 
 
-# JSON format endpoint
-@events.route('/create', methods=['GET', 'POST'])
-@login_required
-def create():
-    if request.method == "POST":
-        data = request.get_json()
-
-        address = data["address"]
-        address_line_two = data["address_line_two"]
-        category_id = data["category_id"]
-        city = data["city"]
-        country = data["country"]
-        end_date = data["end_date"]
-        guests_data = data["guests"]
-        items_data = data["items"]
-        last_edit_date = datetime.utcnow()
-        name = data["name"]
-        start_date = data["start_date"]
-        state = data["state"]
-        status_id = 100 # New event status
-        user_id = current_user.id
-        zip_code = data["zip_code"]
-        event = Event(address=address, address_line_two=address_line_two, category_id=category_id, city=city,
-                      country=country,end_date=end_date, last_edit_date=last_edit_date,
-                      name=name, start_date=start_date, state=state, status_id=status_id,
-                      user_id=user_id, zip_code=zip_code)
-
-        for g in guests_data:
-            e = g['email']
-
-            guest = Guest(email=e)
-            event.guests.append(guest)
-
-        for i in items_data:
-            item_category = i['category']
-            item_name = i['name']
-            item_quantity = i['quantity']
-
-            item = Item(category=item_category,name=item_name, quantity=item_quantity, quantity_claimed=0)
-
-            event.items.append(item)
-
-        try:
-            db.session.add(event)
-            db.session.commit()
-            return json.dumps({'status':'OK'})
-        except exc.SQLAlchemyError as e:
-            current_app.logger.error(e)
-
-            return redirect(url_for('events.create'))
-            return json.dumps({'status':'Error'})
-
-        return redirect(url_for('events.display_events'))
-
-    # return redirect(url_for('events.display_events'))
-    return render_template("events/create.html")
-
-
-#################### Items ################
 @events.route('/item/<item_id>', methods=['GET'])
 @login_required
 def showitem(item_id):

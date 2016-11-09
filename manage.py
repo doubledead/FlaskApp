@@ -57,8 +57,8 @@ def events_test():
 
     ## events = [event for event in Event.query.all()]
 
-    serialized_events = json.dumps(event_schema.dump(events).data)
-    # serialized_events = event_schema.dump(events).data
+    # serialized_events = json.dumps(event_schema.dump(events).data)
+    serialized_events = event_schema.dump(events).data
     json_dict = {"events" : serialized_events, "text" : "Some text."}
 
     print json_dict["events"]
