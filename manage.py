@@ -49,68 +49,44 @@ def events_test():
     # db.session.add(event)
     # db.session.commit()
 
-    # events = Event.query.filter_by(status_id=100).first_or_404()
-
     ## events = Event.query.all()
-
-    ## events = Event.query.filter_by(status_id=100).all()
-
-    ## events = [event for event in Event.query.all()]
 
     # serialized_events = json.dumps(event_schema.dump(events).data)
     # serialized_events = event_schema.dump(events).data
-    # json_dict = {"events" : serialized_events, "text" : "Some text."}
 
-    # print json_dict["events"]
-
-    # for i in serialized_events:
-    #     if i["status_id"] == 100:
-    #         event = i
-    #
-    #         event["status_id"] = 400
-    #
-    #         deserialized_event = event_schema.load(event).data
-    #
-    #         try:
-    #             db.session.add(deserialized_event)
-    #             db.session.commit()
-    #             print('Event status updated.')
-    #         except exc.SQLAlchemyError as e:
-    #             current_app.logger.error(e)
-    #             break
-    #     print i
-
-    # for i in json_dict["events"]:
-    #     if i["status_id"] == 100:
-    #         event = i
-    #
-    #         # event.status_id = 400
-    #         event["status_id"] == 400
-    #
-    #         deserialized_event = event_schema.load(event).data
-    #
-    #         try:
-    #             db.session.add(deserialized_event)
-    #             db.session.commit()
-    #             print('Event status updated.')
-    #         except exc.SQLAlchemyError as e:
-    #             current_app.logger.error(e)
-    #             break
-
-
-    # Using db.session instead of Event works
-    # events = db.session.query(Event).all()
-
-    # This works.
-    events = db.session.query(Event).filter_by(status_id=100).all()
 
     # This works.
     # for e in db.session.query(Event).all():
     #     print e.__dict__
 
+    # Using db.session instead of Event works
+    # events = db.session.query(Event).all()
+
+    # This works
+    events = Event.query.filter_by(status_id=100).all()
+
+    # for e in events:
+    #     print e.__dict__
+
     for e in events:
-        event_dict = e.__dict__
-        print event_dict["name"]
+        # dict_event = e.__dict__
+        # print event_dict["name"]
+
+        if e.end_date <= datetime.utcnow():
+            # print json.dumps(event_schema.dump(e).data)
+
+            e.status_id = 400
+
+            try:
+                db.session.add(e)
+                print 'Success'
+            except exc.SQLAlchemyError as e:
+                current_app.logger.error(e)
+                print 'Error'
+
+
+    db.session.commit()
+
 
 if __name__ == "__main__":
     manager.run()
