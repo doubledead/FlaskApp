@@ -42,49 +42,26 @@ def create_test_users():
     db.session.commit()
 
 @manager.command
-def events_test():
-    # event = Event.query.filter_by(status_id=100).first_or_404()
-    # event.status_id = 400
+def event_status_check():
 
-    # db.session.add(event)
-    # db.session.commit()
-
-    ## events = Event.query.all()
-
-    # serialized_events = json.dumps(event_schema.dump(events).data)
-    # serialized_events = event_schema.dump(events).data
-
-
-    # This works.
-    # for e in db.session.query(Event).all():
-    #     print e.__dict__
-
-    # Using db.session instead of Event works
-    # events = db.session.query(Event).all()
-
-    # This works
+    # Check for events with status_id 100, active status.
     events = Event.query.filter_by(status_id=100).all()
 
-    # for e in events:
-    #     print e.__dict__
-
-    for e in events:
-        # dict_event = e.__dict__
-        # print event_dict["name"]
-
-        if e.end_date <= datetime.utcnow():
-            # print json.dumps(event_schema.dump(e).data)
-
-            e.status_id = 400
+    for event in events:
+        # If the event end date has expired, change its status_id
+        # to 400, completed status.
+        if event.end_date <= datetime.utcnow():
+            event.status_id = 400
 
             try:
-                db.session.add(e)
+                db.session.add(event)
                 print 'Success'
             except exc.SQLAlchemyError as e:
                 current_app.logger.error(e)
                 print 'Error'
 
 
+    # Commit the db session back.
     db.session.commit()
 
 
