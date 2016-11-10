@@ -14,8 +14,6 @@ angular.module('events.controllers', [])
     $scope.formValid = false;
     $scope.rowId = 0;
 
-    var url = location.pathname;
-
     // This method of calling the service initializes the response
     // as an object in the controller on load.
     // $scope.params = EventService.getEvent();

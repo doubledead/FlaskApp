@@ -13,19 +13,33 @@ events = Blueprint('events', __name__, template_folder='templates')
 @login_required
 def index():
     user_id = current_user.id
-    events = Event.query.filter_by(user_id=user_id)
 
-    events_count = events.count()
+    # All events belonging to current user.
+    events_user = Event.query.filter_by(user_id=user_id)
 
+    # All active events belonging to current user.
+    events_active = Event.query.filter_by(user_id=user_id, status_id=100)
+    events_active_count = events_active.count()
 
+    # events_active_all = Event.query.filter_by(status_id=100)
+
+    # This still needs to be filtered with status_id=100, active.
     events_invited = Event.query.filter(Event.guests.any(Guest.email.contains(current_user.email)))
+    # events_invited = Event.query.filter(Event.guests.any(Guest.email.contains(current_user.email)))
     events_invited_count = events_invited.count()
-    # events_invited = Guest.query.filter(Guest.events.any(email=current_user.email)).all()
 
-    # events_invited = Event.query.filter_by(id=user_id).first().guests
+    # events_invited_active= events_invited.query.filter_by(status_id=100)
 
-    return render_template('events/events.html', events=events, events_count=events_count,
-                           events_invited=events_invited, events_invited_count=events_invited_count)
+    # Events belonging to current user with status 400, completed.
+    events_completed = Event.query.filter_by(user_id=user_id, status_id=400).all()
+
+    return render_template('events/events.html',
+                           events_active=events_active,
+                           events_active_count=events_active_count,
+                           events_user=events_user,
+                           events_invited=events_invited,
+                           events_invited_count=events_invited_count,
+                           events_completed=events_completed)
 
 @events.route('/')
 @login_required
@@ -208,8 +222,12 @@ def getitems():
         # Serialize SQLAlchemy object to JSON
         serialized_event = event_schema.dump(event).data
 
+        ##### Add user specific data payload.
+        ##### All Subitems for Event creator only.
+        ### One Subitem for Guests.
+
         # Package data payload into a Python dictionary
-        payload = {"current_user_id" : current_user.id, "event_data" : serialized_event}
+        payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0}
 
         # return dictionary as JSON object
         return json.dumps(payload)
@@ -236,6 +254,8 @@ def updateitem():
         item_id = data['id']
         # subitem_qty_data = int(data['quantity_claimed'])
         subitem_qty_data = int(data['quantity_claimed_new'])
+        ## Refer to getitems() notes above.
+        # subitem_qty_data = 0
 
         item = Item.query.filter_by(id=item_id).first_or_404()
         item_max_qty = item.quantity
