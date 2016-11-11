@@ -18,10 +18,6 @@ from sqlalchemy import exc
 manager = Manager(app)
 
 @manager.command
-def hello():
-    print "hello"
-
-@manager.command
 def populate():
     status_active = Status(name='active', status_code=100)
     status_inactive = Status(name='inactive', status_code=200)
