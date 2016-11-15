@@ -6,7 +6,6 @@ from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 
 from flaskapp import app
 from flaskapp.core import db
-from flaskapp.users.models import User
 from flaskapp.events.models import Category, Event, event_schema, Status
 from datetime import datetime, date
 
