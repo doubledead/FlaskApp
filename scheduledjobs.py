@@ -41,7 +41,7 @@ class Config(object):
             'func': '__main__:job1',
             'args': (1, 2),
             'trigger': 'interval',
-            'seconds': 10
+            'seconds': 30
         }
     ]
 
@@ -61,8 +61,8 @@ class Config(object):
     SCHEDULER_VIEWS_ENABLED = True
 
 
-def job1(a, b):
-    print(str(a) + ' ' + str(b))
+def job1():
+    print('This job runs every 30 seconds.')
 
 app = Flask(__name__)
 app.config.from_object(Config())
