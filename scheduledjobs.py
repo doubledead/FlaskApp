@@ -38,7 +38,7 @@ class Config(object):
         {
             'id': 'job1',
             'func': '__main__:job1',
-            'args': (1, 2),
+            'args': (),
             'trigger': 'interval',
             'seconds': 30
         }
