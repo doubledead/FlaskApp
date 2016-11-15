@@ -60,7 +60,8 @@ def job1():
 
 # app.run()
 
-scheduler = APScheduler(app)
+scheduler = APScheduler()
+scheduler.init_app(app)
 
 JOBS = [
     {
