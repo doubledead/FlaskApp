@@ -1,26 +1,11 @@
-from pytz import utc
-
-from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
-from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 
 from flaskapp import app
 from flaskapp.core import db
-from flaskapp.events.models import Category, Event, event_schema, Status
+from flaskapp.events.models import Event
 from datetime import datetime, date
 
+from apscheduler.schedulers.background import BackgroundScheduler
 
-jobstores = {
-    'default': SQLAlchemyJobStore(url='postgres://nljweakzhspxaa:Cl3n7ipIY1AvTk1MLyslOfZgLz@ec2-54-235-111-59.compute-1.amazonaws.com:5432/dc4t9bjie4nrtc')
-}
-executors = {
-    'default': ThreadPoolExecutor(20),
-    'processpool': ProcessPoolExecutor(5)
-}
-job_defaults = {
-    'coalesce': False,
-    'max_instances': 3
-}
 scheduler = BackgroundScheduler()
 
 def event_status_check():
@@ -40,7 +25,5 @@ def event_status_check():
     db.session.commit()
 
 scheduler.add_job(event_status_check, 'interval', seconds=30)
-
-scheduler.configure(jobstores=jobstores, executors=executors, job_defaults=job_defaults, timezone=utc)
 
 scheduler.start()
