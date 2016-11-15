@@ -24,7 +24,6 @@ job_defaults = {
 }
 scheduler = BackgroundScheduler()
 
-@scheduler.scheduled_job('interval', seconds=30)
 def event_status_check():
     # Check for events with status_id 100, active status.
     events = Event.query.filter_by(status_id=100).all()
@@ -36,16 +35,12 @@ def event_status_check():
             event.status_id = 400
 
             db.session.add(event)
-            # try:
-            #     db.session.add(event)
-            # except exc.SQLAlchemyError as e:
-            #     current_app.logger.error(e)
-            #     print 'Error'
 
 
     # Commit the db session back.
     db.session.commit()
 
+scheduler.add_job(event_status_check, 'interval', seconds=30)
 
 scheduler.configure(jobstores=jobstores, executors=executors, job_defaults=job_defaults, timezone=utc)
 
