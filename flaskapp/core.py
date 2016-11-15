@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security
 from flask_marshmallow import Marshmallow
 from flask.ext.moment import Moment
+from apscheduler.schedulers.background import BackgroundScheduler
 
 #: Flask-SQLAlchemy extension instance
 db = SQLAlchemy()
@@ -22,6 +23,8 @@ security = Security()
 #: Moment.js integration within Jinja2
 # https://blog.miguelgrinberg.com/post/flask-moment-flask-and-jinja2-integration-with-momentjs
 moment = Moment()
+
+scheduler = BackgroundScheduler()
 
 
 class FlaskAppError(Exception):
