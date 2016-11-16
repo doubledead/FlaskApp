@@ -2,6 +2,7 @@
 import os
 from flask import abort, Flask, g, render_template, request
 from flask_security import SQLAlchemyUserDatastore, current_user
+# import logging
 
 from flaskapp.utils import get_instance_folder_path
 from flaskapp.cache import cache
@@ -18,6 +19,8 @@ app = Flask(__name__,
 
 app.config.from_object('flaskapp.settings')
 app.config.from_pyfile('config.cfg', silent=True)
+
+# logging.basicConfig(filename='example.log',level=logging.DEBUG)
 
 cache.init_app(app)
 

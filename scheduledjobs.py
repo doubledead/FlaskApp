@@ -3,9 +3,12 @@ from flaskapp import app
 from flaskapp.core import db
 from flaskapp.events.models import Event
 from datetime import datetime, date
+import logging
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.blocking import BlockingScheduler
+
+logging.basicConfig(filename='jobs.log',level=logging.DEBUG)
 
 # sched = BackgroundScheduler()
 sched = BlockingScheduler()
