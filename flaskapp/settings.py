@@ -10,9 +10,9 @@ CACHE_TYPE = 'simple'
 # SQLite Connection
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
 # PostgreSQL Connection
-# SQLALCHEMY_DATABASE_URI = 'postgresql://puser:Password1@localhost/devdb1'
+SQLALCHEMY_DATABASE_URI = 'postgresql://puser:Password1@localhost/devdb1'
 # Heroku DB Connection
-SQLALCHEMY_DATABASE_URI = 'postgres://nljweakzhspxaa:Cl3n7ipIY1AvTk1MLyslOfZgLz@ec2-54-235-111-59.compute-1.amazonaws.com:5432/dc4t9bjie4nrtc'
+# SQLALCHEMY_DATABASE_URI = 'postgres://nljweakzhspxaa:Cl3n7ipIY1AvTk1MLyslOfZgLz@ec2-54-235-111-59.compute-1.amazonaws.com:5432/dc4t9bjie4nrtc'
 SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39a'
 
 # Flask-Mail
@@ -37,3 +37,17 @@ SECURITY_POST_REGISTER_VIEW = '/main'
 SECURITY_SEND_REGISTER_EMAIL = False
 # SECURITY_SEND_REGISTER_EMAIL = True
 SECURITY_TRACKABLE = True
+
+# Configure logging
+LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+# Flask-APScheduler
+JOBS = [
+    {
+        'id': 'job1',
+        'func': 'flaskapp.apsjobs:events_check',
+        'trigger': 'interval',
+        'seconds': 30
+    }
+]
+SCHEDULER_VIEWS_ENABLED = True

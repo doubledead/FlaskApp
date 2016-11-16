@@ -2,12 +2,12 @@
 import os
 from flask import abort, Flask, g, render_template, request
 from flask_security import SQLAlchemyUserDatastore, current_user
-# import logging
+import logging
 
 from flaskapp.utils import get_instance_folder_path
 from flaskapp.cache import cache
 
-from .core import db, ma, mail, security, moment
+from .core import db, ma, mail, security, moment, scheduler
 from .models import User, Role
 
 from .users.forms import ExtendedRegisterForm, ExtendedConfirmRegisterForm
@@ -20,17 +20,21 @@ app = Flask(__name__,
 app.config.from_object('flaskapp.settings')
 app.config.from_pyfile('config.cfg', silent=True)
 
-# logging.basicConfig(filename='example.log',level=logging.DEBUG)
+logging.basicConfig(format=app.config['LOGGING_FORMAT'],filename='logs.log',level=logging.DEBUG)
 
 cache.init_app(app)
 
 db.init_app(app)
 ma.init_app(app)
 mail.init_app(app)
+moment.init_app(app)
 security.init_app(app, SQLAlchemyUserDatastore(db, User, Role),
                   register_form=ExtendedRegisterForm,
                   confirm_register_form=ExtendedConfirmRegisterForm)
-moment.init_app(app)
+
+# Flask-APScheduler initialize and start.
+scheduler.init_app(app)
+scheduler.start()
 
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
