@@ -5,8 +5,10 @@
 # from datetime import datetime, date
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
-sched = BackgroundScheduler()
+# sched = BackgroundScheduler()
+sched = BlockingScheduler()
 
 def event_status_check():
     # Check for events with status_id 100, active status.
