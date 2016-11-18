@@ -142,7 +142,7 @@ angular.module('create.controllers', [])
 
       var item = {
         itemId: $scope.itemId,
-        category: 100,
+        category_id: 100,
         name: itemName,
         quantity: itemQuantity
       };

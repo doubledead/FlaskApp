@@ -69,7 +69,7 @@ class Item(db.Model):
     __tablename__ = 'items'
 
     id = db.Column(db.Integer(), primary_key=True)
-    category = db.Column(db.String(225))
+    category_id = db.Column(db.Integer())
     name = db.Column(db.String(225))
     quantity = db.Column(db.Integer())
     quantity_claimed = db.Column(db.Integer())
@@ -78,8 +78,8 @@ class Item(db.Model):
     subitems = db.relationship('Subitem', secondary=items_subitems,
                             backref=db.backref('items', lazy='joined'))
 
-    def __init__(self, category, name, quantity, quantity_claimed):
-        self.category = category
+    def __init__(self, category_id, name, quantity, quantity_claimed):
+        self.category_id = category_id
         self.name = name
         self.quantity = quantity
         self.quantity_claimed = quantity_claimed

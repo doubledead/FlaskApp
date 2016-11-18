@@ -15,7 +15,7 @@ def index():
     user_id = current_user.id
 
     # All events belonging to current user.
-    events_user = Event.query.filter_by(user_id=user_id)
+    # events_user = Event.query.filter_by(user_id=user_id)
 
     # All active events belonging to current user.
     events_active = Event.query.filter_by(user_id=user_id, status_id=100)
@@ -23,12 +23,12 @@ def index():
 
     # events_active_all = Event.query.filter_by(status_id=100)
 
-    # This still needs to be filtered with status_id=100, active.
+    # Events current user is a guest of
     events_invited = Event.query.filter(Event.guests.any(Guest.email.contains(current_user.email)))
-    # events_invited = Event.query.filter(Event.guests.any(Guest.email.contains(current_user.email)))
-    events_invited_count = events_invited.count()
 
-    # events_invited_active= events_invited.query.filter_by(status_id=100)
+    # Events invited to that are active
+    events_invited_active = events_invited.filter_by(status_id=100)
+    events_invited_active_count = events_invited_active.count()
 
     # Events belonging to current user with status 400, completed.
     events_completed = Event.query.filter_by(user_id=user_id, status_id=400).all()
@@ -36,9 +36,8 @@ def index():
     return render_template('events/events.html',
                            events_active=events_active,
                            events_active_count=events_active_count,
-                           events_user=events_user,
-                           events_invited=events_invited,
-                           events_invited_count=events_invited_count,
+                           events_invited_active=events_invited_active,
+                           events_invited_active_count=events_invited_active_count,
                            events_completed=events_completed)
 
 @events.route('/')
@@ -117,11 +116,11 @@ def create():
             event.guests.append(guest)
 
         for i in items_data:
-            item_category = i['category']
+            item_category_id = int(i['category_id'])
             item_name = i['name']
             item_quantity = i['quantity']
 
-            item = Item(category=item_category,name=item_name, quantity=item_quantity, quantity_claimed=0)
+            item = Item(category_id=item_category_id,name=item_name, quantity=item_quantity, quantity_claimed=0)
 
             event.items.append(item)
 

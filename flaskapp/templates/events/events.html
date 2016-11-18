@@ -70,54 +70,7 @@
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-md-12">
-      <h4><strong>Invited To</strong></h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12 col-md-12">&nbsp;</div>
-  </div>
-  {% if events_invited_count > 0 %}
-    <div class="row">
-      <div class="col-sm-3 col-md-3"><strong>Name</strong></div>
-      <div class="col-sm-3 col-md-3"><strong>Start</strong></div>
-      <div class="col-sm-3 col-md-3"><strong>End</strong></div>
-      <div class="col-sm-1 col-md-1">&nbsp;</div>
-      <div class="col-sm-2 col-md-2">&nbsp;</div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-12">&nbsp;</div>
-    </div>
-    {% for event in events_invited %}
-      <div class="row">
-        <div class="col-sm-3 col-md-3">{{ event.name }}</div>
-{#        <div class="col-sm-3 col-md-3">{{ event.start_date.strftime('%m-%d-%Y %H:%M %p') }}</div>#}
-        <div class="col-sm-3 col-md-3">{{ moment(event.start_date).format('MM-D-YYYY, h:mm a') }}</div>
-{#        <div class="col-sm-3 col-md-3">{{ event.end_date.strftime('%m-%d-%Y %H:%M %p') }}</div>#}
-        <div class="col-sm-3 col-md-3">{{ moment(event.end_date).format('MM-D-YYYY, h:mm a') }}</div>
-        <div class="col-sm-1 col-md-1">
-          <a href="{{ url_for('events.show', event_id=event.id) }}" class="btn btn-xs btn-info">
-            View
-          </a>
-        </div>
-        <div class="col-sm-2 col-md-2">&nbsp;</div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 col-md-12">&nbsp;</div>
-      </div>
-    {% endfor %}
-  {% else %}
-    <div class="row">
-      <div class="col-sm-12 col-md-12">
-        You have not been invited to any events.
-      </div>
-    </div>
-  {% endif %}
-  <div class="row">
-    <div class="col-sm-12 col-md-12">&nbsp;</div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12 col-md-12">Completed Events</div>
+    <div class="col-sm-12 col-md-12">Your Completed Events</div>
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
@@ -154,6 +107,53 @@
       {% endfor %}
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <h4><strong>Invited To</strong></h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  {% if events_invited_active_count > 0 %}
+    <div class="row">
+      <div class="col-sm-3 col-md-3"><strong>Name</strong></div>
+      <div class="col-sm-3 col-md-3"><strong>Start</strong></div>
+      <div class="col-sm-3 col-md-3"><strong>End</strong></div>
+      <div class="col-sm-1 col-md-1">&nbsp;</div>
+      <div class="col-sm-2 col-md-2">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">&nbsp;</div>
+    </div>
+    {% for ei in events_invited_active %}
+      <div class="row">
+        <div class="col-sm-3 col-md-3">{{ ei.name }}</div>
+{#        <div class="col-sm-3 col-md-3">{{ event.start_date.strftime('%m-%d-%Y %H:%M %p') }}</div>#}
+        <div class="col-sm-3 col-md-3">{{ moment(ei.start_date).format('MM-D-YYYY, h:mm a') }}</div>
+{#        <div class="col-sm-3 col-md-3">{{ event.end_date.strftime('%m-%d-%Y %H:%M %p') }}</div>#}
+        <div class="col-sm-3 col-md-3">{{ moment(ei.end_date).format('MM-D-YYYY, h:mm a') }}</div>
+        <div class="col-sm-1 col-md-1">
+          <a href="{{ url_for('events.show', event_id=ei.id) }}" class="btn btn-xs btn-info">
+            View
+          </a>
+        </div>
+        <div class="col-sm-2 col-md-2">&nbsp;</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12">&nbsp;</div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        You have not been invited to any events.
+      </div>
+    </div>
+  {% endif %}
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
