@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 from flask import request, redirect, url_for, json, current_app
-from ..core import db
+from ..core import db, mail
+from flask_mail import Message
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import NewEventForm, UpdateEventForm, UpdateItemForm
@@ -124,9 +125,15 @@ def create():
 
             event.items.append(item)
 
+        msg = Message()
+        msg.add_recipient(current_user.email)
+
+        msg.body = "Event created: " + name
+
         try:
             db.session.add(event)
             db.session.commit()
+            mail.send(msg)
             return json.dumps({'status':'OK'})
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
