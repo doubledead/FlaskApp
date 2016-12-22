@@ -147,6 +147,7 @@ def create():
             db.session.add(event)
             db.session.commit()
             mail.send(msg)
+            mail.send(guestmsg)
             return json.dumps({'status':'OK'})
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
