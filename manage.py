@@ -9,11 +9,12 @@ from flask.ext.script import Manager
 from flask import json, current_app
 
 from flaskapp import app
-from flaskapp.core import db
+from flaskapp.core import db, mail
 from flaskapp.users.models import User
 from flaskapp.events.models import Category, Event, event_schema, Status
 from datetime import datetime, date
 from sqlalchemy import exc
+from flask_mail import Message
 
 manager = Manager(app)
 
@@ -64,8 +65,14 @@ def event_status_check():
         if event.end_date <= datetime.utcnow():
             event.status_id = 400
 
+            event_creator = User.query.filter_by(id=event.user_id)
+            confmsg = Message()
+            confmsg.add_recipient(event_creator.email)
+            confmsg.body = "The following event has ended: " + event.name
+
             try:
                 db.session.add(event)
+                mail.send(confmsg)
                 print 'Success'
             except exc.SQLAlchemyError as e:
                 current_app.logger.error(e)
