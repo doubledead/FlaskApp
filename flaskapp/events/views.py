@@ -110,12 +110,23 @@ def create():
                       name=name, start_date=start_date, state=state, status_id=status_id,
                       user_id=user_id, zip_code=zip_code)
 
+        # Guest invite email
+        guestmsg = Message()
+        guestmsg.subject = "FlaskApp - Event Invite - " + name
+        guestmsg.body = "You have been invited to the following event: " + name
+
+
+        # Iterate through guest email addresses
         for g in guests_data:
             e = g['email']
 
             guest = Guest(email=e)
             event.guests.append(guest)
 
+            guestmsg.add_recipient(e)
+
+
+        # Iterate through items
         for i in items_data:
             item_category_id = int(i['category_id'])
             item_name = i['name']
@@ -130,6 +141,7 @@ def create():
         msg.add_recipient(current_user.email)
 
         msg.body = "Event created: " + name
+
 
         try:
             db.session.add(event)
