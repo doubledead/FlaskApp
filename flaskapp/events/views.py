@@ -126,6 +126,7 @@ def create():
             event.items.append(item)
 
         msg = Message()
+        msg.subject = "FlaskApp - Event Created: " + name
         msg.add_recipient(current_user.email)
 
         msg.body = "Event created: " + name

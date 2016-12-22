@@ -31,13 +31,14 @@ def events_check():
                 event.status_id = 400
                 current_app.logger.info('Event expired. Status updated. Event ID: %s', event.id)
 
-                # event_creator = User.query.filter_by(id=event.user_id)
-                # confmsg = Message()
-                # confmsg.add_recipient(event_creator.email)
-                # confmsg.body = "The following event has ended: " + event.name
+                user = User.query.filter_by(id=event.user_id).first_or_404()
+                confmsg = Message()
+                confmsg.subject = "FlaskApp - Event Ended"
+                confmsg.add_recipient(user.email)
+                confmsg.body = "The following event has ended: " + event.name
 
                 db.session.add(event)
-                # mail.send(confmsg)
+                mail.send(confmsg)
             else:
                 current_app.logger.info('Status 105, no expired events.')
 
