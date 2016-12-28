@@ -58,7 +58,7 @@ def inject_user():
     return dict(user=current_user)
 
 @app.route('/')
-@cache.cached(300)
+# @cache.cached(300)
 def home():
     return render_template('index.html')
 
