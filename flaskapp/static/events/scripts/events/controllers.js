@@ -25,12 +25,14 @@ angular.module('events.controllers', [])
       .getEvent()
       .then(function (res) {
         $scope.params = res.data;
-        console.log($scope.params);
+        // console.log($scope.params);
       });
 
 
     $scope.claimItem = function (id) {
       var item;
+
+      // Iterate through params.event_data to find Item object
       for (var i = 0; i < $scope.params.event_data.items.length; i++) {
         if ($scope.params.event_data.items[i].id === id) {
           item = $scope.params.event_data.items[i];

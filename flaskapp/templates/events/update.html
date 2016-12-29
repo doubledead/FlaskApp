@@ -46,18 +46,24 @@
     <div class="col-sm-3 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-sm-3 col-md-12">
+    <div class="col-sm-1 col-md-1">
       <a href="{{ url_for('events.delete', event_id=event.id) }}" class="btn btn-xs btn-danger">
         Delete
       </a>
     </div>
+    <div class="col-sm-1 col-md-1">
+      <a href="{{ url_for('events.show', event_id=event.id) }}" class="btn btn-xs btn-info">
+        Back
+      </a>
+    </div>
   </div>
   <div class="row">
-    <div class="col-sm-3 col-md-12">&nbsp;</div>
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-md-12">&nbsp;</div>
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
-  {% raw %}
-  {% endraw %}
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
 {% endblock %}

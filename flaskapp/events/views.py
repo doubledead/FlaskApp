@@ -41,6 +41,7 @@ def index():
                            events_invited_active_count=events_invited_active_count,
                            events_completed=events_completed)
 
+
 @events.route('/')
 @login_required
 def display_events():
@@ -48,6 +49,7 @@ def display_events():
     events = Event.query.filter_by(user_id=user_id)
 
     return render_template("events/events.html", events=events)
+
 
 # Flask WTForms Create endpoint
 @events.route('/create_event', methods=['GET', 'POST'])
@@ -82,6 +84,7 @@ def create_event():
         return redirect(url_for('events.display_events'))
 
     return render_template("events/create_event.html", form=form)
+
 
 # JSON format endpoint
 @events.route('/create', methods=['GET', 'POST'])
@@ -159,6 +162,7 @@ def create():
 
     return render_template("events/create.html")
 
+
 @events.route('/<event_id>', methods=['GET', 'POST'])
 @login_required
 def show(event_id):
@@ -171,6 +175,20 @@ def show(event_id):
         items = event.items
 
         return render_template("events/show.html", event=event, guests=guests, items=items, user_id=user_id)
+
+# Endpoint for Jinja2 template
+@events.route('/view/<event_id>', methods=['GET', 'POST'])
+@login_required
+def view(event_id):
+    if request.method =="GET":
+        user_id = current_user.id
+        event = Event.query.filter_by(id=event_id).first_or_404()
+
+        guests = event.guests
+
+        items = event.items
+
+        return render_template("events/view.html", event=event, guests=guests, items=items, user_id=user_id)
 
 
 @events.route('/update/<event_id>', methods=['GET', 'POST'])
@@ -210,6 +228,7 @@ def update(event_id):
 
     return render_template("events/update.html", event=event, form=form)
 
+
 @events.route('/delete/<event_id>', methods=['GET', 'POST'])
 @login_required
 def delete(event_id):
@@ -239,7 +258,6 @@ def getitems():
 
         event = Event.query.filter_by(id=paramId).first_or_404()
 
-        # Serialize SQLAlchemy object to JSON
         serialized_event = event_schema.dump(event).data
 
         ##### Add user specific data payload.
@@ -249,7 +267,6 @@ def getitems():
         # Package data payload into a Python dictionary
         payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0}
 
-        # return dictionary as JSON object
         return json.dumps(payload)
 
 
@@ -265,6 +282,7 @@ def showitem(item_id):
         return render_template("events/items/show.html", item=item, subitems=subitems, user_id=user_id)
 
 
+## Updates Subitem claimed amounts.
 @events.route('/updateitem', methods=['GET', 'POST'])
 @login_required
 def updateitem():
@@ -272,17 +290,13 @@ def updateitem():
         data = request.get_json()
 
         item_id = data['id']
-        # subitem_qty_data = int(data['quantity_claimed'])
         subitem_qty_data = int(data['quantity_claimed_new'])
-        ## Refer to getitems() notes above.
-        # subitem_qty_data = 0
 
         item = Item.query.filter_by(id=item_id).first_or_404()
         item_max_qty = item.quantity
         item_claimed_current = item.quantity_claimed
 
-        # Update existing Subitem.
-        # Else, create new Subitem
+        # Update existing Subitem. Else, create new Subitem
         for i in item.subitems:
             if i.user_id == current_user.id:
                 subitem = i
@@ -304,7 +318,6 @@ def updateitem():
                         return json.dumps({'status':'code:3'})
 
 
-                # Append updated Subitem to Item's Subitems
                 item.subitems.append(subitem)
                 try:
                     db.session.add(item)
@@ -346,5 +359,3 @@ def updateitem():
         #
         #     item.subitems.append(subitem)
         #     db.session.add(item)
-
-

@@ -42,16 +42,16 @@
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-sm-2 col-md-2">Start Date</div>
-    <div class="col-sm-2 col-md-2">End Date</div>
+    <div class="col-sm-2 col-md-3">Start</div>
+    <div class="col-sm-2 col-md-3">End</div>
     <div class="col-sm-2 col-md-2">&nbsp;</div>
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-sm-3 col-md-2">{{ event.start_date.strftime('%m-%d-%Y') }}</div>
-    <div class="col-sm-3 col-md-2">{{ event.end_date.strftime('%m-%d-%Y') }}</div>
+    <div class="col-sm-3 col-md-3">{{ moment(event.start_date).format('MM-D-YYYY, h:mm a') }}</div>
+    <div class="col-sm-3 col-md-3">{{ moment(event.end_date).format('MM-D-YYYY, h:mm a') }}</div>
     <div class="col-sm-3 col-md-2">
       {% if event.user_id == user_id %}
         <a href="{{ url_for('events.update', event_id=event.id) }}" class="btn btn-xs btn-info">
@@ -112,6 +112,9 @@
               <div>&nbsp;</div>
               <button type="button" class="btn btn-primary btn-xs" ng-click="claimItem(item.id)">Claim</button>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
           <div class="row">
             <div class="col-sm-12 col-md-12">&nbsp;</div>

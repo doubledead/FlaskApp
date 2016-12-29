@@ -1,0 +1,134 @@
+{% extends 'layouts/events/show.html' %}
+{% block title %}Events - {{ event.name }}{% endblock %}
+{% block container %}
+  <div class="jumbotron">
+    <h4>{{ event.name }}</h4>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <h4><strong>Details</strong></h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12"><strong>Location</strong></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">{{ event.address }}</div>
+  </div>
+    {% if event.address_line_two %}
+      <div class="row">
+        <div class="col-sm-12 col-md-12">{{ event.address_line_two }}</div>
+      </div>
+    {% endif %}
+  <div class="row">
+    <div class="col-sm-4 col-md-5">
+        {{ event.city }}, {{ event.state }} {{ event.zip_code }}
+    </div>
+    <div class="col-sm-8 col-md-7">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12"><strong>Time</strong></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2 col-md-3">Start</div>
+    <div class="col-sm-2 col-md-3">End</div>
+    <div class="col-sm-2 col-md-2">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3 col-md-3">{{ moment(event.start_date).format('MM-D-YYYY, h:mm a') }}</div>
+    <div class="col-sm-3 col-md-2">{{ moment(event.end_date).format('MM-D-YYYY, h:mm a') }}</div>
+    <div class="col-sm-3 col-md-2">
+        {% if event.user_id == user_id %}
+          <a href="{{ url_for('events.update', event_id=event.id) }}" class="btn btn-xs btn-info">
+            Edit Details
+          </a>
+        {% endif %}
+    </div>
+    <div class="col-sm-3 col-md-1">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+    {% if event.user_id == user_id %}
+      <div class="row">
+        <div class="col-sm-12 col-md-12"><h4><strong>Guests</strong></h4></div>
+      </div>
+        {% for g in guests %}
+          <div class="row">
+            <div class="col-sm-5 col-md-12">{{ g.email }}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+        {% endfor %}
+      <div class="row">
+        <div class="col-sm-12 col-md-12">&nbsp;</div>
+      </div>
+    {% endif %}
+  <div class="row">
+    <div class="col-sm-12 col-md-12"><h4><strong>Items</strong></h4></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  {% for item in items %}
+    <div class="row">
+      <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
+      <div class="col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
+      <div class="col-sm-2 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
+      <div class="col-sm-1 col-md-1">
+        <a href="{{ url_for('events.showitem', item_id=item.id) }}" class="btn btn-xs btn-info">View</a>
+      </div>
+    </div>
+    {% if event.user_id == user_id %}
+      <div class="row">
+        <div class="col-sm-12 col-md-12">&nbsp;</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12"><strong>Claimed By Guests</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12">&nbsp;</div>
+      </div>
+      {% for subitem in item.subitems %}
+        <div class="row">
+          <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
+          <div class="col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12">&nbsp;</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+    <div class="row">
+      <div class="col-sm-12 col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <hr >
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">&nbsp;</div>
+    </div>
+  {% endfor %}
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+{% endblock %}
