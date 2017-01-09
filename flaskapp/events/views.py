@@ -248,6 +248,18 @@ def delete(event_id):
 
 #################### Items ################
 
+@events.route('/item/<item_id>', methods=['GET'])
+@login_required
+def showitem(item_id):
+    if request.method == "GET":
+        user_id = current_user.id
+        item = Item.query.filter_by(id=item_id).first_or_404()
+
+        subitems = item.subitems
+
+        return render_template("events/items/show.html", item=item, subitems=subitems, user_id=user_id)
+
+
 @events.route('/getitems', methods=['GET', 'POST'])
 @login_required
 def getitems():
@@ -268,18 +280,6 @@ def getitems():
         payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0}
 
         return json.dumps(payload)
-
-
-@events.route('/item/<item_id>', methods=['GET'])
-@login_required
-def showitem(item_id):
-    if request.method == "GET":
-        user_id = current_user.id
-        item = Item.query.filter_by(id=item_id).first_or_404()
-
-        subitems = item.subitems
-
-        return render_template("events/items/show.html", item=item, subitems=subitems, user_id=user_id)
 
 
 ## Updates Subitem claimed amounts.
@@ -309,13 +309,35 @@ def updateitem():
                     item.quantity_claimed = item_claimed_current - subitem_qty_difference
                 elif subitem_qty_data > subitem_qty_current:
                     subitem_qty_difference = (subitem_qty_data - subitem_qty_current)
+                    # sum
+                    item_claimed_subtotal = (item_claimed_current + subitem_qty_difference)
 
-                    if (item_claimed_current + subitem_qty_difference) <= item_max_qty:
-                        subitem.quantity = subitem_qty_current + subitem_qty_difference
-                        item.quantity_claimed = (item_claimed_current + subitem_qty_difference)
-                    else:
-                        print('Quantity being claimed exceeds max. Value will remain unchanged.')
-                        return json.dumps({'status':'code:3'})
+                    # if (item_claimed_current + subitem_qty_difference) <= item_max_qty:
+                    #     subitem.quantity = subitem_qty_current + subitem_qty_difference
+                    #     item.quantity_claimed = (item_claimed_current + subitem_qty_difference)
+                    # else:
+                    #     print('Quantity being claimed exceeds max. Value will remain unchanged.')
+                    #     return json.dumps({'status':'code:3'})
+
+                    if item_claimed_subtotal <= item_max_qty:
+                        subitem.quantity = (subitem_qty_current + subitem_qty_difference)
+                        item.quantity_claimed = item_claimed_subtotal
+                    elif item_claimed_subtotal > item_max_qty:
+                        claimed_subtotal_difference = (item_claimed_subtotal - item_max_qty)
+                        print claimed_subtotal_difference
+                        if (item_claimed_current + claimed_subtotal_difference) <= item_max_qty:
+                            # subitem_claimed_diff =
+                            subitem.quantity = (subitem_qty_current + claimed_subtotal_difference)
+                            item.quantity_claimed = (item_claimed_current + claimed_subtotal_difference)
+                            print('Quantity being claimed exceeds max. Difference claimed.')
+                            print claimed_subtotal_difference
+                            return json.dumps({'status':'code:2'})
+                        else:
+                            print('Quantity being claimed exceeds max. Value will remain unchanged.')
+                            return json.dumps({'status':'code:3'})
+                else:
+                    print('Something broke.')
+                    return json.dumps({'status':'code:4'})
 
 
                 item.subitems.append(subitem)
