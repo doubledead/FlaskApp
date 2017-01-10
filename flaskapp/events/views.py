@@ -346,7 +346,6 @@ def updateitem():
                 subitem = Subitem(quantity=subitem_qty_data,user_id=current_user.id)
                 item.subitems.append(subitem)
                 item.quantity_claimed = item_claimed_current + subitem_qty_data
-                # print("Subitem added.")
                 try:
                     db.session.add(item)
                     db.session.commit()
@@ -356,8 +355,22 @@ def updateitem():
                     current_app.logger.error(e)
                     return json.dumps({'status':'Error'})
             else:
-                print('Quantity being claimed exceeds max. Item not created.')
-                return json.dumps({'status':'code:3'})
+                if item_claimed_current < item_max_qty:
+                    item_claimed_max_diff = (item_max_qty - item_claimed_current)
+                    subitem = Subitem(quantity=item_claimed_max_diff,user_id=current_user.id)
+                    item.subitems.append(subitem)
+                    item.quantity_claimed = item_claimed_current + item_claimed_max_diff
+                    try:
+                        db.session.add(item)
+                        db.session.commit()
+                        print('Subitem added. Difference added.')
+                        return json.dumps({'status':'OK'})
+                    except exc.SQLAlchemyError as e:
+                        current_app.logger.error(e)
+                        return json.dumps({'status':'Error'})
+                else:
+                    print('Quantity being claimed exceeds max. Item not created.')
+                    return json.dumps({'status':'code:3'})
 
 
         # This will be for handling multiple items at once.
