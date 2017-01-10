@@ -317,15 +317,13 @@ def updateitem():
                         item.quantity_claimed = item_claimed_subtotal
                     else:
                         if item_claimed_subtotal > item_max_qty:
-                            claimed_subtotal_difference = (item_claimed_subtotal - item_max_qty)
-                            if (item_claimed_current + claimed_subtotal_difference) <= item_max_qty:
-                                # subitem_claimed_diff = subitem_qty_current
-                                subitem.quantity = (subitem_qty_current + claimed_subtotal_difference)
-                                item.quantity_claimed = (item_claimed_current + claimed_subtotal_difference)
-                                # print('Quantity being claimed exceeds max. Difference claimed.')
-                                # return json.dumps({'status':'code:2'})
+                            if item_claimed_current < item_max_qty:
+                                item_claimed_max_diff = (item_max_qty - item_claimed_current)
+                                subitem.quantity = (subitem_qty_current + item_claimed_max_diff)
+                                item.quantity_claimed = (item_claimed_current + item_claimed_max_diff)
+                                print 'Difference added.'
                             else:
-                                print('Quantity being claimed exceeds max. Value will remain unchanged. Code: 3')
+                                print 'Quantity being claimed exceeds max. Value will remain unchanged. Code: 3'
                                 return json.dumps({'status':'code:3'})
                 else:
                     print('Something broke.')
@@ -336,7 +334,7 @@ def updateitem():
                 try:
                     db.session.add(item)
                     db.session.commit()
-                    print('Subitem updated.')
+                    print('Subitem updated. Code: 1')
                     return json.dumps({'status':'OK'})
                 except exc.SQLAlchemyError as e:
                     current_app.logger.error(e)
