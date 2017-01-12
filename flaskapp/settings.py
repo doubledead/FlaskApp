@@ -1,8 +1,8 @@
 
 # Settings
 
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 # Setting TESTING to True disables @login_required checks
 TESTING = False
 
