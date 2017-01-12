@@ -14,7 +14,7 @@
         <div class="animate-switch" ng-switch-default>
           <p>Welcome to the form.</p>
           <p>Validation is disabled for this test app so please add data to every field.</p>
-          <button type="button" class="btn btn-primary" ng-click="next('stage1')">Next</button>
+          <button type="button" class="btn btn-success btn-sm" ng-click="next('stage1')">Next</button>
         </div>
         <div class="animate-switch" ng-switch-when="stage1">
           <div class="row">
@@ -26,8 +26,8 @@
             </div>
             <div class="col-sm-7 col-md-6">&nbsp;</div>
           </div>
-          <button type="button" class="btn btn-info" ng-click="back('')">Back</button>
-          <button type="button" class="btn btn-primary" ng-click="next('stage2')">Next</button>
+          <button type="button" class="btn btn-warning btn-sm" ng-click="back('')">Back</button>
+          <button type="button" class="btn btn-success btn-sm" ng-click="next('stage2')">Next</button>
         </div>
         <div class="animate-switch" ng-switch-when="stage2">
           <div class="row">
@@ -74,8 +74,8 @@
             </div>
             <div class="col-sm-9 col-md-8">&nbsp;</div>
           </div>
-          <button type="button" class="btn btn-info" ng-click="back('stage1')">Back</button>
-          <button type="button" class="btn btn-primary" ng-click="next('stage3')">Next</button>
+          <button type="button" class="btn btn-warning btn-sm" ng-click="back('stage1')">Back</button>
+          <button type="button" class="btn btn-success btn-sm" ng-click="next('stage3')">Next</button>
         </div>
         <div class="animate-switch" ng-switch-when="stage3">
           <div class="row">
@@ -126,8 +126,8 @@
             </div>
             <div class="col-sm-7 col-md-6">&nbsp;</div>
           </div>
-          <button type="button" class="btn btn-info" ng-click="back('stage2')">Back</button>
-          <button type="button" class="btn btn-primary" ng-click="next('stage4')">Next</button>
+          <button type="button" class="btn btn-warning btn-sm" ng-click="back('stage2')">Back</button>
+          <button type="button" class="btn btn-success btn-sm" ng-click="next('stage4')">Next</button>
         </div>
         <div class="animate-switch" ng-switch-when="stage4">
           <div class="row">
@@ -142,7 +142,7 @@
             </div>
             <div class="col-sm-7 col-md-6">
               <div>&nbsp;</div>
-              <button type="button" class="btn btn-xs btn-warning" ng-click="addGuestEmail()">Add</button>
+              <button type="button" class="btn btn-info btn-xs" ng-click="addGuestEmail()">Add</button>
             </div>
             <div class="row">
               <div class="col-sm-12 col-md-12">&nbsp;</div>
@@ -159,7 +159,7 @@
           <div ng-repeat="e in params.guests">
             <div class="row">
               <div class="col-sm-12 col-md-12">
-                {{ e.email }} <button type="button" class="btn btn-danger btn-xs" ng-click="removeGuestEmail(e.row_id)">Remove</button>
+                {{ e.email }}&nbsp;&nbsp;<button type="button" class="btn btn-danger btn-xs" ng-click="removeGuestEmail(e.row_id)">Remove</button>
               </div>
             </div>
             <div class="row">
@@ -168,8 +168,8 @@
           </div>
           <div class="row">
             <div class="col-sm-6 col-md-12">
-              <button type="button" class="btn btn-info" ng-click="back('stage3')">Back</button>
-              <button type="button" class="btn btn-primary" ng-click="next('stage5')">Next</button>
+              <button type="button" class="btn btn-warning btn-sm" ng-click="back('stage3')">Back</button>
+              <button type="button" class="btn btn-success btn-sm" ng-click="next('stage5')">Next</button>
             </div>
           </div>
         </div>
@@ -195,17 +195,9 @@
             </div>
             <div class="col-sm-2 col-md-2">
               <div>&nbsp;</div>
-              <button type="button" class="btn btn-xs btn-warning" ng-click="addItem()">Add</button>
+              <button type="button" class="btn btn-info btn-xs" ng-click="addItem()">Add</button>
             </div>
           </div>
-          <!--
-          <div class="row">
-            <div class="col-sm-12 col-md-12">
-              <div>&nbsp;</div>
-              <button type="button" class="btn btn-xs btn-warning" ng-click="addItem()">Add</button>
-            </div>
-          </div>
-          -->
           <div class="row">
             <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
@@ -235,8 +227,8 @@
           </div>
           <div class="row">
             <div class="col-sm-6 col-md-12">
-              <button type="button" class="btn btn-info" ng-click="back('stage4')">Back</button>
-              <button type="button" class="btn btn-primary" ng-click="next('stage6')">Next</button>
+              <button type="button" class="btn btn-warning btn-sm" ng-click="back('stage4')">Back</button>
+              <button type="button" class="btn btn-success btn-sm" ng-click="next('stage6')">Next</button>
             </div>
           </div>
         </div>
@@ -254,8 +246,8 @@
             <pre> {{ params | json }}</pre>
           </div>
           -->
-          <button type="button" class="btn btn-info" ng-click="back('stage5')">Back</button>
-          <button type="button" class="btn btn-primary" ng-click="submitForm()">Submit</button>
+          <button type="button" class="btn btn-warning btn-sm" ng-click="back('stage5')">Back</button>
+          <button type="button" class="btn btn-primary btn-sm" ng-click="submitForm()">Create</button>
         </div>
         <div class="animate-switch" ng-switch-when="createSuccess">
           <div class="row">

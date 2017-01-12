@@ -2,7 +2,7 @@ angular.module('events.services', [])
   .factory('EventService', function($http){
 
       return {
-        getEvent: function() {
+        getItems: function() {
           var url = location.pathname;
           // Split event ID out of URL
           var paramId = url.split('/events/', 2)[1];

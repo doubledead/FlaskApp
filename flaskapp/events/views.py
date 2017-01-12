@@ -172,9 +172,7 @@ def show(event_id):
 
         guests = event.guests
 
-        items = event.items
-
-        return render_template("events/show.html", event=event, guests=guests, items=items, user_id=user_id)
+        return render_template("events/show.html", event=event, guests=guests, user_id=user_id)
 
 # Endpoint for Jinja2 template
 @events.route('/view/<event_id>', methods=['GET', 'POST'])
@@ -270,16 +268,28 @@ def getitems():
 
         event = Event.query.filter_by(id=paramId).first_or_404()
 
+        ## Revise to not send not send whole event object.
         serialized_event = event_schema.dump(event).data
 
         ##### Add user specific data payload.
         ##### All Subitems for Event creator only.
         ### One Subitem for Guests.
 
+        items = item_schema.dump(event.items).data
+
         # Package data payload into a Python dictionary
-        payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0}
+        payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0, "items_data" : items}
 
         return json.dumps(payload)
+
+
+@events.route('/updateitems', methods=['GET', 'POST'])
+@login_required
+def updateitems():
+    if request.method == "POST":
+        data = request.get_json()
+
+        return json.dumps({'status':'OK'})
 
 
 ## Updates Subitem claimed amounts.

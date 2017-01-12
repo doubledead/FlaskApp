@@ -13,6 +13,7 @@ angular.module('events.controllers', [])
     $scope.params = [];
     $scope.formValid = false;
     $scope.rowId = 0;
+    $scope.toggleEventObjView = false;
 
     // This method of calling the service initializes the response
     // as an object in the controller on load.
@@ -22,10 +23,9 @@ angular.module('events.controllers', [])
     // This method initializes the object after everything else loads
     // and makes the object available to routes/views. ng-repeat, etc.
     EventService
-      .getEvent()
-      .then(function (res) {
-        $scope.params = res.data;
-        // console.log($scope.params);
+      .getItems()
+      .then(function (response) {
+        $scope.params = response.data;
       });
 
 
@@ -33,9 +33,9 @@ angular.module('events.controllers', [])
       var item;
 
       // Iterate through params.event_data to find Item object
-      for (var i = 0; i < $scope.params.event_data.items.length; i++) {
-        if ($scope.params.event_data.items[i].id === id) {
-          item = $scope.params.event_data.items[i];
+      for (var i = 0; i < $scope.params.items_data.length; i++) {
+        if ($scope.params.items_data[i].id === id) {
+          item = $scope.params.items_data[i];
         }
       }
 
@@ -55,13 +55,33 @@ angular.module('events.controllers', [])
       });
     };
 
+    $scope.claimItems = function (id) {
+      var items = $scope.params.event_data.items;
+
+
+      $http({
+        method: 'POST',
+        url: '/events/updateitems',
+        data: JSON.stringify(items)
+      }).then(function successCallback(response) {
+        if (response.data && response.data.status === 'OK') {
+          console.log('Success.')
+        } else if (response.data && response.data.status === 'code:3') {
+          console.log('Quantity being claimed exceeds max. Value will remain unchanged.')
+        }
+        // console.log(response)
+      }, function errorCallback(response) {
+        console.log(response);
+      });
+    };
+
     function changeRoute() {
       var returnRoute = location.origin + '/events/';
       location.assign(returnRoute);
     }
 
     function reset() {
-      // Clean up scope before destorying
+      // Clean up scope before destroying
       $scope.params = {};
       $scope.stage = '';
 

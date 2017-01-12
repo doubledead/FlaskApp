@@ -54,7 +54,7 @@
     <div class="col-sm-3 col-md-3">{{ moment(event.end_date).format('MM-D-YYYY, h:mm a') }}</div>
     <div class="col-sm-3 col-md-2">
       {% if event.user_id == user_id %}
-        <a href="{{ url_for('events.update', event_id=event.id) }}" class="btn btn-xs btn-info">
+        <a href="{{ url_for('events.update', event_id=event.id) }}" class="btn btn-primary btn-xs">
           Edit Details
         </a>
       {% endif %}
@@ -89,7 +89,7 @@
   {% raw %}
     <div class="top-pad" ng-app="eventsApp" ng-controller="eventsCtrl">
       <form name="eventsForm" role="form" novalidate ng-cloak>
-        <div ng-repeat="item in params.event_data.items">
+        <div ng-repeat="item in params.items_data">
           <div class="row">
             <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
             <div class="col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
@@ -110,7 +110,7 @@
             </div>
             <div class="col-sm-1 col-md-1">
               <div>&nbsp;</div>
-              <button type="button" class="btn btn-primary btn-xs" ng-click="claimItem(item.id)">Claim</button>
+              <button type="button" class="btn btn-success btn-xs" ng-click="claimItem(item.id)">Claim</button>
             </div>
           </div>
           <div class="row">
@@ -133,12 +133,6 @@
             <div class="row">
               <div class="col-sm-12 col-md-12">&nbsp;</div>
             </div>
-            <div class="row">
-              <hr >
-            </div>
-            <div class="row">
-              <div class="col-sm-12 col-md-12">&nbsp;</div>
-            </div>
           </div>
           <!--End Subitems -->
           <div class="row">
@@ -151,7 +145,32 @@
             <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
         </div>
+        <!-- End Items -->
+        <div class="row">
+          <div class="col-sm-5 col-md-5">&nbsp;</div>
+          <div class="col-sm-1 col-md-1">
+            <a href="{{ url_for('events.index') }}" class="btn btn-warning btn-sm">
+              Back
+            </a>
+          </div>
+          <div class="col-sm-1 col-md-1">
+            <button type="button" class="btn btn-primary btn-sm" ng-click="claimItems()">Claim Items</button>
+          </div>
+          <div class="col-sm-5 col-md-5">&nbsp;</div>
+        </div>
       </form>
+      <div class="row">
+        <div class="col-sm-12 col-md-12">&nbsp;</div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h4>JSON Object</h4>
+          <div>&nbsp;</div>
+          <button type="button" class="btn btn-sm btn-info" ng-click="toggleEventObjView = !toggleEventObjView" >View</button>
+          <div>&nbsp;</div>
+          <pre ng-show="toggleEventObjView">{{ params | json }}</pre>
+        </div>
+      </div>
       <div class="row">
         <div class="col-sm-12 col-md-12">&nbsp;</div>
       </div>
