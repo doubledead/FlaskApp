@@ -4,7 +4,7 @@ from ..core import db, mail
 from flask_mail import Message
 from flask_security import login_required, current_user
 from datetime import datetime
-from .forms import NewEventForm, UpdateEventForm, UpdateItemForm
+from .forms import NewEventForm, UpdateEventForm, UpdateItemForm, SubItemForm
 from .models import Event, event_schema, Guest, Item, item_schema, Subitem
 from sqlalchemy import exc
 
@@ -149,8 +149,8 @@ def create():
         try:
             db.session.add(event)
             db.session.commit()
-            mail.send(msg)
-            mail.send(guestmsg)
+            # mail.send(msg)
+            # mail.send(guestmsg)
             return json.dumps({'status':'OK'})
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
@@ -186,7 +186,9 @@ def view(event_id):
 
         items = event.items
 
-        return render_template("events/view.html", event=event, guests=guests, items=items, user_id=user_id)
+        form = SubItemForm()
+
+        return render_template("events/view.html", event=event, guests=guests, items=items, user_id=user_id, form=form)
 
 
 @events.route('/update/<event_id>', methods=['GET', 'POST'])
@@ -278,7 +280,7 @@ def getitems():
         items = item_schema.dump(event.items).data
 
         # Package data payload into a Python dictionary
-        # payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0, "items_data" : items}
+        # payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0}
 
         payload = {"items_data" : items}
 

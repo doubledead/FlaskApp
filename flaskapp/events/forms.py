@@ -6,7 +6,7 @@
 """
 
 from flask_wtf import Form
-from wtforms import DateField, DateTimeField, IntegerField, StringField
+from wtforms import DateField, DateTimeField, IntegerField, StringField, FieldList
 from wtforms import validators
 
 class NewEventForm(Form):
@@ -85,7 +85,7 @@ class UpdateItemForm(Form):
         validators.Length(min=1, max=4)
     ])
 
-class UpdateSubItemForm(Form):
-    quantity = IntegerField('quantity', [
+class SubItemForm(Form):
+    quantity = FieldList(IntegerField('quantity', [
         validators.DataRequired(),
-        validators.Length(min=1, max=4)])
+        validators.Length(min=1, max=4)]))
