@@ -269,7 +269,7 @@ def getitems():
         event = Event.query.filter_by(id=paramId).first_or_404()
 
         ## Revise to not send not send whole event object.
-        serialized_event = event_schema.dump(event).data
+        # serialized_event = event_schema.dump(event).data
 
         ##### Add user specific data payload.
         ##### All Subitems for Event creator only.
@@ -278,7 +278,9 @@ def getitems():
         items = item_schema.dump(event.items).data
 
         # Package data payload into a Python dictionary
-        payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0, "items_data" : items}
+        # payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0, "items_data" : items}
+
+        payload = {"items_data" : items}
 
         return json.dumps(payload)
 

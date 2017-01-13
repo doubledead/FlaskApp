@@ -56,7 +56,7 @@ angular.module('events.controllers', [])
     };
 
     $scope.claimItems = function (id) {
-      var items = $scope.params.event_data.items;
+      var items = $scope.params.items;
 
 
       $http({

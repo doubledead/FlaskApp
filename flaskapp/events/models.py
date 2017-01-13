@@ -111,9 +111,9 @@ class Event(db.Model):
     name = db.Column(db.String(225))
     start_date = db.Column(db.DateTime())
     state = db.Column(db.String(225))
+    status_id = db.Column(db.Integer())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     zip_code = db.Column(db.String(225))
-    status_id = db.Column(db.Integer())
 
     # Many-to-many
     # https://github.com/mattupstate/overholt/blob/master/overholt/stores/models.py

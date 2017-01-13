@@ -23,15 +23,10 @@ This webapp requires these programs:
 
 	$ pip install -r requirements.txt
 
-#### 3. Install all required JS libraries
+#### 3. Install SQLite(or postgreSQL, depending on connection) test data (run at root of project)
 
-  $ cd static
-  $ bower install
+    $ python seed.py
 
-#### 4. Install SQLite(or postgreSQL, depending on connection) test data (run at root of project)
+#### 4. Run the Flask project (run at root of project)
 
-  $ python seed.py
-
-#### 5. Run the Flask project (run at root of project)
-
-  $ python run.py
+    $ python run.py
