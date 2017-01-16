@@ -86,48 +86,48 @@
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
-  {% for item in items %}
-    <div class="row">
-      <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
-      <div class="col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
-      <div class="col-sm-2 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
-      <div class="col-sm-1 col-md-1">
-        <a href="{{ url_for('events.showitem', item_id=item.id) }}" class="btn btn-xs btn-info">View</a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-12">&nbsp;</div>
-    </div>
-    {% if event.user_id == user_id %}
+  {% from "macros/_formhelpers.html" import render_field_with_errors, render_field %}
+  <form method="POST" action="" name="update">
+    {{ form.csrf_token }}
+    {% for item in items %}
       <div class="row">
-        <div class="col-sm-12 col-md-12">&nbsp;</div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 col-md-12"><strong>Claimed By Guests</strong></div>
+        <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
+        <div class="col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
+        <div class="col-sm-2 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
+        <div class="col-sm-1 col-md-1">
+          <a href="{{ url_for('events.showitem', item_id=item.id) }}" class="btn btn-xs btn-info">View</a>
+        </div>
       </div>
       <div class="row">
         <div class="col-sm-12 col-md-12">&nbsp;</div>
       </div>
-      {% for subitem in item.subitems %}
+      {% if event.user_id == user_id %}
         <div class="row">
-          <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
-          <div class="col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
+          <div class="col-sm-12 col-md-12">&nbsp;</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12"><strong>Claimed By Guests</strong></div>
         </div>
         <div class="row">
           <div class="col-sm-12 col-md-12">&nbsp;</div>
         </div>
-      {% endfor %}
-    {% else %}
-      <div class="row">
-        <div class="col-sm-12 col-md-12"><strong>Claimed By You</strong></div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 col-md-12">&nbsp;</div>
-      </div>
-      {% from "macros/_formhelpers.html" import render_field_with_errors, render_field %}
-      <form method="POST" action="" name="update">
-        {{ form.csrf_token }}
         {% for subitem in item.subitems %}
+          <div class="row">
+            <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
+            <div class="col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="row">
+          <div class="col-sm-12 col-md-12"><strong>Claimed By You</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12">&nbsp;</div>
+        </div>
+          {% for subitem in item.subitems %}
             {% if subitem.user_id == user_id %}
               <div class="row">
                 <div class="col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
@@ -136,19 +136,19 @@
                 <div class="col-sm-12 col-md-12">&nbsp;</div>
               </div>
             {% endif %}
-        {% endfor %}
-      </form>
-    {% endif %}
-    <div class="row">
-      <div class="col-sm-12 col-md-12">&nbsp;</div>
-    </div>
-    <div class="row">
-      <hr >
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-12">&nbsp;</div>
-    </div>
-  {% endfor %}
+          {% endfor %}
+      {% endif %}
+      <div class="row">
+        <div class="col-sm-12 col-md-12">&nbsp;</div>
+      </div>
+      <div class="row">
+        <hr >
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12">&nbsp;</div>
+      </div>
+    {% endfor %}
+  </form>
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>

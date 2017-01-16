@@ -175,9 +175,17 @@
         </div>
         <div class="animate-switch" ng-switch-when="stage5">
           <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <h3>Items</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+          <div class="row">
             <div class="col-sm-3 col-md-4">
               <div class="form-group">
-                <label for="tb-item-name">Item Name</label>
+                <label for="tb-item-name">Name</label>
                 <input type="text"
                        id="tb-item-name"
                        class="form-control"
@@ -235,12 +243,37 @@
         <div class="animate-switch" ng-switch-when="stage6">
           <div class="row">
             <div class="col-sm-12 col-md-12">
+              <h3>Summary</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
               Event name: {{ params.name }}
             </div>
           </div>
           <div class="row">
-            &nbsp;
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12"><strong>Guests</strong></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+          <div ng-repeat="e in params.guests">
+            <div class="row">
+              <div class="col-sm-12 col-md-12">
+                {{ e.email }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12">&nbsp;</div>
+            </div>
+          </div>
+          <div class="row">&nbsp;</div>
           <!--
           <div class="row">
             <pre> {{ params | json }}</pre>

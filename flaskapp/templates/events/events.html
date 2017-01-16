@@ -133,7 +133,7 @@
 {#        <div class="col-sm-3 col-md-3">{{ event.end_date.strftime('%m-%d-%Y %H:%M %p') }}</div>#}
         <div class="col-sm-3 col-md-3">{{ moment(ei.end_date).format('MM-D-YYYY, h:mm a') }}</div>
         <div class="col-sm-1 col-md-1">
-          <a href="{{ url_for('events.view', event_id=ei.id) }}" class="btn btn-xs btn-info">
+          <a href="{{ url_for('events.show', event_id=ei.id) }}" class="btn btn-xs btn-info">
             View
           </a>
         </div>

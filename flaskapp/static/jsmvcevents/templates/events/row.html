@@ -1,4 +1,20 @@
-<div class="form-group">
-  <label for="{{'tb-quantity-claimed' + row.row_id}}">&nbsp;</label>
-  <input type="text" id="{{'tb-quantity-claimed' + row.row_id}}" class="form-control" ng-model="row.quantity_claimed">
+<div class="row">
+  <div class="col-sm-3 col-md-4">
+    <div class="form-group">
+      <label for="{{'tb-item-name-' + row.row_id}}">Name</label>
+      <input type="text" id="{{'tb-item-name-' + row.row_id}}" class="form-control" ng-model="row.name">
+    </div>
+  </div>
+  <div class="col-sm-2 col-md-2">
+    <div class="form-group">
+      <label for="{{'tb-item-quantity' + row.row_id}}">&nbsp;</label>
+      <input type="text" id="{{'tb-item-quantity' + row.row_id}}" class="form-control" ng-model="row.quantity">
+    </div>
+  </div>
+  <div class="col-sm-1 col-md-1">
+    <button type="button" class="btn btn-danger btn-xs" ng-click="removeItem(row.row_id)">Remove</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-12">&nbsp;</div>
 </div>

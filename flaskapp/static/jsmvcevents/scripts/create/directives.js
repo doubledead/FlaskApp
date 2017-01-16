@@ -24,7 +24,7 @@ angular.module('create.directives', [])
       }
   };
 })
-.directive('entryRow', function () {
+.directive('itemRow', function () {
   return {
     restrict: 'E',
     templateUrl: 'form/row.html',

@@ -270,19 +270,30 @@ def getitems():
 
         event = Event.query.filter_by(id=paramId).first_or_404()
 
-        ## Revise to not send not send whole event object.
-        # serialized_event = event_schema.dump(event).data
+        # items = item_schema.dump(event.items).data
 
-        ##### Add user specific data payload.
-        ##### All Subitems for Event creator only.
-        ### One Subitem for Guests.
+        items_data = event.items
 
-        items = item_schema.dump(event.items).data
+        if event.user_id != current_user.id:
+            for i in items_data:
+                item = i
+                for subitem in item.subitems:
+                    if subitem.user_id != current_user.id:
+                        print 'Subitem removed.'
+                        print subitem
+                        item.subitems.remove(subitem)
+
+            items = item_schema.dump(items_data).data
+        else:
+            items = item_schema.dump(event.items).data
+
+        # items = item_schema.dump(items_data).data
+
 
         # Package data payload into a Python dictionary
         # payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0}
 
-        payload = {"items_data" : items}
+        payload = {"uId" : current_user.id, "items_data" : items}
 
         return json.dumps(payload)
 
