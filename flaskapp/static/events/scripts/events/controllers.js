@@ -66,6 +66,7 @@ angular.module('events.controllers', [])
       }).then(function successCallback(response) {
         if (response.data && response.data.status === 'OK') {
           console.log('Success.')
+          // reset();
         } else if (response.data && response.data.status === 'code:3') {
           console.log('Quantity being claimed exceeds max. Value will remain unchanged.')
         }
@@ -77,7 +78,7 @@ angular.module('events.controllers', [])
 
     function changeRoute() {
       var returnRoute = location.origin + '/events/';
-      location.assign(returnRoute);
+      location.assign(location.href);
     }
 
     function reset() {

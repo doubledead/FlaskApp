@@ -5,7 +5,7 @@ from flask_mail import Message
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import NewEventForm, UpdateEventForm, UpdateItemForm, SubItemForm
-from .models import Event, event_schema, Guest, Item, item_schema, Subitem
+from .models import Event, event_schema, Guest, Item, item_schema, Subitem, subitem_schema
 from sqlalchemy import exc
 
 events = Blueprint('events', __name__, template_folder='templates')
@@ -135,7 +135,7 @@ def create():
             item_name = i['name']
             item_quantity = i['quantity']
 
-            item = Item(category_id=item_category_id,name=item_name, quantity=item_quantity, quantity_claimed=0)
+            item = Item(category_id=item_category_id, name=item_name, quantity=item_quantity, quantity_claimed=0)
 
             event.items.append(item)
 
@@ -266,21 +266,24 @@ def getitems():
     if request.method == "POST":
         data = request.get_json()
 
-        paramId = data["paramId"]
+        uid = current_user.id
+        print current_user.id
 
-        event = Event.query.filter_by(id=paramId).first_or_404()
+        paramid = data["paramId"]
+
+        event = Event.query.filter_by(id=paramid).first_or_404()
 
         # items = item_schema.dump(event.items).data
 
         items_data = event.items
 
-        if event.user_id != current_user.id:
+        if event.user_id != uid:
             for i in items_data:
                 item = i
                 for subitem in item.subitems:
-                    if subitem.user_id != current_user.id:
+                    if subitem.user_id != uid:
                         print 'Subitem removed.'
-                        print subitem
+                        print subitem_schema.dump(subitem).data
                         item.subitems.remove(subitem)
 
             items = item_schema.dump(items_data).data
@@ -313,6 +316,8 @@ def updateitems():
 def updateitem():
     if request.method == "POST":
         data = request.get_json()
+
+        uid = current_user.id
 
         item_id = data['id']
         subitem_qty_data = int(data['quantity_claimed_new'])
@@ -368,7 +373,8 @@ def updateitem():
                 break
         else:
             if (item_claimed_current + subitem_qty_data) <= item_max_qty:
-                subitem = Subitem(quantity=subitem_qty_data,user_id=current_user.id)
+                # subitem = Subitem(quantity=subitem_qty_data, user_id=current_user.id)
+                subitem = Subitem(quantity=subitem_qty_data, user_id=uid)
                 item.subitems.append(subitem)
                 item.quantity_claimed = item_claimed_current + subitem_qty_data
                 try:
@@ -382,7 +388,8 @@ def updateitem():
             else:
                 if item_claimed_current < item_max_qty:
                     item_claimed_max_diff = (item_max_qty - item_claimed_current)
-                    subitem = Subitem(quantity=item_claimed_max_diff,user_id=current_user.id)
+                    # subitem = Subitem(quantity=item_claimed_max_diff, user_id=current_user.id)
+                    subitem = Subitem(quantity=item_claimed_max_diff, user_id=uid)
                     item.subitems.append(subitem)
                     item.quantity_claimed = item_claimed_current + item_claimed_max_diff
                     try:

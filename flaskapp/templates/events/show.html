@@ -1,8 +1,10 @@
 {% extends 'layouts/events/show.html' %}
 {% block title %}Events - {{ event.name }}{% endblock %}
 {% block container %}
-  <div class="jumbotron">
-    <h4>{{ event.name }}</h4>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <h3>{{ event.name }}</h3>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-12">
@@ -87,8 +89,8 @@
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
   {% raw %}
-    <div class="top-pad" ng-app="eventsApp" ng-controller="eventsCtrl">
-      <form name="eventsForm" role="form" novalidate ng-cloak>
+    <div class="top-pad" ng-app="eventsApp" ng-controller="eventsCtrl" ng-cloak>
+      <form name="eventsForm" role="form" novalidate>
         <div ng-repeat="item in params.items_data">
           <div class="row">
             <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
@@ -126,9 +128,23 @@
             <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
           <div ng-repeat="subitem in item.subitems">
+            <!--
             <div class="row">
               <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
               <div class="col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
+            </div>
+            -->
+            <div class="row">
+              <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
+              <div class="col-sm-2 col-md-2">
+                <div class="form-group">
+                  <label for="{{'tb-subitem-quantity-' + subitem.id}}">Quantity</label>
+                  <input type="text"
+                         id="{{'tb-subitem-quantity-' + subitem.id}}"
+                         class="form-control"
+                         ng-model="subitem.quantity">
+                </div>
+              </div>
             </div>
             <div class="row">
               <div class="col-sm-12 col-md-12">&nbsp;</div>
@@ -147,12 +163,6 @@
         </div>
         <!-- End Items -->
         <div class="row">
-          <div class="col-sm-5 col-md-5">&nbsp;</div>
-          <div class="col-sm-1 col-md-1">
-            <a href="{{ url_for('events.index') }}" class="btn btn-warning btn-sm">
-              Back
-            </a>
-          </div>
           <div class="col-sm-1 col-md-1">
             <button type="button" class="btn btn-primary btn-sm" ng-click="claimItems()">Claim Items</button>
           </div>
@@ -176,5 +186,14 @@
       </div>
     </div>
   {% endraw %}
+  <div class="row">
+    <div class="col-sm-5 col-md-5">&nbsp;</div>
+    <div class="col-sm-1 col-md-1">
+      <a href="{{ url_for('events.index') }}" class="btn btn-warning btn-sm">
+        Back
+      </a>
+    </div>
+    <div class="col-sm-5 col-md-5">&nbsp;</div>
+  </div>
 
 {% endblock %}
