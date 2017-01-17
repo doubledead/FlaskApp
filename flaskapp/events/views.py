@@ -167,12 +167,12 @@ def create():
 @login_required
 def show(event_id):
     if request.method =="GET":
-        user_id = current_user.id
+        u_id = current_user.id
         event = Event.query.filter_by(id=event_id).first_or_404()
 
         guests = event.guests
 
-        return render_template("events/show.html", event=event, guests=guests, user_id=user_id)
+        return render_template("events/show.html", event=event, guests=guests, u_id=u_id)
 
 # Endpoint for Jinja2 template
 @events.route('/view/<event_id>', methods=['GET', 'POST'])
@@ -266,37 +266,48 @@ def getitems():
     if request.method == "POST":
         data = request.get_json()
 
-        uid = current_user.id
+        u_id = current_user.id
         print current_user.id
 
-        paramid = data["paramId"]
+        param_id = data["paramId"]
 
-        event = Event.query.filter_by(id=paramid).first_or_404()
+        event = Event.query.filter_by(id=param_id).first_or_404()
 
         # items = item_schema.dump(event.items).data
 
         items_data = event.items
 
-        if event.user_id != uid:
-            for i in items_data:
-                item = i
-                for subitem in item.subitems:
-                    if subitem.user_id != uid:
-                        print 'Subitem removed.'
-                        print subitem_schema.dump(subitem).data
-                        item.subitems.remove(subitem)
+        if event.user_id != u_id:
+            for item in items_data:
+                # item = item_schema.dump(i).data
+                # for subitem in item.subitems:
+                #     # if subitem.user_id != uid:
+                #     #     print 'Subitem removed.'
+                #     #     print subitem_schema.dump(subitem).data
+                #     #     item.subitems.remove(subitem)
+                #
+                #     if subitem.user_id != uid:
+                #         print 'Subitem removed.'
+                #
+                #         # item.subitems.pop(subitem)
+                #         item.subitems.filter_by(user_id=uid).all()
+
+                for i in xrange(len(item.subitems) - 1, -1, -1):
+                    subitem = item.subitems[i]
+                    if subitem.user_id != u_id:
+                        print subitem_schema.dump(item.subitems[i]).data
+                        del item.subitems[i]
+
+
 
             items = item_schema.dump(items_data).data
         else:
             items = item_schema.dump(event.items).data
 
-        # items = item_schema.dump(items_data).data
-
 
         # Package data payload into a Python dictionary
         # payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0}
-
-        payload = {"uId" : current_user.id, "items_data" : items}
+        payload = {"u_Id" : u_id, "items_data" : items}
 
         return json.dumps(payload)
 
