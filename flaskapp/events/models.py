@@ -43,6 +43,7 @@ class GuestSchema(ma.ModelSchema):
         model = Guest
 
 # guest_schema = GuestSchema(many=True)
+guest_schema = GuestSchema()
 
 
 class Subitem(db.Model):

@@ -55,14 +55,14 @@ angular.module('events.controllers', [])
       });
     };
 
-    $scope.claimItems = function (id) {
-      var items = $scope.params.items;
+    $scope.claimItems = function () {
+      var items = JSON.stringify($scope.params.items);
 
 
       $http({
         method: 'POST',
         url: '/events/updateitems',
-        data: JSON.stringify(items)
+        data: items
       }).then(function successCallback(response) {
         if (response.data && response.data.status === 'OK') {
           console.log('Success.')

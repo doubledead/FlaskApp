@@ -131,13 +131,21 @@
         </div>
         <div class="animate-switch" ng-switch-when="stage4">
           <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <h3>Guests</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+          <div class="row">
             <div class="col-sm-5 col-md-6">
               <div class="form-group">
-                <label for="tb-guest-email">Guest email:</label>
-                <input type="text"
+                <label for="tb-guest-email">Email:</label>
+                <input type="email"
                        id="tb-guest-email"
                        class="form-control"
-                       ng-model="params.guestEmail" />
+                       ng-model="params.guestEmail">
               </div>
             </div>
             <div class="col-sm-7 col-md-6">
