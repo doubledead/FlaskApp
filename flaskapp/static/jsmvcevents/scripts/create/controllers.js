@@ -14,6 +14,7 @@ angular.module('create.controllers', [])
     $scope.longStage = 0;
     $scope.formValid = false;
     $scope.rowId = 0;
+    $scope.itemId = 0;
 
     $scope.params = {
       address: '',

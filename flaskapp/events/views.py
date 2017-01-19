@@ -322,13 +322,13 @@ def getitems():
 @login_required
 def updateitems():
     if request.method == "POST":
-        items_data = request.get_json()
+        data = request.get_json()
 
         u_id = current_user.id
 
         ## These for loops might need to be while loops with len
-        for i in items_data:
-            item = Item.query.filter_by(id=i.id).first_or_404()
+        for i in data:
+            item = Item.query.filter_by(id=i['id']).first_or_404()
             item_max_qty = item.quantity
             item_claimed_current = item.quantity_claimed
 
@@ -360,13 +360,14 @@ def updateitems():
                         print("Subitem added. Difference added.")
                     else:
                         print("Quantity being claimed exceeds max. Item not created.")
-                        return json.dumps({'status':'code:3'})
             else:
                 for si in item.subitems:
                     if si.user_id == u_id:
                         subitem = si
                         subitem_qty_current = subitem.quantity
 
+                        # <= here causes infinite loop.
+                        # Breaking case was quantity: 1, claimed_quantity: 1
                         if subitem_qty_data < subitem_qty_current:
                             subitem_qty_difference = (subitem_qty_current - subitem_qty_data)
                             subitem.quantity = subitem_qty_data

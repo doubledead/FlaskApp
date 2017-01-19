@@ -56,7 +56,7 @@ angular.module('events.controllers', [])
     };
 
     $scope.claimItems = function () {
-      var items = JSON.stringify($scope.params.items);
+      var items = JSON.stringify($scope.params.items_data);
 
 
       $http({
@@ -72,6 +72,10 @@ angular.module('events.controllers', [])
         }
         // console.log(response)
       }, function errorCallback(response) {
+        if (response.data && response.data.status === 'Error') {
+          console.log('Error.')
+          // reset();
+        }
         console.log(response);
       });
     };
