@@ -315,6 +315,8 @@ def updateitems():
                 item_claimed_current = item.quantity_claimed
 
                 # Explore i['subitems']
+                subitems = i['subitems']
+                print(subitems)
 
                 if not item.subitems:
                     if i['quantity_claimed_new'] == "":
