@@ -381,7 +381,7 @@ def updateitems():
                                 print("Something broke.")
                                 return json.dumps({'status':'code:6'})
                                 break
-                        else:
+                        elif subitem.user_id != u_id:
                             if i['quantity_claimed_new'] == "":
                                 subitem_qty_data = 0
                             else:
