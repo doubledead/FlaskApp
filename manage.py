@@ -37,19 +37,32 @@ def create_test_users():
     test_user = User(email='user@test.com',
                      password='123456',
                      active=True,
-                     birth_date=date.today())
-    test_user1 = User(email='user1@test.com',
-                      password='123456',
-                      active=True,
-                      birth_date=date.today())
+                     birth_date=date.today(),
+                     first_name='User',
+                     last_name='Test')
     test_user2 = User(email='user2@test.com',
                       password='123456',
                       active=True,
-                      birth_date=date.today())
+                      birth_date=date.today(),
+                      first_name='User2',
+                      last_name='Test')
+    test_user3 = User(email='user3@test.com',
+                      password='123456',
+                      active=True,
+                      birth_date=date.today(),
+                      first_name='User3',
+                      last_name='Test')
+    test_user4 = User(email='user4@test.com',
+                      password='123456',
+                      active=True,
+                      birth_date=date.today(),
+                      first_name='User4',
+                      last_name='Test')
 
     db.session.add(test_user)
-    db.session.add(test_user1)
     db.session.add(test_user2)
+    db.session.add(test_user3)
+    db.session.add(test_user4)
     db.session.commit()
 
 

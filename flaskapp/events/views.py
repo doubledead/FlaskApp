@@ -577,7 +577,9 @@ def updateitems():
 
                 item.subitems.append(subitem)
                 print("Subitem updated. Code: 1")
-            else:
+
+
+            if not subitems_user:
                 if i['quantity_claimed_new'] == "":
                     subitem_qty_data = 0
                 else:
@@ -588,8 +590,7 @@ def updateitems():
 
                     item.subitems.append(subitem)
                     item.quantity_claimed = item_claimed_current + subitem_qty_data
-
-                    print("Subitem created.")
+                    print("Subitem created. Code:1")
                 else:
                     if item_claimed_current < item_max_qty:
                         item_claimed_max_diff = (item_max_qty - item_claimed_current)
@@ -598,11 +599,11 @@ def updateitems():
 
                         item.subitems.append(subitem)
                         item.quantity_claimed = item_claimed_current + item_claimed_max_diff
-
-                        print("Subitem added. Difference added.")
+                        print("Subitem added. Difference added. Code:1")
                     else:
                         print("Quantity being claimed exceeds max. Item not created.")
 
+            # Add updated SQLAlchemy Item to session
             db.session.add(item)
         else:
             try:

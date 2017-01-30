@@ -282,13 +282,16 @@
             </div>
           </div>
           <div class="row">&nbsp;</div>
-          <!--
           <div class="row">
-            <pre> {{ params | json }}</pre>
+            <div class="col-sm-4 col-md-4">&nbsp;</div>
+            <div class="col-sm-2 col-md-2">
+              <button type="button" class="btn btn-warning btn-sm" ng-click="back('stage5')">Back</button>
+            </div>
+            <div class="col-sm-2 col-md-2">
+              <button type="button" class="btn btn-primary btn-lg" ng-click="submitForm()">Create</button>
+            </div>
+            <div class="col-sm-4 col-md-4">&nbsp;</div>
           </div>
-          -->
-          <button type="button" class="btn btn-warning btn-sm" ng-click="back('stage5')">Back</button>
-          <button type="button" class="btn btn-primary btn-sm" ng-click="submitForm()">Create</button>
         </div>
         <div class="animate-switch" ng-switch-when="createSuccess">
           <div class="row">
