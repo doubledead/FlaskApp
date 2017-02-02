@@ -22,6 +22,7 @@ angular.module('create.controllers', [])
       category_id: 100,
       city: '',
       country: '',
+      description: '',
       end_date: '',
       guestEmail: '',
       guests: [],
@@ -31,14 +32,14 @@ angular.module('create.controllers', [])
       name: '',
       start_date: '',
       state: '',
-      zip_code: '',
+      zip_code: ''
     };
 
     // Navigation functions
     $scope.next = function (stage) {
       $scope.direction = 1;
       $scope.stage = stage;
-      if (stage=='stage6') {
+      if (stage=='stage5') {
         $scope.longStage = 1;
       }
     };

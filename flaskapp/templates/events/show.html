@@ -100,7 +100,7 @@
           <div class="row">
             <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
-          <div class="row">
+          <div class="row" ng-hide="item.subitems.length > 0">
             <div class="col-sm-2 col-md-2">
               <div class="form-group">
                 <label for="{{'tb-item-quantity-claimed-' + item.id}}">Claim</label>
