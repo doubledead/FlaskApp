@@ -2,32 +2,51 @@ angular.module('events.directives', [])
 .directive('itemRow', function () {
   return {
     restrict: 'E',
-      template:
-      '<div class="form-group">' +
-      '<label for="tb-fname">First Name:</label>' +
-      '<input type="text" id="tb-fname" class="form-control" ng-model="fname">' +
-      '</div>' +
-      '<div class="form-group">' +
-      '<label for="tb-lname">Last Name:</label>' +
-      '<input type="text" id="tb-lname" class="form-control" ng-model="lname">' +
-      '</div>' +
-      '<div class="form-group">' +
-      '<label for="tb-date-birth">DOB:</label>' +
-      '<input type="text" id="tb-date-birth" class="form-control" ng-model="dateOfBirth">' +
-      '</div>' +
-      '<div class="form-group">' +
-      '<label for="tb-email">Email:</label>' +
-      '<input type="text" id="tb-email" class="form-control" ng-model="email">' +
-      '</div>',
-      link: function (scope, element, attrs) {
+    templateUrl: 'events/items/item.html',
+    scope: {
+      item: '='
+    },
+    link: function (scope, element, attrs) {
+      scope.subitemId = 0;
 
-      }
+      scope.$watch('item.quantity_claimed', function () {
+        if (scope.item.quantity_claimed === 0) {
+          console.log("Test");
+          // Do some logic here to add an subtract
+          // the quantity_claimed from something like
+          // called remaining.
+
+          // Get rid of quantity_claimed_new and make it bind
+          // to quantity_claimed. Watch for changes in the input
+          // and add and subtract difference accordingly.
+
+          // Maybe add in one Subitem by default and check for that
+          // on the back-end after submit.
+          scope.addSubitemRow = function () {
+            scope.subitemId++;
+
+            var subitemRow = {
+              row_id: scope.subitemId,
+              quantity: 0
+            };
+
+            scope.item.subitems.push(subitemRow);
+          };
+          scope.addSubitemRow();
+        }
+      });
+
+
+    }
   };
 })
-.directive('entryRow', function () {
+.directive('subitemRow', function () {
   return {
     restrict: 'E',
-    templateUrl: 'events/row.html',
+    templateUrl: 'events/subitems/subitem.html',
+    scope: {
+      subitem: '='
+    },
     link: function (scope, element, attrs) {
 
     }

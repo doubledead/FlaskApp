@@ -91,6 +91,7 @@
   {% raw %}
     <div class="top-pad" ng-app="eventsApp" ng-controller="eventsCtrl" ng-cloak>
       <form name="eventsForm" role="form" novalidate>
+        <!--
         <div ng-repeat="item in params.items_data">
           <div class="row">
             <div class="col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
@@ -121,12 +122,6 @@
             <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
           <div ng-repeat="subitem in item.subitems">
-            <!--
-            <div class="row">
-              <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
-              <div class="col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
-            </div>
-            -->
             <div class="row">
               <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
               <div class="col-sm-2 col-md-2">
@@ -143,7 +138,6 @@
               <div class="col-sm-12 col-md-12">&nbsp;</div>
             </div>
           </div>
-          <!--End Subitems -->
           <div class="row">
             <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
@@ -153,6 +147,11 @@
           <div class="row">
             <div class="col-sm-12 col-md-12">&nbsp;</div>
           </div>
+        </div>
+        -->
+        <!-- Items -->
+        <div ng-repeat="item in params.items_data">
+          <item-row item="item"></item-row>
         </div>
         <!-- End Items -->
         <div class="row">

@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
+  <div class="col-sm-2 col-md-2">
+    <div class="form-group">
+      <label for="{{'tb-subitem-quantity-' + subitem.id}}">Claimed</label>
+      <input type="text"
+             id="{{'tb-subitem-quantity-' + subitem.id}}"
+             class="form-control"
+             ng-model="subitem.quantity">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-12">&nbsp;</div>
+</div>
