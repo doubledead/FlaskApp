@@ -580,6 +580,8 @@ def updateitems():
 
 
             if not subitems_user:
+                # Fix this portion - code will always create a subitem.
+                # Troubleshoot quantity_claimed_new not existing.
                 if i['quantity_claimed_new'] == "":
                     subitem_qty_data = 0
                 else:

@@ -70,5 +70,6 @@ bower_components
 # IntelliJ IDEA IDE
 .idea/
 
-# node_modules from JSMVCApp
+# node_modules from JS MVC Apps
 flaskapp/static/jsmvcapp/node_modules
+flaskapp/static/jsmvcevents/node_modules

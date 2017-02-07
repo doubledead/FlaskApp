@@ -1,14 +1,30 @@
 <div class="row">
-  <div class="col-sm-3 col-md-4">
+  <div class="col-xs-3 col-sm-3 col-md-4">
     <div class="form-group">
       <label for="{{'tb-item-name-' + row.row_id}}">Name</label>
-      <input type="text" id="{{'tb-item-name-' + row.row_id}}" class="form-control" ng-model="row.name">
+      <input type="text"
+             class="form-control"
+             id="{{'tb-item-name-' + row.row_id}}"
+             ng-model="row.name">
     </div>
   </div>
-  <div class="col-sm-2 col-md-2">
+  <div class="col-xs-3 col-sm-3 col-md-3">
     <div class="form-group">
-      <label for="{{'tb-item-quantity' + row.row_id}}">&nbsp;</label>
-      <input type="text" id="{{'tb-item-quantity' + row.row_id}}" class="form-control" ng-model="row.quantity">
+      <label for="{{'dd-item-category' + row.row_id}}">Category</label>
+      <select class="form-control"
+              id="{{'dd-item-category' + row.row_id}}"
+              ng-model="row.category_id">
+        <option value="100">..Select..</option>
+        <option value="101">New</option>
+        <option value="102">Option 2</option>
+        <option value="103">Option 3</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-xs-2 col-sm-2 col-md-3">
+    <div class="form-group">
+      <label for="{{'tb-item-quantity' + row.row_id}}">Quantity</label>
+      <input type="text" class="form-control" id="{{'tb-item-quantity' + row.row_id}}" ng-model="row.quantity">
     </div>
   </div>
   <div class="col-sm-1 col-md-1">

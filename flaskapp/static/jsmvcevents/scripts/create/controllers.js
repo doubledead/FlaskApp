@@ -15,6 +15,7 @@ angular.module('create.controllers', [])
     $scope.formValid = false;
     $scope.rowId = 0;
     $scope.itemId = 0;
+    $scope.toggleEventObjView = false;
 
     $scope.params = {
       address: '',
@@ -137,6 +138,21 @@ angular.module('create.controllers', [])
     };
 
     // Item functions
+
+    $scope.addItemRow = function () {
+      $scope.itemId++;
+
+      var itemRow = {
+        row_id: $scope.itemId,
+        category_id: 0,
+        name: "",
+        quantity: 0
+      };
+
+      $scope.params.items.push(itemRow);
+    };
+    $scope.addItemRow();
+
     $scope.addItem = function () {
       $scope.itemId++;
       var itemName = $scope.params.itemName;
@@ -164,6 +180,7 @@ angular.module('create.controllers', [])
       }
     };
 
+    // AngularJS Datetimepicker
     $scope.endDateBeforeRender = endDateBeforeRender
     $scope.endDateOnSetTime = endDateOnSetTime
     $scope.startDateBeforeRender = startDateBeforeRender

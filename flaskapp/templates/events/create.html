@@ -203,6 +203,16 @@
             <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
           </div>
           <div class="row">
+            <div class="col-xs-2 col-sm-2 col-md-2">
+              <div>&nbsp;</div>
+              <button type="button" class="btn btn-info btn-xs" ng-click="addItemRow()">Add</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+          <!--
+          <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-4">
               <div class="form-group">
                 <label for="tb-item-name">Name</label>
@@ -250,6 +260,10 @@
               <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
             </div>
           </div>
+          -->
+          <div ng-repeat="row in params.items">
+            <item-row></item-row>
+          </div>
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
           </div>
@@ -295,45 +309,55 @@
           </div>
           <div class="row">&nbsp;</div>
           <div class="row">
-            <div class="col-sm-4 col-md-4">&nbsp;</div>
-            <div class="col-sm-2 col-md-2">
+            <div class="col-xs-4 col-sm-4 col-md-4">&nbsp;</div>
+            <div class="col-xs-2 col-sm-2 col-md-2">
               <button type="button" class="btn btn-warning btn-sm" ng-click="back('stage4')">Back</button>
             </div>
-            <div class="col-sm-2 col-md-2">
+            <div class="col-xs-2 col-sm-2 col-md-2">
               <button type="button" class="btn btn-primary btn-lg" ng-click="submitForm()">Create</button>
             </div>
-            <div class="col-sm-4 col-md-4">&nbsp;</div>
+            <div class="col-xs-4 col-sm-4 col-md-4">&nbsp;</div>
           </div>
         </div>
         <div class="animate-switch" ng-switch-when="createSuccess">
           <div class="row">
-            <div class="col-sm-12 col-md-12">
+            <div class="col-xs-12 col-sm-12 col-md-12">
               <h2 class="text-success">Success!</h2>
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-12 col-md-12">
+            <div class="col-xs-12 col-sm-12 col-md-12">
               <p class="text-muted">Redirecting to your events...</p>
             </div>
           </div>
         </div>
         <div class="animate-switch" ng-switch-when="createError">
           <div class="row">
-            <div class="col-sm-12 col-md-12">
+            <div class="col-xs-12 col-sm-12 col-md-12">
               <h4 class="text-danger">Error</h4>
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-12 col-md-12">
+            <div class="col-xs-12 col-sm-12 col-md-12">
               <p class="text-muted">Redirecting to your events...</p>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">&nbsp;</div>
+        <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
       </div>
     </form>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <button type="button" class="btn btn-sm btn-info" ng-click="toggleEventObjView = !toggleEventObjView" >Toggle JSON</button>
+        <div>&nbsp;</div>
+        <pre ng-show="toggleEventObjView">{{ params | json }}</pre>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12">&nbsp;</div>
     </div>

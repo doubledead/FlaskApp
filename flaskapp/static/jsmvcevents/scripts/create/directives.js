@@ -27,7 +27,7 @@ angular.module('create.directives', [])
 .directive('itemRow', function () {
   return {
     restrict: 'E',
-    templateUrl: 'form/row.html',
+    templateUrl: 'events/row.html',
     link: function (scope, element, attrs) {
 
     }
