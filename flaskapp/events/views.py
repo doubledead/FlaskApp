@@ -302,8 +302,9 @@ def getitems():
 def updateitems():
     if request.method == "POST":
         data = request.get_json()
-
         u_id = current_user.id
+        # response_payload will contain status codes for each item and subitem
+        response_payload = {}
 
         # count = 0
         # n = len(data)

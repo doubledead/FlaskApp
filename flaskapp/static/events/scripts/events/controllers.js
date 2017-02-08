@@ -11,6 +11,7 @@ angular.module('events.controllers', [])
     EventService
   ){
     $scope.params = [];
+    $scope.carbon = [];
     $scope.formValid = false;
     $scope.rowId = 0;
     $scope.toggleEventObjView = false;
@@ -26,6 +27,7 @@ angular.module('events.controllers', [])
       .getItems()
       .then(function (response) {
         $scope.params = response.data;
+        $scope.carbon = response.data;
       });
 
 
@@ -56,8 +58,15 @@ angular.module('events.controllers', [])
     };
 
     $scope.claimItems = function () {
-      var items = JSON.stringify($scope.params.items_data);
+      // Validation
+      // Maybe make a copy and validate on client side before
+      // even hitting the DB to save a service call.
 
+      // Maybe store copy in local storage and dump it on
+      // change/submit.
+
+
+      var items = JSON.stringify($scope.params.items_data);
 
       $http({
         method: 'POST',
