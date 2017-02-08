@@ -308,6 +308,7 @@ def updateitems():
 
         # Need to add functionality for 'Unclaim' or user setting claimed amount
         # to 0.
+        # Handle for strings, '-&'
         for i in data:
             item = Item.query.filter_by(id=i['id']).first_or_404()
             item_max_qty = item.quantity
@@ -318,7 +319,6 @@ def updateitems():
             subitems_new = []
 
             for si_data in subitem_data:
-                print(si_data)
                 if si_data['user_id'] and si_data['user_id'] == u_id:
                     subitems_user.append(si_data)
                 else:
@@ -327,8 +327,25 @@ def updateitems():
             for si_user in subitems_user:
                 subitem = Subitem.query.filter_by(id=si_user['id']).first_or_404()
                 subitem_qty_current = subitem.quantity
-                subitem_qty_data = int(si_user['quantity'])
+                # subitem_qty_data = int(si_user['quantity'])
 
+                # Subitem quantity data check
+                if not si_user['quantity']:
+                    print("Subitem quantity left blank.")
+                    subitem_qty_data = subitem_qty_current
+                else:
+                    if isinstance( si_user['quantity'], int ):
+                        if int(si_user['quantity']) > 0:
+                            print("Subitem quantity is 0 or less.")
+                            subitem_qty_data = int(si_user['quantity'])
+                        elif int(si_user['quantity']) <= 0:
+                            print("Subitem quantity is 0 or less.")
+                            subitem_qty_data = subitem_qty_current
+                    else:
+                        print("Subitem quantity NaN.")
+                        subitem_qty_data = subitem_qty_current
+
+                # Begin math
                 if subitem_qty_data < subitem_qty_current:
                     subitem_qty_difference = (subitem_qty_current - subitem_qty_data)
                     subitem.quantity = subitem_qty_data
