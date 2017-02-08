@@ -9,25 +9,35 @@ angular.module('events.directives', [])
     link: function (scope, element, attrs) {
       scope.subitemId = 0;
 
+      // Insert blank Subitem row as placeholder if conditions
       scope.$watch('item.quantity_claimed', function () {
         if (scope.item.quantity_claimed === 0) {
-          console.log("Test");
-          // Do some logic here to add an subtract
+          // console.log("Test");
+          // Do some logic here to add and subtract
           // the quantity_claimed from something like
-          // called remaining.
+          // called remaining. Watch for changes in the
+          // input and add and subtract difference accordingly.
 
-          // Get rid of quantity_claimed_new and make it bind
-          // to quantity_claimed. Watch for changes in the input
-          // and add and subtract difference accordingly.
-
-          // Maybe add in one Subitem by default and check for that
-          // on the back-end after submit.
           scope.addSubitemRow = function () {
             scope.subitemId++;
 
             var subitemRow = {
               row_id: scope.subitemId,
-              quantity: 0
+              quantity: 0,
+              user_id: 0
+            };
+
+            scope.item.subitems.push(subitemRow);
+          };
+          scope.addSubitemRow();
+        } else if (scope.item.subitems.length <= 0) {
+          scope.addSubitemRow = function () {
+            scope.subitemId++;
+
+            var subitemRow = {
+              row_id: scope.subitemId,
+              quantity: 0,
+              user_id: 0
             };
 
             scope.item.subitems.push(subitemRow);

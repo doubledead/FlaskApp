@@ -306,239 +306,23 @@ def updateitems():
         # response_payload will contain status codes for each item and subitem
         response_payload = {}
 
-        # count = 0
-        # n = len(data)
-        # while count < n:
-        #     for i in data:
-        #         # Query DB for latest Item record matching received Item payload ID.
-        #         item = Item.query.filter_by(id=i['id']).first_or_404()
-        #         item_max_qty = item.quantity
-        #         item_claimed_current = item.quantity_claimed
-        #
-        #         if not item.subitems:
-        #             if i['quantity_claimed_new'] == "":
-        #                 subitem_qty_data = 0
-        #             else:
-        #                 subitem_qty_data = int(i['quantity_claimed_new'])
-        #
-        #             if (item_claimed_current + subitem_qty_data) <= item_max_qty:
-        #                 subitem = Subitem(quantity=subitem_qty_data, user_id=u_id)
-        #
-        #                 item.subitems.append(subitem)
-        #                 item.quantity_claimed = item_claimed_current + subitem_qty_data
-        #
-        #                 print("Subitem added. Empty list.")
-        #             else:
-        #                 if item_claimed_current < item_max_qty:
-        #                     item_claimed_max_diff = (item_max_qty - item_claimed_current)
-        #
-        #                     subitem = Subitem(quantity=item_claimed_max_diff, user_id=u_id)
-        #
-        #                     item.subitems.append(subitem)
-        #                     item.quantity_claimed = item_claimed_current + item_claimed_max_diff
-        #
-        #                     print("Subitem added. Difference added. Empty list.")
-        #                 else:
-        #                     print("Quantity being claimed exceeds max. Item not created.")
-        #         else:
-        #             for si in xrange(len(item.subitems) - 1, -1, -1):
-        #                 subitem = item.subitems[si]
-        #                 if subitem.user_id == u_id:
-        #                     subitem_qty_current = subitem.quantity
-        #                     subitem_qty_data = int(i['quantity_claimed_new'])
-        #
-        #                     if subitem_qty_data < subitem_qty_current:
-        #                         subitem_qty_difference = (subitem_qty_current - subitem_qty_data)
-        #                         subitem.quantity = subitem_qty_data
-        #
-        #                         item.quantity_claimed = item_claimed_current - subitem_qty_difference
-        #                     elif subitem_qty_data > subitem_qty_current:
-        #                         subitem_qty_difference = (subitem_qty_data - subitem_qty_current)
-        #
-        #                         item_claimed_subtotal = (item_claimed_current + subitem_qty_difference)
-        #
-        #                         if item_claimed_subtotal <= item_max_qty:
-        #                             subitem.quantity = (subitem_qty_current + subitem_qty_difference)
-        #                             item.quantity_claimed = item_claimed_subtotal
-        #                         else:
-        #                             if item_claimed_subtotal > item_max_qty:
-        #                                 if item_claimed_current < item_max_qty:
-        #                                     item_claimed_max_diff = (item_max_qty - item_claimed_current)
-        #
-        #                                     subitem.quantity = (subitem_qty_current + item_claimed_max_diff)
-        #
-        #                                     item.quantity_claimed = (item_claimed_current + item_claimed_max_diff)
-        #                                     print ("Difference added.")
-        #                                 else:
-        #                                     print ("Quantity being claimed exceeds max. Value will remain unchanged. Code: 3")
-        #                     elif subitem_qty_data == subitem_qty_current:
-        #                         print("Quantity matches current Subitem amount. No item change.")
-        #                     else:
-        #                         print("Something broke.")
-        #                         return json.dumps({'status':'code:6'})
-        #                         break
-        #                 else:
-        #                     if i['quantity_claimed_new'] == "":
-        #                         subitem_qty_data = 0
-        #                     else:
-        #                         subitem_qty_data = int(i['quantity_claimed_new'])
-        #
-        #                     if (item_claimed_current + subitem_qty_data) <= item_max_qty:
-        #                         subitem = Subitem(quantity=subitem_qty_data, user_id=u_id)
-        #
-        #                         item.subitems.append(subitem)
-        #                         item.quantity_claimed = item_claimed_current + subitem_qty_data
-        #
-        #                         print("Subitem added. Existing items.")
-        #                     else:
-        #                         if item_claimed_current < item_max_qty:
-        #                             item_claimed_max_diff = (item_max_qty - item_claimed_current)
-        #
-        #                             subitem = Subitem(quantity=item_claimed_max_diff, user_id=u_id)
-        #
-        #                             item.subitems.append(subitem)
-        #                             item.quantity_claimed = item_claimed_current + item_claimed_max_diff
-        #
-        #                             print("Subitem added. Difference added. Existing items.")
-        #                         else:
-        #                             print("Quantity being claimed exceeds max. Item not created. Existing items.")
-        #
-        #
-        #                 item.subitems.append(subitem)
-        #                 print("Subitem updated. Code: 1")
-        #                 # Deleting the Subitem from prevents infinite loops.
-        #                 # del item.subitems[si]
-        #
-        #         db.session.add(item)
-        #         count = count + 1
-        # else:
-        #     try:
-        #         db.session.commit()
-        #         return json.dumps({'status':'OK'})
-        #     except exc.SQLAlchemyError as e:
-        #         current_app.logger.error(e)
-        #         return json.dumps({'status':'Error'})
-
-        # These for loops might need to be while loops with len
+        # Need to add functionality for 'Unclaim' or user setting claimed amount
+        # to 0.
         for i in data:
             item = Item.query.filter_by(id=i['id']).first_or_404()
             item_max_qty = item.quantity
             item_claimed_current = item.quantity_claimed
 
-            # for si in xrange(len(item.subitems) - 1, -1, -1):
-            #     subitem = item.subitems[si]
-            #     if subitem.user_id == u_id:
-            #         subitem_qty_current = subitem.quantity
-            #         subitem_qty_data = int(i['quantity_claimed_new'])
-            #
-            #         if subitem_qty_data < subitem_qty_current:
-            #             subitem_qty_difference = (subitem_qty_current - subitem_qty_data)
-            #             subitem.quantity = subitem_qty_data
-            #
-            #             item.quantity_claimed = item_claimed_current - subitem_qty_difference
-            #         elif subitem_qty_data > subitem_qty_current:
-            #             subitem_qty_difference = (subitem_qty_data - subitem_qty_current)
-            #
-            #             item_claimed_subtotal = (item_claimed_current + subitem_qty_difference)
-            #
-            #             if item_claimed_subtotal <= item_max_qty:
-            #                 subitem.quantity = (subitem_qty_current + subitem_qty_difference)
-            #                 item.quantity_claimed = item_claimed_subtotal
-            #             else:
-            #                 if item_claimed_subtotal > item_max_qty:
-            #                     # Work on the logic here. Something is firing off.
-            #                     if item_claimed_current < item_max_qty:
-            #                         item_claimed_max_diff = (item_max_qty - item_claimed_current)
-            #
-            #                         subitem.quantity = (subitem_qty_current + item_claimed_max_diff)
-            #
-            #                         item.quantity_claimed = (item_claimed_current + item_claimed_max_diff)
-            #                         print ("Difference added.")
-            #                     else:
-            #                         print ("Quantity being claimed exceeds max. Value will remain unchanged. Code: 3")
-            #         elif subitem_qty_data == subitem_qty_current:
-            #             print("Quantity matches current Subitem amount. No item change.")
-            #         else:
-            #             print("Something broke.")
-            #             return json.dumps({'status':'code:6'})
-            #             break
-            #
-            #
-            #         item.subitems.append(subitem)
-            #         print("Subitem updated. Code: 1")
-            #         del item.subitems[si]
-            # else:
-            #     if i['quantity_claimed_new'] == "":
-            #         subitem_qty_data = 0
-            #     else:
-            #         subitem_qty_data = int(i['quantity_claimed_new'])
-            #
-            #     if (item_claimed_current + subitem_qty_data) <= item_max_qty:
-            #         subitem = Subitem(quantity=subitem_qty_data, user_id=u_id)
-            #
-            #         item.subitems.append(subitem)
-            #         item.quantity_claimed = item_claimed_current + subitem_qty_data
-            #
-            #         print("Subitem created.")
-            #     else:
-            #         if item_claimed_current < item_max_qty:
-            #             item_claimed_max_diff = (item_max_qty - item_claimed_current)
-            #
-            #             subitem = Subitem(quantity=item_claimed_max_diff, user_id=u_id)
-            #
-            #             item.subitems.append(subitem)
-            #             item.quantity_claimed = item_claimed_current + item_claimed_max_diff
-            #
-            #             print("Subitem added. Difference added.")
-            #         else:
-            #             print("Quantity being claimed exceeds max. Item not created.")
-
             subitem_data = i['subitems']
             subitems_user = []
-
-            # for si_data in subitem_data:
-            #     if si_data['user_id'] == u_id:
-            #         subitem = Subitem.query.filter_by(id=si_data['id']).first_or_404()
-            #         subitem_qty_current = subitem.quantity
-            #         subitem_qty_data = int(si_data['quantity'])
-            #
-            #         if subitem_qty_data < subitem_qty_current:
-            #             subitem_qty_difference = (subitem_qty_current - subitem_qty_data)
-            #             subitem.quantity = subitem_qty_data
-            #
-            #             item.quantity_claimed = item_claimed_current - subitem_qty_difference
-            #         elif subitem_qty_data > subitem_qty_current:
-            #             subitem_qty_difference = (subitem_qty_data - subitem_qty_current)
-            #
-            #             item_claimed_subtotal = (item_claimed_current + subitem_qty_difference)
-            #
-            #             if item_claimed_subtotal <= item_max_qty:
-            #                 subitem.quantity = (subitem_qty_current + subitem_qty_difference)
-            #                 item.quantity_claimed = item_claimed_subtotal
-            #             else:
-            #                 if item_claimed_subtotal > item_max_qty:
-            #                     if item_claimed_current < item_max_qty:
-            #                         item_claimed_max_diff = (item_max_qty - item_claimed_current)
-            #
-            #                         subitem.quantity = (subitem_qty_current + item_claimed_max_diff)
-            #
-            #                         item.quantity_claimed = (item_claimed_current + item_claimed_max_diff)
-            #                         print ("Difference added.")
-            #                     else:
-            #                         print ("Quantity being claimed exceeds max. Value will remain unchanged. Code: 3")
-            #         elif subitem_qty_data == subitem_qty_current:
-            #             print("Quantity matches current Subitem amount. No item change.")
-            #         else:
-            #             print("Something broke.")
-            #             return json.dumps({'status':'code:6'})
-            #             break
-            #
-            #     item.subitems.append(subitem)
-            #     print("Subitem updated. Code: 1")
+            subitems_new = []
 
             for si_data in subitem_data:
-                if si_data['user_id'] == u_id:
+                print(si_data)
+                if si_data['user_id'] and si_data['user_id'] == u_id:
                     subitems_user.append(si_data)
+                else:
+                    subitems_new.append(si_data)
 
             for si_user in subitems_user:
                 subitem = Subitem.query.filter_by(id=si_user['id']).first_or_404()
@@ -579,32 +363,33 @@ def updateitems():
                 item.subitems.append(subitem)
                 print("Subitem updated. Code: 1")
 
-
+            # Handle new Subitems
             if not subitems_user:
-                # Fix this portion - code will always create a subitem.
-                # Troubleshoot quantity_claimed_new not existing.
-                if i['quantity_claimed_new'] == "":
-                    subitem_qty_data = 0
-                else:
-                    subitem_qty_data = int(i['quantity_claimed_new'])
-
-                if (item_claimed_current + subitem_qty_data) <= item_max_qty:
-                    subitem = Subitem(quantity=subitem_qty_data, user_id=u_id)
-
-                    item.subitems.append(subitem)
-                    item.quantity_claimed = item_claimed_current + subitem_qty_data
-                    print("Subitem created. Code:1")
-                else:
-                    if item_claimed_current < item_max_qty:
-                        item_claimed_max_diff = (item_max_qty - item_claimed_current)
-
-                        subitem = Subitem(quantity=item_claimed_max_diff, user_id=u_id)
-
-                        item.subitems.append(subitem)
-                        item.quantity_claimed = item_claimed_current + item_claimed_max_diff
-                        print("Subitem added. Difference added. Code:1")
+                for subitem_new in subitems_new:
+                    if not subitem_new['quantity']:
+                        print("Subitem quantity left blank.")
+                    elif int(subitem_new['quantity']) <= 0:
+                        print("Subitem quantity is 0 or less.")
                     else:
-                        print("Quantity being claimed exceeds max. Item not created.")
+                        subitem_qty_data = int(subitem_new['quantity'])
+
+                        if (item_claimed_current + subitem_qty_data) <= item_max_qty:
+                            subitem = Subitem(quantity=subitem_qty_data, user_id=u_id)
+
+                            item.subitems.append(subitem)
+                            item.quantity_claimed = item_claimed_current + subitem_qty_data
+                            print("Subitem created. Code:1")
+                        else:
+                            if item_claimed_current < item_max_qty:
+                                item_claimed_max_diff = (item_max_qty - item_claimed_current)
+
+                                subitem = Subitem(quantity=item_claimed_max_diff, user_id=u_id)
+
+                                item.subitems.append(subitem)
+                                item.quantity_claimed = item_claimed_current + item_claimed_max_diff
+                                print("Subitem added. Difference added. Code:1")
+                            else:
+                                print("Quantity being claimed exceeds max. Item not created.")
 
             # Add updated SQLAlchemy Item to session
             db.session.add(item)

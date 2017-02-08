@@ -14,13 +14,13 @@ user = Blueprint('user', __name__, template_folder='templates')
 def index():
     return render_template('users/user_profile.html')
 
-@user.route('/<user_id>', methods=['GET', 'POST'])
-@login_required
-def show(user_id):
-    user_id = current_user.id
-    user = User.query.filter_by(id=user_id).first_or_404()
-
-    return render_template('users/user_profile.html', user=user)
+# @user.route('/<user_id>', methods=['GET', 'POST'])
+# @login_required
+# def show(user_id):
+#     user_id = current_user.id
+#     user = User.query.filter_by(id=user_id).first_or_404()
+#
+#     return render_template('users/user_profile.html', user=user)
 
 @user.route('/edit', methods=['GET', 'POST'])
 @login_required
