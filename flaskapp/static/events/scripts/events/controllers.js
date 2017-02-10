@@ -74,15 +74,15 @@ angular.module('events.controllers', [])
         data: items
       }).then(function successCallback(response) {
         if (response.data && response.data.status === 'OK') {
-          console.log('Success.')
-          // reset();
+          console.log('Success.');
+          reset();
         } else if (response.data && response.data.status === 'code:3') {
           console.log('Quantity being claimed exceeds max. Value will remain unchanged.')
         }
         // console.log(response)
       }, function errorCallback(response) {
         if (response.data && response.data.status === 'Error') {
-          console.log('Error.')
+          console.log('Error.');
           // reset();
         }
         console.log(response);
@@ -97,11 +97,13 @@ angular.module('events.controllers', [])
     function reset() {
       // Clean up scope before destroying
       $scope.params = {};
-      $scope.stage = '';
-
-      // Send the app back to a Flask route
-      // This method is kind of experimental at the moment.
-      $timeout(changeRoute, 1000);
+      $scope.carbon = {};
+      EventService
+        .getItems()
+        .then(function (response) {
+          $scope.params = response.data;
+          $scope.carbon = response.data;
+        });
     }
 
 }]);

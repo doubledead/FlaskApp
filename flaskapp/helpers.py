@@ -50,3 +50,13 @@ class JsonSerializer(object):
         for key in hidden:
             rv.pop(key, None)
         return rv
+
+
+class DataTypeCheck(object):
+    def representsint(self):
+        try:
+            int(self)
+            return True
+        except ValueError:
+            return False
+
