@@ -14,6 +14,7 @@ angular.module('events.controllers', [])
     $scope.carbon = [];
     $scope.formValid = false;
     $scope.rowId = 0;
+    $scope.stage = 0;
     $scope.toggleEventObjView = false;
 
     // This method of calling the service initializes the response
@@ -26,8 +27,18 @@ angular.module('events.controllers', [])
     EventService
       .getItems()
       .then(function (response) {
-        $scope.params = response.data;
-        $scope.carbon = response.data;
+        if (response.data && response.data.status === "OK") {
+          $scope.params = response.data;
+          $scope.carbon = response.data;
+          console.log("getItems: OK!");
+        } else if (response.data && response.data.status === "Error") {
+          $scope.stage = "Error";
+          console.log("Error");
+          // Get last data from local storage
+          // $scope.params = $scope.carbon;
+        }
+        // $scope.params = response.data;
+        // $scope.carbon = response.data;
       });
 
 
@@ -76,8 +87,9 @@ angular.module('events.controllers', [])
         if (response.data && response.data.status === 'OK') {
           console.log('Success.');
           reset();
-        } else if (response.data && response.data.status === 'code:3') {
-          console.log('Quantity being claimed exceeds max. Value will remain unchanged.')
+        } else if (response.data && response.data.status === 'Error') {
+          console.log("Error");
+          $scope.stage = "error"
         }
         // console.log(response)
       }, function errorCallback(response) {

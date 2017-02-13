@@ -274,7 +274,13 @@ def getitems():
 
         u_id = current_user.id
 
-        event = Event.query.filter_by(id=param_id).first_or_404()
+        try:
+            event = Event.query.filter_by(id=param_id).first_or_404()
+        except exc.SQLAlchemyError as e:
+            # Set up emailing e error log
+            current_app.logger.error(e)
+            return json.dumps({"status":"Error"})
+        # event = Event.query.filter_by(id=param_id).first_or_404()
         items_data = event.items
 
         if event.user_id != u_id:
@@ -292,8 +298,7 @@ def getitems():
 
 
         # Package data payload into a Python dictionary
-        # payload = {"current_user_id" : current_user.id, "event_data" : serialized_event, "claimed_item_temp" : 0}
-        payload = {"u_Id" : u_id, "items_data" : items}
+        payload = {"u_Id" : u_id, "items_data" : items, "status" : "OK"}
 
         return json.dumps(payload)
 
@@ -305,13 +310,20 @@ def updateitems():
         data = request.get_json()
         u_id = current_user.id
         # response_payload will contain status codes for each item and subitem
-        response_payload = {}
+        response_payload = {"item_codes" : []}
 
         # Need to add functionality for 'Unclaim' or user setting claimed amount
         # to 0.
         for i in data:
             # This Item query needs to be a try/except
-            item = Item.query.filter_by(id=i['id']).first_or_404()
+            try:
+                item = Item.query.filter_by(id=i['id']).first_or_404()
+                print("Item query success!")
+            except exc.SQLAlchemyError as e:
+                current_app.logger.error(e)
+                # response_payload.item_codes.append(something)
+                continue
+            # item = Item.query.filter_by(id=i['id']).first_or_404()
             item_max_qty = item.quantity
             item_claimed_current = item.quantity_claimed
 
@@ -326,9 +338,11 @@ def updateitems():
                     subitems_new.append(si_data)
 
             for si_user in subitems_user:
+                # This Subitem query needs to be a try/except
                 subitem = Subitem.query.filter_by(id=si_user['id']).first_or_404()
                 subitem_qty_current = subitem.quantity
 
+                # Data validation on Subitem quantity with Utils function.
                 if si_user['quantity'] and representsint(si_user['quantity']):
                     print("Subitem quantity is number.")
                     subitem_qty = int(si_user['quantity'])
@@ -354,6 +368,8 @@ def updateitems():
                 #     subitem_qty_data = subitem_qty_current
 
                 # Begin math
+                # This could probably become a function.
+                # Takes multiple args and returns an Item
                 if subitem_qty_data < subitem_qty_current:
                     subitem_qty_difference = (subitem_qty_current - subitem_qty_data)
                     subitem.quantity = subitem_qty_data
@@ -443,6 +459,7 @@ def updateitems():
         else:
             try:
                 db.session.commit()
+                # Eventually return response_payload
                 return json.dumps({'status':'OK'})
             except exc.SQLAlchemyError as e:
                 current_app.logger.error(e)
