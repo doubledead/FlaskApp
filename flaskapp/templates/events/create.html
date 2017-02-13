@@ -211,56 +211,6 @@
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
           </div>
-          <!--
-          <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-4">
-              <div class="form-group">
-                <label for="tb-item-name">Name</label>
-                <input type="text"
-                       id="tb-item-name"
-                       class="form-control"
-                       ng-model="params.itemName" />
-              </div>
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-3">
-              <div class="form-group">
-                <label for="tb-item-quantity">Quantity</label>
-                <input type="text"
-                       id="tb-item-quantity"
-                       class="form-control"
-                       ng-model="params.itemQuantity" />
-              </div>
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2">
-              <div>&nbsp;</div>
-              <button type="button" class="btn btn-info btn-xs" ng-click="addItem()">Add</button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
-          </div>
-          <div class="row" ng-hide="params.items.length > 0">
-            <div class="col-xs-4 col-sm-5 col-md-6">
-              No event items added, yet.
-            </div>
-          </div>
-          <div ng-repeat="i in params.items">
-            <div class="row">
-              <div class="col-xs-2 col-sm-2 col-md-3">
-                {{ i.name }}
-              </div>
-              <div class="col-xs-1 col-sm-1 col-md-2">
-                {{ i.quantity }}
-              </div>
-              <div class="col-xs-1 col-sm-1 col-md-2">
-                <button type="button" class="btn btn-danger btn-xs" ng-click="removeItem(i.itemId)">Remove</button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
-            </div>
-          </div>
-          -->
           <!-- Items -->
           <div ng-repeat="row in params.items">
             <item-row></item-row>

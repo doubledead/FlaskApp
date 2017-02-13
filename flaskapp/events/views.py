@@ -7,7 +7,7 @@ from datetime import datetime
 from .forms import NewEventForm, UpdateEventForm, UpdateItemForm, SubItemForm
 from .models import Event, event_schema, Guest, Item, item_schema, Subitem, subitem_schema
 from sqlalchemy import exc
-from ..helpers import DataTypeCheck
+from ..utils import representsint
 
 events = Blueprint('events', __name__, template_folder='templates')
 
@@ -309,8 +309,8 @@ def updateitems():
 
         # Need to add functionality for 'Unclaim' or user setting claimed amount
         # to 0.
-        # Handle for strings, '-&'
         for i in data:
+            # This Item query needs to be a try/except
             item = Item.query.filter_by(id=i['id']).first_or_404()
             item_max_qty = item.quantity
             item_claimed_current = item.quantity_claimed
@@ -328,34 +328,30 @@ def updateitems():
             for si_user in subitems_user:
                 subitem = Subitem.query.filter_by(id=si_user['id']).first_or_404()
                 subitem_qty_current = subitem.quantity
-                # subitem_qty_data = int(si_user['quantity'])
 
-                # Subitem quantity data check
-                # if not si_user['quantity']:
-                #     print("Subitem quantity left blank.")
-                #     subitem_qty_data = subitem_qty_current
-                # elif isinstance(si_user['quantity'], int ):
-                #         if int(si_user['quantity']) > 0:
-                #             print("Subitem quantity is 0 or less.")
-                #             subitem_qty_data = int(si_user['quantity'])
-                #         elif int(si_user['quantity']) <= 0:
-                #             print("Subitem quantity is 0 or less.")
-                #             subitem_qty_data = subitem_qty_current
-                # else:
-                #     print("Subitem quantity NaN.")
-                #     subitem_qty_data = subitem_qty_current
-
-                try:
-                    subitem_qty = int(si_user['quantity'])
+                if si_user['quantity'] and representsint(si_user['quantity']):
                     print("Subitem quantity is number.")
+                    subitem_qty = int(si_user['quantity'])
                     if subitem_qty > 0:
                         subitem_qty_data = subitem_qty
                     elif subitem_qty <= 0:
                         print("Subitem quantity is 0 or less. Current quantity used.")
                         subitem_qty_data = subitem_qty_current
-                except:
+                else:
                     print("New Subitem quantity is NaN. Current quantity used.")
                     subitem_qty_data = subitem_qty_current
+
+                # try:
+                #     subitem_qty = int(si_user['quantity'])
+                #     print("Subitem quantity is number.")
+                #     if subitem_qty > 0:
+                #         subitem_qty_data = subitem_qty
+                #     elif subitem_qty <= 0:
+                #         print("Subitem quantity is 0 or less. Current quantity used.")
+                #         subitem_qty_data = subitem_qty_current
+                # except:
+                #     print("New Subitem quantity is NaN. Current quantity used.")
+                #     subitem_qty_data = subitem_qty_current
 
                 # Begin math
                 if subitem_qty_data < subitem_qty_current:

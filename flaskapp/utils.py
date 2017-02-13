@@ -7,3 +7,10 @@ def get_app_base_path():
 
 def get_instance_folder_path():
     return os.path.join(get_app_base_path(), 'instance')
+
+def representsint(object):
+    try:
+        int(object)
+        return True
+    except ValueError:
+        return False
