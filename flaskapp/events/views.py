@@ -124,29 +124,33 @@ def create():
         for g in guests_data:
             e = g['email']
 
-            guest = Guest(email=e)
+            guest = Guest(active=True, email=e)
             event.guests.append(guest)
             guestmsg.add_recipient(e)
 
 
         # Iterate through items
         for i in items_data:
-            item_category_id = int(i['category_id'])
+            if i['category_id'] and representsint(i['category_id']):
+                item_category_id = int(i['category_id'])
+            else:
+                item_category_id = 100
 
             if i['name'] == "":
                 item_name = "Blank"
             else:
                 item_name = i['name']
 
-            # Work more on type checking
-            if i['quantity'] == "":
-                # item_quantity = int(i['quantity'])
-                # If a blank value is entered, at least give it 1.
-                item_quantity = 1
+            if i['quantity'] and representsint(i['quantity']):
+                item_quantity = int(i['quantity'])
             else:
-                item_quantity = i['quantity']
+                item_quantity = 1
 
-            item = Item(category_id=item_category_id, name=item_name, quantity=item_quantity, quantity_claimed=0)
+            item = Item(active=True,
+                        category_id=item_category_id,
+                        name=item_name,
+                        quantity=item_quantity,
+                        quantity_claimed=0)
             event.items.append(item)
 
         msg = Message()
@@ -274,13 +278,7 @@ def getitems():
 
         u_id = current_user.id
 
-        try:
-            event = Event.query.filter_by(id=param_id).first_or_404()
-        except exc.SQLAlchemyError as e:
-            # Set up emailing e error log
-            current_app.logger.error(e)
-            return json.dumps({"status":"Error"})
-        # event = Event.query.filter_by(id=param_id).first_or_404()
+        event = Event.query.filter_by(id=param_id).first_or_404()
         items_data = event.items
 
         if event.user_id != u_id:
@@ -315,15 +313,7 @@ def updateitems():
         # Need to add functionality for 'Unclaim' or user setting claimed amount
         # to 0.
         for i in data:
-            # This Item query needs to be a try/except
-            try:
-                item = Item.query.filter_by(id=i['id']).first_or_404()
-                print("Item query success!")
-            except exc.SQLAlchemyError as e:
-                current_app.logger.error(e)
-                # response_payload.item_codes.append(something)
-                continue
-            # item = Item.query.filter_by(id=i['id']).first_or_404()
+            item = Item.query.filter_by(id=i['id']).first_or_404()
             item_max_qty = item.quantity
             item_claimed_current = item.quantity_claimed
 
@@ -344,7 +334,6 @@ def updateitems():
 
                 # Data validation on Subitem quantity with Utils function.
                 if si_user['quantity'] and representsint(si_user['quantity']):
-                    print("Subitem quantity is number.")
                     subitem_qty = int(si_user['quantity'])
                     if subitem_qty > 0:
                         subitem_qty_data = subitem_qty
@@ -355,21 +344,7 @@ def updateitems():
                     print("New Subitem quantity is NaN. Current quantity used.")
                     subitem_qty_data = subitem_qty_current
 
-                # try:
-                #     subitem_qty = int(si_user['quantity'])
-                #     print("Subitem quantity is number.")
-                #     if subitem_qty > 0:
-                #         subitem_qty_data = subitem_qty
-                #     elif subitem_qty <= 0:
-                #         print("Subitem quantity is 0 or less. Current quantity used.")
-                #         subitem_qty_data = subitem_qty_current
-                # except:
-                #     print("New Subitem quantity is NaN. Current quantity used.")
-                #     subitem_qty_data = subitem_qty_current
-
                 # Begin math
-                # This could probably become a function.
-                # Takes multiple args and returns an Item
                 if subitem_qty_data < subitem_qty_current:
                     subitem_qty_difference = (subitem_qty_current - subitem_qty_data)
                     subitem.quantity = subitem_qty_data
@@ -407,14 +382,14 @@ def updateitems():
             # Handle new Subitems
             if not subitems_user:
                 for subitem_new in subitems_new:
-                    try:
+                    if subitem_new['quantity'] and representsint(subitem_new['quantity']):
                         subitem_qty = int(subitem_new['quantity'])
                         print("Subitem quantity is number.")
                         if subitem_qty > 0:
                             subitem_qty_data = subitem_qty
 
                             if (item_claimed_current + subitem_qty_data) <= item_max_qty:
-                                subitem = Subitem(quantity=subitem_qty_data, user_id=u_id)
+                                subitem = Subitem(active=True, quantity=subitem_qty_data, user_id=u_id)
 
                                 item.subitems.append(subitem)
                                 item.quantity_claimed = item_claimed_current + subitem_qty_data
@@ -423,7 +398,7 @@ def updateitems():
                                 if item_claimed_current < item_max_qty:
                                     item_claimed_max_diff = (item_max_qty - item_claimed_current)
 
-                                    subitem = Subitem(quantity=item_claimed_max_diff, user_id=u_id)
+                                    subitem = Subitem(active=True, quantity=item_claimed_max_diff, user_id=u_id)
 
                                     item.subitems.append(subitem)
                                     item.quantity_claimed = item_claimed_current + item_claimed_max_diff
@@ -432,27 +407,8 @@ def updateitems():
                                     print("Quantity being claimed exceeds max. Item not created.")
                         elif subitem_qty <= 0:
                             print("Subitem quantity is 0 or less. Subitem not created.")
-                            # subitem_qty_data = 1
-                    except:
+                    else:
                         print("Subitem quantity is NaN. Subitem not created.")
-
-                    # if (item_claimed_current + subitem_qty_data) <= item_max_qty:
-                    #     subitem = Subitem(quantity=subitem_qty_data, user_id=u_id)
-                    #
-                    #     item.subitems.append(subitem)
-                    #     item.quantity_claimed = item_claimed_current + subitem_qty_data
-                    #     print("Subitem created. Code:1")
-                    # else:
-                    #     if item_claimed_current < item_max_qty:
-                    #         item_claimed_max_diff = (item_max_qty - item_claimed_current)
-                    #
-                    #         subitem = Subitem(quantity=item_claimed_max_diff, user_id=u_id)
-                    #
-                    #         item.subitems.append(subitem)
-                    #         item.quantity_claimed = item_claimed_current + item_claimed_max_diff
-                    #         print("Subitem added. Difference added. Code:1")
-                    #     else:
-                    #         print("Quantity being claimed exceeds max. Item not created.")
 
             # Add updated SQLAlchemy Item to session
             db.session.add(item)

@@ -27,18 +27,16 @@ angular.module('events.controllers', [])
     EventService
       .getItems()
       .then(function (response) {
-        if (response.data && response.data.status === "OK") {
-          $scope.params = response.data;
-          $scope.carbon = response.data;
-          console.log("getItems: OK!");
-        } else if (response.data && response.data.status === "Error") {
-          $scope.stage = "Error";
-          console.log("Error");
-          // Get last data from local storage
-          // $scope.params = $scope.carbon;
-        }
-        // $scope.params = response.data;
-        // $scope.carbon = response.data;
+        // if (response.data && response.data.status === "OK") {
+        //   $scope.params = response.data;
+        //   $scope.carbon = response.data;
+        //   console.log("getItems: OK!");
+        // } else if (response.data && response.data.status === "Error") {
+        //   $scope.stage = "Error";
+        //   console.log("Error");
+        // }
+        $scope.params = response.data;
+        $scope.carbon = response.data;
       });
 
 

@@ -32,9 +32,11 @@ class Guest(db.Model):
     __tablename__ = 'guests'
 
     id = db.Column(db.Integer(), primary_key=True)
+    active = db.Column(db.Boolean())
     email = db.Column(db.String(225))
 
-    def __init__(self, email):
+    def __init__(self, active, email):
+        self.active = True
         self.email = email
 
 
@@ -50,11 +52,13 @@ class Subitem(db.Model):
     __tablename__ = 'subitems'
 
     id = db.Column(db.Integer(), primary_key=True)
+    active = db.Column(db.Boolean())
     quantity = db.Column(db.Integer())
     # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user_id = db.Column(db.Integer())
 
-    def __init__(self, quantity, user_id):
+    def __init__(self, active, quantity, user_id):
+        self.active = True
         self.quantity = quantity
         self.user_id = user_id
 
@@ -71,6 +75,7 @@ class Item(db.Model):
     __tablename__ = 'items'
 
     id = db.Column(db.Integer(), primary_key=True)
+    active = db.Column(db.Boolean())
     category_id = db.Column(db.Integer())
     name = db.Column(db.String(225))
     quantity = db.Column(db.Integer())
@@ -80,7 +85,8 @@ class Item(db.Model):
     subitems = db.relationship('Subitem', secondary=items_subitems,
                             backref=db.backref('items', lazy='joined'))
 
-    def __init__(self, category_id, name, quantity, quantity_claimed):
+    def __init__(self, active, category_id, name, quantity, quantity_claimed):
+        self.active = True
         self.category_id = category_id
         self.name = name
         self.quantity = quantity
