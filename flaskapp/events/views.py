@@ -183,6 +183,16 @@ def show(event_id):
 
         return render_template("events/show.html", event=event, guests=guests, u_id=u_id)
 
+@events.route('/host/<event_id>', methods=['GET', 'POST'])
+@login_required
+def host(event_id):
+    if request.method =="GET":
+        u_id = current_user.id
+        event = Event.query.filter_by(id=event_id).first_or_404()
+        guests = event.guests
+
+        return render_template("events/host-view.html", event=event, guests=guests, u_id=u_id)
+
 # Endpoint for Jinja2 template
 @events.route('/view/<event_id>', methods=['GET', 'POST'])
 @login_required
