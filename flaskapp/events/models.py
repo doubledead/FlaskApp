@@ -52,13 +52,12 @@ class Subitem(db.Model):
     __tablename__ = 'subitems'
 
     id = db.Column(db.Integer(), primary_key=True)
-    active = db.Column(db.Boolean())
+    active = db.Column(db.Boolean(), default=True)
     quantity = db.Column(db.Integer())
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user_id = db.Column(db.Integer())
 
     def __init__(self, active, quantity, user_id):
-        self.active = True
+        self.active = active
         self.quantity = quantity
         self.user_id = user_id
 
@@ -80,17 +79,19 @@ class Item(db.Model):
     name = db.Column(db.String(225))
     quantity = db.Column(db.Integer())
     quantity_claimed = db.Column(db.Integer())
+    user_id = db.Column(db.Integer())
 
     # Many-to-many
     subitems = db.relationship('Subitem', secondary=items_subitems,
                             backref=db.backref('items', lazy='joined'))
 
-    def __init__(self, active, category_id, name, quantity, quantity_claimed):
+    def __init__(self, active, category_id, name, quantity, quantity_claimed, user_id):
         self.active = True
         self.category_id = category_id
         self.name = name
         self.quantity = quantity
         self.quantity_claimed = quantity_claimed
+        self.user_id = user_id
 
     def __repr__(self):
         return 'Item %r>' % (self.name)

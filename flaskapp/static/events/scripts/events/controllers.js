@@ -36,7 +36,7 @@ angular.module('events.controllers', [])
         //   console.log("Error");
         // }
         $scope.params = response.data;
-        $scope.carbon = response.data;
+        // $scope.carbon = response.data;
       });
 
 
@@ -107,12 +107,12 @@ angular.module('events.controllers', [])
     function reset() {
       // Clean up scope before destroying
       $scope.params = {};
-      $scope.carbon = {};
+      // $scope.carbon = {};
       EventService
         .getItems()
         .then(function (response) {
           $scope.params = response.data;
-          $scope.carbon = response.data;
+          // $scope.carbon = response.data;
         });
     }
 

@@ -20,6 +20,38 @@ angular.module('events.services', [])
           }, function errorCallback(response) {
             console.log(response);
           });
+        },
+        removeItem: function(itemId) {
+
+          var data = {
+            paramId: itemId
+          };
+
+          return $http({
+            method: 'POST',
+            url: '/events/removeitem',
+            data: JSON.stringify(data)
+          }).then(function successCallback(response) {
+            return response;
+          }, function errorCallback(response) {
+            console.log(response);
+          });
+        },
+        reactivateItem: function(itemId) {
+
+          var data = {
+            paramId: itemId
+          };
+
+          return $http({
+            method: 'POST',
+            url: '/events/reactivateitem',
+            data: JSON.stringify(data)
+          }).then(function successCallback(response) {
+            return response;
+          }, function errorCallback(response) {
+            console.log(response);
+          });
         }
       }
     });

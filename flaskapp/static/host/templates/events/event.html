@@ -1,13 +1,16 @@
 <!-- Items -->
 <div ng-repeat="item in event.items_data">
-  <item-row item="item"></item-row>
+  <item-row ng-if="item.active === true" item="item"></item-row>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12">
+    <h4><strong>Removed Items</strong></h4>
+  </div>
+</div>
+<div ng-repeat="item in event.items_data">
+  <item-row ng-if="item.active === false" item="item"></item-row>
 </div>
 <!-- End Items -->
-<!--
-<div class="row">
-  <div class="col-xs-2 col-sm-2 col-md-2">
-    <button type="button" class="btn btn-primary btn-sm" ng-click="claimItems()">Claim Items</button>
-  </div>
-  <div class="col-xs-2 col-sm-5 col-md-5">&nbsp;</div>
-</div>
--->

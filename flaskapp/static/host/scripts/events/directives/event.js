@@ -1,5 +1,5 @@
 angular.module('events.event', [])
-  .directive('eventRow', ['$http', function ($http) {
+  .directive('eventRow', ['$http', 'EventService', function ($http, EventService) {
     return {
       restrict: 'E',
       templateUrl: 'events/event.html',
@@ -35,6 +35,38 @@ angular.module('events.event', [])
             }
             console.log(response);
           });
+        };
+
+        scope.removeItem = function (id) {
+
+          EventService
+            .removeItem(id)
+            .then(function (response) {
+              if (response.data && response.data.status === "OK") {
+                // $scope.params = response.data;
+                console.log("removeItem: OK!");
+              } else if (response.data && response.data.status === "Error") {
+                scope.stage = "Error";
+                console.log("removeItem: Error!");
+              }
+              // $scope.params = response.data;
+            });
+        };
+
+        scope.reactivateItem = function (id) {
+
+          EventService
+            .reactivateItem(id)
+            .then(function (response) {
+              if (response.data && response.data.status === "OK") {
+                // $scope.params = response.data;
+                console.log("removeItem: OK!");
+              } else if (response.data && response.data.status === "Error") {
+                scope.stage = "Error";
+                console.log("removeItem: Error!");
+              }
+              // $scope.params = response.data;
+            });
         };
 
 

@@ -15,3 +15,7 @@
  */
 [ng\:cloak], [ng-cloak], .ng-cloak {
     display: none; }
+
+.item-removed {
+    background: #EEEEEE;
+}

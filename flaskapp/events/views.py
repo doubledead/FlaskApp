@@ -93,6 +93,7 @@ def create_event():
 def create():
     if request.method == "POST":
         data = request.get_json()
+        u_id = current_user.id
 
         address = data["address"]
         address_line_two = data["address_line_two"]
@@ -107,7 +108,7 @@ def create():
         start_date = data["start_date"]
         state = data["state"]
         status_id = 100 # New event status
-        user_id = current_user.id
+        user_id = u_id
         zip_code = data["zip_code"]
         event = Event(address=address, address_line_two=address_line_two, category_id=category_id, city=city,
                       country=country,end_date=end_date, last_edit_date=last_edit_date,
@@ -150,7 +151,8 @@ def create():
                         category_id=item_category_id,
                         name=item_name,
                         quantity=item_quantity,
-                        quantity_claimed=0)
+                        quantity_claimed=0,
+                        user_id=u_id)
             event.items.append(item)
 
         msg = Message()
@@ -179,9 +181,8 @@ def show(event_id):
     if request.method =="GET":
         u_id = current_user.id
         event = Event.query.filter_by(id=event_id).first_or_404()
-        guests = event.guests
 
-        return render_template("events/show.html", event=event, guests=guests, u_id=u_id)
+        return render_template("events/show.html", event=event, u_id=u_id)
 
 @events.route('/host/<event_id>', methods=['GET', 'POST'])
 @login_required
@@ -189,9 +190,8 @@ def host(event_id):
     if request.method =="GET":
         u_id = current_user.id
         event = Event.query.filter_by(id=event_id).first_or_404()
-        guests = event.guests
 
-        return render_template("events/host-view.html", event=event, guests=guests, u_id=u_id)
+        return render_template("events/host-view.html", event=event, u_id=u_id)
 
 # Endpoint for Jinja2 template
 @events.route('/view/<event_id>', methods=['GET', 'POST'])
@@ -277,6 +277,33 @@ def showitem(item_id):
         subitems = item.subitems
 
         return render_template("events/items/show.html", item=item, subitems=subitems, user_id=user_id)
+
+
+@events.route('/removeitem', methods=['GET', 'POST'])
+@login_required
+def removeitem():
+    if request.method == "POST":
+        data = request.get_json()
+        param_id = data['paramId']
+        u_id = current_user.id
+
+        item = Item.query.filter_by(id=param_id).first_or_404()
+
+        if u_id == item.user_id and item.active:
+            item.active = False
+        elif u_id == item.user_id and item.active == False:
+            item.active = True
+        else:
+            return json.dumps({'status':'Error'})
+
+        try:
+            db.session.add(item)
+            db.session.commit()
+            return json.dumps({'status':'OK'})
+        except exc.SQLAlchemyError as e:
+            current_app.logger.error(e)
+            # Email log here
+            return json.dumps({'status':'Error'})
 
 
 @events.route('/getitems', methods=['GET', 'POST'])

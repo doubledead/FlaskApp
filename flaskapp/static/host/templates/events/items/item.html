@@ -1,25 +1,34 @@
-<div class="row">
-  <div class="col-xs-2 col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
-  <div class="col-xs-2 col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
-  <div class="col-xs-2 col-sm-2 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12"><strong>You've Claimed:</strong></div>
-</div>
-<!-- Subitems -->
-<div ng-repeat="subitem in item.subitems">
-  <subitem-row subitem="subitem"></subitem-row>
-</div>
-<!--End Subitems -->
-<div class="row">
-  <hr >
-</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+<div ng-class="{'item-removed': item.active === false}">
+  <div class="row">
+    <div class="col-xs-2 col-sm-2 col-md-3"><strong>Name:</strong> {{ item.name }}</div>
+    <div class="col-xs-2 col-sm-2 col-md-2">Active: {{ item.active }}</div>
+    <div class="col-xs-2 col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
+    <div class="col-xs-2 col-sm-2 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
+    <div class="col-xs-2 col-sm-2 col-md-2">
+      <button type="button" class="btn btn-danger btn-xs" ng-click="$parent.removeItem(item.id)">
+        <span ng-if="item.active===true">Remove Item</span>
+        <span ng-if="item.active===false">Reactivate Item</span>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12"><strong>You've Claimed:</strong></div>
+  </div>
+  <!-- Subitems -->
+  <div ng-repeat="subitem in item.subitems">
+    <subitem-row subitem="subitem"></subitem-row>
+  </div>
+  <!--End Subitems -->
+  <div class="row">
+    <hr >
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+  </div>
 </div>
