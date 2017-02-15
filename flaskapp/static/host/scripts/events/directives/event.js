@@ -46,10 +46,9 @@ angular.module('events.event', [])
                 // $scope.params = response.data;
                 console.log("removeItem: OK!");
               } else if (response.data && response.data.status === "Error") {
-                scope.stage = "Error";
+                // scope.stage = "Error";
                 console.log("removeItem: Error!");
               }
-              // $scope.params = response.data;
             });
         };
 
@@ -62,10 +61,9 @@ angular.module('events.event', [])
                 // $scope.params = response.data;
                 console.log("removeItem: OK!");
               } else if (response.data && response.data.status === "Error") {
-                scope.stage = "Error";
+                // scope.stage = "Error";
                 console.log("removeItem: Error!");
               }
-              // $scope.params = response.data;
             });
         };
 

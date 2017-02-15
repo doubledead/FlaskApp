@@ -32,12 +32,14 @@ class Guest(db.Model):
     __tablename__ = 'guests'
 
     id = db.Column(db.Integer(), primary_key=True)
-    active = db.Column(db.Boolean())
+    active = db.Column(db.Boolean(), default=True)
     email = db.Column(db.String(225))
+    user_id = db.Column(db.Integer())
 
-    def __init__(self, active, email):
-        self.active = True
+    def __init__(self, active, email, user_id):
+        self.active = active
         self.email = email
+        self.user_id = user_id
 
 
 class GuestSchema(ma.ModelSchema):
@@ -74,7 +76,7 @@ class Item(db.Model):
     __tablename__ = 'items'
 
     id = db.Column(db.Integer(), primary_key=True)
-    active = db.Column(db.Boolean())
+    active = db.Column(db.Boolean(), default=True)
     category_id = db.Column(db.Integer())
     name = db.Column(db.String(225))
     quantity = db.Column(db.Integer())
@@ -86,7 +88,7 @@ class Item(db.Model):
                             backref=db.backref('items', lazy='joined'))
 
     def __init__(self, active, category_id, name, quantity, quantity_claimed, user_id):
-        self.active = True
+        self.active = active
         self.category_id = category_id
         self.name = name
         self.quantity = quantity
@@ -109,12 +111,14 @@ class Event(db.Model):
     __tablename__ = 'events'
 
     id = db.Column(db.Integer(), primary_key=True)
+    active = db.Column(db.Boolean(), default=True)
     address = db.Column(db.String(225))
     address_line_two = db.Column(db.String(225))
     category_id = db.Column(db.Integer())
     city = db.Column(db.String(225))
     create_date = db.Column(db.DateTime())
     country = db.Column(db.String(225))
+    description = db.Column(db.String(425))
     end_date = db.Column(db.DateTime())
     last_edit_date = db.Column(db.DateTime())
     name = db.Column(db.String(225))
@@ -133,9 +137,10 @@ class Event(db.Model):
     items = db.relationship('Item', secondary=events_items,
                             backref=db.backref('events', lazy='joined'))
 
-    def __init__(self, address, address_line_two, category_id, city, country,
-                 end_date, last_edit_date, name, start_date, state,
+    def __init__(self, active, address, address_line_two, category_id, city, country,
+                 description, end_date, last_edit_date, name, start_date, state,
                  status_id, user_id, zip_code, create_date=None):
+        self.active = active
         self.address = address
         self.address_line_two = address_line_two
         self.category_id = category_id
@@ -144,6 +149,7 @@ class Event(db.Model):
         if create_date is None:
             create_date = datetime.utcnow()
         self.create_date = create_date
+        self.description = description
         self.end_date = end_date
         self.last_edit_date = last_edit_date
         self.name = name

@@ -100,6 +100,7 @@ def create():
         category_id = data["category_id"]
         city = data["city"]
         country = data["country"]
+        description = data["description"]
         end_date = data["end_date"]
         guests_data = data["guests"]
         items_data = data["items"]
@@ -110,8 +111,8 @@ def create():
         status_id = 100 # New event status
         user_id = u_id
         zip_code = data["zip_code"]
-        event = Event(address=address, address_line_two=address_line_two, category_id=category_id, city=city,
-                      country=country,end_date=end_date, last_edit_date=last_edit_date,
+        event = Event(active=True, address=address, address_line_two=address_line_two, category_id=category_id, city=city,
+                      country=country, description=description, end_date=end_date, last_edit_date=last_edit_date,
                       name=name, start_date=start_date, state=state, status_id=status_id,
                       user_id=user_id, zip_code=zip_code)
 
@@ -125,7 +126,7 @@ def create():
         for g in guests_data:
             e = g['email']
 
-            guest = Guest(active=True, email=e)
+            guest = Guest(active=True, email=e, user_id=u_id)
             event.guests.append(guest)
             guestmsg.add_recipient(e)
 
@@ -191,7 +192,10 @@ def host(event_id):
         u_id = current_user.id
         event = Event.query.filter_by(id=event_id).first_or_404()
 
-        return render_template("events/host-view.html", event=event, u_id=u_id)
+        if event.user_id == u_id:
+            return render_template("events/host-view.html", event=event, u_id=u_id)
+        else:
+            return render_template("errors/404.html")
 
 # Endpoint for Jinja2 template
 @events.route('/view/<event_id>', methods=['GET', 'POST'])
