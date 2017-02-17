@@ -44,6 +44,9 @@ angular.module('create.controllers', [])
 
   // Form submission functions
   $scope.submitForm = function () {
+    $scope.direction = 1;
+    $scope.stage = "loading";
+
     var
       deferred = $.Deferred(),
       data = JSON.stringify($scope.params);
@@ -83,10 +86,11 @@ angular.module('create.controllers', [])
       } else if (response
         && response.data
         && response.data.status === 'Error') {
-        console.log(response.data)
+        $scope.stage = "error";
       }
     }, function errorCallback(response) {
       console.log(response);
+      $scope.stage = "error";
     });
   };
 
@@ -98,6 +102,7 @@ angular.module('create.controllers', [])
   function reset() {
     // Clean up scope before destroying
     $scope.params = {};
+    $scope.direction = 1;
     $scope.stage = 'createSuccess';
 
     // Send the app back to a Flask route
@@ -143,6 +148,7 @@ angular.module('create.controllers', [])
 
     $scope.params.items.push(itemRow);
   };
+  /* Add one default Item row */
   $scope.addItemRow();
 
   $scope.addItem = function () {

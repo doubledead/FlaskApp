@@ -14,7 +14,8 @@ angular.module('events.controllers', [])
     $scope.carbon = [];
     $scope.formValid = false;
     $scope.rowId = 0;
-    $scope.stage = 0;
+    $scope.stage = "";
+    $scope.longStage = 0;
     $scope.toggleEventObjView = false;
 
     EventService
@@ -25,15 +26,18 @@ angular.module('events.controllers', [])
       });
 
     $scope.removeItem = function (id) {
+      $scope.direction = 1;
+      $scope.stage = "loading";
 
       EventService
         .removeItem(id)
         .then(function (response) {
           if (response.data && response.data.status === "OK") {
-            // $scope.params = response.data;
             console.log("removeItem: OK!");
+            $scope.reset();
           } else if (response.data && response.data.status === "Error") {
-            // scope.stage = "Error";
+            $scope.direction = 1;
+            scope.stage = "error";
             console.log("removeItem: Error!");
           }
         });
@@ -41,6 +45,10 @@ angular.module('events.controllers', [])
 
     $scope.claimItems = function () {
       var items = JSON.stringify($scope.params.items_data);
+      $scope.direction = 1;
+      $scope.stage = "loading";
+      $scope.longStage = 1;
+
 
       $http({
         method: 'POST',
@@ -49,7 +57,7 @@ angular.module('events.controllers', [])
       }).then(function successCallback(response) {
         if (response.data && response.data.status === 'OK') {
           console.log('Success.');
-          reset();
+          $scope.reset();
         } else if (response.data && response.data.status === 'Error') {
           console.log("Error");
           $scope.stage = "error"
@@ -57,7 +65,7 @@ angular.module('events.controllers', [])
       }, function errorCallback(response) {
         if (response.data && response.data.status === 'Error') {
           console.log('Error.');
-          // reset();
+          $scope.stage = "error"
         }
         console.log(response);
       });
@@ -68,16 +76,34 @@ angular.module('events.controllers', [])
       location.assign(location.href);
     }
 
-    function reset() {
+    $scope.reset = function () {
       // Clean up scope before destroying
       $scope.params = {};
-      $scope.carbon = {};
+      // $scope.carbon = {};
       EventService
         .getItems()
         .then(function (response) {
           $scope.params = response.data;
           // $scope.carbon = response.data;
         });
+      $scope.direction = 1;
+      $scope.stage = "";
+      $scope.longStage = 0;
     }
+
+    // function reset() {
+    //   // Clean up scope before destroying
+    //   $scope.params = {};
+    //   // $scope.carbon = {};
+    //   EventService
+    //     .getItems()
+    //     .then(function (response) {
+    //       $scope.params = response.data;
+    //       // $scope.carbon = response.data;
+    //     });
+    //   $scope.direction = 1;
+    //   $scope.stage = "";
+    //   $scope.longStage = 0;
+    // }
 
 }]);

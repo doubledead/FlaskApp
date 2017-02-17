@@ -1,10 +1,11 @@
 {% extends 'layouts/events/host.html' %}
 {% block title %}Events Host - {{ event.name }}{% endblock %}
 {% block container %}
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-      <h3>{{ event.name }}</h3>
-    </div>
+  <div class="jumbotron">
+    <h2>Host View</h2>
+  </div>
+  <div class="page-header">
+    <h3>{{ event.name }}</h3>
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
@@ -74,24 +75,22 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
   </div>
-    {% if event.user_id == u_id %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <h4><strong>Guests</strong></h4>
+    </div>
+  </div>
+    {% for g in event.guests %}
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-          <h4><strong>Guests</strong></h4>
-        </div>
+        <div class="col-xs-5 col-sm-5 col-md-12">{{ g.email }}</div>
       </div>
-        {% for g in event.guests %}
-          <div class="row">
-            <div class="col-xs-5 col-sm-5 col-md-12">{{ g.email }}</div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
-          </div>
-        {% endfor %}
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
       </div>
-    {% endif %}
+    {% endfor %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+  </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
       <h4><strong>Items</strong></h4>
@@ -107,31 +106,55 @@
         <event-row event="params"></event-row>
         End Events -->
         <!-- Items -->
-        <div ng-repeat="item in params.items_data">
-          <item-row ng-if="item.active === true" item="item"></item-row>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-12">
-            <h4><strong>Removed Items</strong></h4>
+        <div class="animate-switch-host-container" ng-switch on="stage" ng-class="{forward: direction, backward:!direction,longStage: longStage}">
+          <div class="animate-switch" ng-switch-default>
+            <div ng-repeat="item in params.items_data">
+              <item-row ng-if="item.active === true" item="item"></item-row>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <h4><strong>Removed Items</strong></h4>
+              </div>
+            </div>
+            <div ng-repeat="item in params.items_data">
+              <item-row ng-if="item.active === false" item="item"></item-row>
+            </div>
+            <!-- End Items -->
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-2 col-sm-2 col-md-2">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="claimItems()">
+                  Claim Items
+                </button>
+              </div>
+              <div class="col-xs-5 col-sm-5 col-md-5">&nbsp;</div>
+            </div>
           </div>
-        </div>
-        <div ng-repeat="item in params.items_data">
-          <item-row ng-if="item.active === false" item="item"></item-row>
-        </div>
-        <!-- End Items -->
-        <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
-        </div>
-        <div class="row">
-          <div class="col-xs-2 col-sm-2 col-md-2">
-            <button type="button" class="btn btn-primary btn-sm" ng-click="claimItems()">
-              Claim Items
-            </button>
+          <div class="animate-switch" ng-switch-when="loading">
+            <div class="success-wrap">
+              <h2 class="confirmation-text">Updating items...</h2>
+            </div>
           </div>
-          <div class="col-xs-5 col-sm-5 col-md-5">&nbsp;</div>
+          <div class="animate-switch" ng-switch-when="success">
+            <div class="success-wrap">
+              <h2 class="confirmation-text">Thank you</h2>
+              <p>Your message has been sent.<br>You should receive a confirmation email.</p>
+              <div><button type="button" class="btn btn-success btn-lg" ng-click="reset()" >Send Another</button></div>
+            </div>
+          </div>
+          <div class="animate-switch" ng-switch-when="error">
+            <div class="error-wrap">
+              <h2 class="confirmation-text">Error</h2>
+              <p>There was an error when attempting to submit your request.<br>Please try again later.</p>
+              <p><strong>*This will always error until a web service URL is set.*</strong></p>
+              <div><button type="button" class="btn btn-danger btn-lg" ng-click="reset()" >Try again</button></div>
+            </div>
+          </div>
         </div>
       </form>
       <div class="row">

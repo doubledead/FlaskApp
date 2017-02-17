@@ -1,11 +1,8 @@
 {% extends 'layouts/events/events.html' %}
 {% block title %}Events{% endblock %}
 {% block container %}
-  <div class="jumbotron">
-    <h3>Events</h3>
-  </div>
-  <div class="row">
-    <div class="col-sm-12 col-md-12">&nbsp;</div>
+  <div class="page-header">
+    <h2>Events</h2>
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-12">
@@ -66,11 +63,14 @@
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-md-12">Your Completed Events</div>
+    <div class="col-sm-12 col-md-12">
+      <h4><strong>Completed Events</strong></h4>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
+  {% if events_completed|count > 0 %}
   <div class="row">
     <div class="col-sm-12 col-md-12">
       <div class="row">
@@ -103,6 +103,13 @@
       {% endfor %}
     </div>
   </div>
+  {% else %}
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        No recent completed events.
+      </div>
+    </div>
+  {% endif %}
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>

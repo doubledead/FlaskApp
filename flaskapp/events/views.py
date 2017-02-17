@@ -349,7 +349,7 @@ def updateitems():
         data = request.get_json()
         u_id = current_user.id
         # response_payload will contain status codes for each item and subitem
-        response_payload = {"item_codes" : []}
+        response_payload = {"item_codes" : [], "status" : ""}
 
         # Need to add functionality for 'Unclaim' or user setting claimed amount
         # to 0.
