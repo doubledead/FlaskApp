@@ -4,6 +4,12 @@
     <div class="col-xs-2 col-sm-2 col-md-2">Quantity: {{ item.quantity }}</div>
     <div class="col-xs-2 col-sm-2 col-md-2">Claimed: {{ item.quantity_claimed }}</div>
     <div class="col-xs-2 col-sm-2 col-md-2">
+      <!--
+      <button type="button" class="btn btn-danger btn-xs" ng-click="$parent.removeItem(item.id)">
+        <span ng-if="item.active===true">Remove Item</span>
+        <span ng-if="item.active===false">Reactivate Item</span>
+      </button>
+      -->
       <button type="button" class="btn btn-danger btn-xs" ng-click="$parent.removeItem(item.id)">
         <span ng-if="item.active===true">Remove Item</span>
         <span ng-if="item.active===false">Reactivate Item</span>
