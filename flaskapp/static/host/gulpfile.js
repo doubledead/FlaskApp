@@ -19,9 +19,9 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 gulp.task('templates', function () {
-  return gulp.src('templates/**/*.html')
+  return gulp.src('app/templates/**/*.html')
     .pipe(templateCache({standalone: true}))
-    .pipe(gulp.dest('scripts'));
+    .pipe(gulp.dest('app/scripts'));
 });
 
 // Watch Files For Changes & Reload
@@ -36,9 +36,9 @@ gulp.task('serve', [], function () {
     // https: true,
     server: ["./"]
   });
-  gulp.watch("templates/**/*.html", ['templates', reload]);
-  gulp.watch("scripts/**/*.js").on('change', reload);
-  gulp.watch("styles/**/*.css").on('change', reload);
+  gulp.watch("app/templates/**/*.html", ['templates', reload]);
+  gulp.watch("app/scripts/**/*.js").on('change', reload);
+  gulp.watch("app/styles/**/*.css").on('change', reload);
 });
 
 // Default task that will run by type 'gulp'
