@@ -12,38 +12,30 @@ angular.module('events.directives', [])
       // Insert blank Subitem row as placeholder if conditions
       scope.$watch('item.quantity_claimed', function () {
         if (scope.item.quantity_claimed === 0) {
-          // console.log("Test");
           // Do some logic here to add and subtract
           // the quantity_claimed from something like
           // called remaining. Watch for changes in the
           // input and add and subtract difference accordingly.
 
-          scope.addSubitemRow = function () {
-            scope.subitemId++;
-
-            var subitemRow = {
-              row_id: scope.subitemId,
-              quantity: 0,
-              user_id: 0
-            };
-
-            scope.item.subitems.push(subitemRow);
+          scope.subitemId++;
+          var subitemRow = {
+            row_id: scope.subitemId,
+            quantity: 0,
+            user_id: 0
           };
-          scope.addSubitemRow();
+          scope.item.subitems.push(subitemRow);
         } else if (scope.item.subitems.length <= 0) {
-          scope.addSubitemRow = function () {
-            scope.subitemId++;
-
-            var subitemRow = {
-              row_id: scope.subitemId,
-              quantity: 0,
-              user_id: 0
-            };
-
-            scope.item.subitems.push(subitemRow);
+          scope.subitemId++;
+          var subitemRow = {
+            row_id: scope.subitemId,
+            quantity: 0,
+            user_id: 0
           };
-          scope.addSubitemRow();
+
+          scope.item.subitems.push(subitemRow);
         }
+        // Need to check for a subitem row belonging to host
+        // else, add a default one for host.
       });
 
 
