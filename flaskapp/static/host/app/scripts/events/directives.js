@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('events.directives', [])
 .directive('itemRow', function () {
   return {

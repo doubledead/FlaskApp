@@ -105,6 +105,7 @@ def create():
         guests_data = data["guests"]
         items_data = data["items"]
         last_edit_date = datetime.utcnow()
+        last_host_view = datetime.utcnow()
         name = data["name"]
         start_date = data["start_date"]
         state = data["state"]
@@ -113,7 +114,7 @@ def create():
         zip_code = data["zip_code"]
         event = Event(active=True, address=address, address_line_two=address_line_two, category_id=category_id, city=city,
                       country=country, description=description, end_date=end_date, last_edit_date=last_edit_date,
-                      name=name, start_date=start_date, state=state, status_id=status_id,
+                      last_host_view=last_host_view, name=name, start_date=start_date, state=state, status_id=status_id,
                       user_id=user_id, zip_code=zip_code)
 
         # Guest invite email
@@ -192,10 +193,23 @@ def host(event_id):
         u_id = current_user.id
         event = Event.query.filter_by(id=event_id).first_or_404()
 
+        # if event.user_id == u_id:
+        #     return render_template("events/host-view.html", event=event, u_id=u_id)
+        # else:
+        #     return render_template("errors/404.html")
+
         if event.user_id == u_id:
-            return render_template("events/host-view.html", event=event, u_id=u_id)
+            try:
+                event.last_host_view = datetime.utcnow()
+                db.session.add(event)
+                db.session.commit()
+                return render_template("events/host-view.html", event=event, u_id=u_id)
+            except exc.SQLAlchemyError as e:
+                current_app.logger.error(e)
+                return json.dumps({'status':'Error'})
         else:
             return render_template("errors/404.html")
+
 
 
 # Endpoint for Jinja2 template

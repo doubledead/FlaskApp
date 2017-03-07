@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('events.services', [])
   .factory('EventService', function($http){
 

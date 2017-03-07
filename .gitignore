@@ -74,4 +74,4 @@ bower_components
 flaskapp/static/events/node_modules
 flaskapp/static/host/node_modules
 flaskapp/static/jsmvcapp/node_modules
-flaskapp/static/jsmvcevents/node_modules
+flaskapp/static/create/node_modules

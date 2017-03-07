@@ -121,6 +121,7 @@ class Event(db.Model):
     description = db.Column(db.String(425))
     end_date = db.Column(db.DateTime())
     last_edit_date = db.Column(db.DateTime())
+    last_host_view = db.Column(db.DateTime())
     name = db.Column(db.String(225))
     start_date = db.Column(db.DateTime())
     state = db.Column(db.String(225))
@@ -138,7 +139,7 @@ class Event(db.Model):
                             backref=db.backref('events', lazy='joined'))
 
     def __init__(self, active, address, address_line_two, category_id, city, country,
-                 description, end_date, last_edit_date, name, start_date, state,
+                 description, end_date, last_edit_date, last_host_view, name, start_date, state,
                  status_id, user_id, zip_code, create_date=None):
         self.active = active
         self.address = address
@@ -152,6 +153,7 @@ class Event(db.Model):
         self.description = description
         self.end_date = end_date
         self.last_edit_date = last_edit_date
+        self.last_host_view = last_host_view
         self.name = name
         self.start_date = start_date
         self.state = state
