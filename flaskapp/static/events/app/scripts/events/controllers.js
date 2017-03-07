@@ -27,14 +27,6 @@ angular.module('events.controllers', [])
     EventService
       .getItems()
       .then(function (response) {
-        // if (response.data && response.data.status === "OK") {
-        //   $scope.params = response.data;
-        //   $scope.carbon = response.data;
-        //   console.log("getItems: OK!");
-        // } else if (response.data && response.data.status === "Error") {
-        //   $scope.stage = "Error";
-        //   console.log("Error");
-        // }
         $scope.params = response.data;
         // $scope.carbon = response.data;
       });
@@ -74,29 +66,18 @@ angular.module('events.controllers', [])
       // Maybe store copy in local storage and dump it on
       // change/submit.
 
-
-      var items = JSON.stringify($scope.params.items_data);
-
-      $http({
-        method: 'POST',
-        url: '/events/updateitems',
-        data: items
-      }).then(function successCallback(response) {
-        if (response.data && response.data.status === 'OK') {
-          console.log('Success.');
-          reset();
-        } else if (response.data && response.data.status === 'Error') {
-          console.log("Error");
-          $scope.stage = "error"
-        }
-        // console.log(response)
-      }, function errorCallback(response) {
-        if (response.data && response.data.status === 'Error') {
-          console.log('Error.');
-          // reset();
-        }
-        console.log(response);
-      });
+      EventService
+        .updateItems($scope.params.items_data)
+        .then(function (response) {
+          if (response.data && response.data.status === "OK") {
+            console.log("updateitems: OK!");
+            $scope.reset();
+          } else if (response.data && response.data.status === "Error") {
+            $scope.direction = 1;
+            $scope.stage = "error";
+            console.log("removeItem: Error!");
+          }
+        });
     };
 
     function changeRoute() {
@@ -104,7 +85,7 @@ angular.module('events.controllers', [])
       location.assign(location.href);
     }
 
-    function reset() {
+    $scope.reset = function () {
       // Clean up scope before destroying
       $scope.params = {};
       // $scope.carbon = {};

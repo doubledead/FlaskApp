@@ -49,26 +49,18 @@ angular.module('events.controllers', [])
       $scope.stage = "loading";
       $scope.longStage = 1;
 
-
-      $http({
-        method: 'POST',
-        url: '/events/updateitems',
-        data: items
-      }).then(function successCallback(response) {
-        if (response.data && response.data.status === 'OK') {
-          console.log('Success.');
-          $scope.reset();
-        } else if (response.data && response.data.status === 'Error') {
-          console.log("Error");
-          $scope.stage = "error"
-        }
-      }, function errorCallback(response) {
-        if (response.data && response.data.status === 'Error') {
-          console.log('Error.');
-          $scope.stage = "error"
-        }
-        console.log(response);
-      });
+      EventService
+        .updateItems($scope.params.items_data)
+        .then(function (response) {
+          if (response.data && response.data.status === "OK") {
+            console.log("updateitems: OK!");
+            $scope.reset();
+          } else if (response.data && response.data.status === "Error") {
+            $scope.direction = 1;
+            $scope.stage = "error";
+            console.log("removeItem: Error!");
+          }
+        });
     };
 
     function changeRoute() {

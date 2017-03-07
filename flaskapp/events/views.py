@@ -353,6 +353,8 @@ def getitemshost():
         u_id = current_user.id
 
         event = Event.query.filter_by(id=param_id).first_or_404()
+        ## Add extra data to this call. Maybe append things to each subitem like
+        ## user email address.
 
         if event.user_id == u_id:
             items = item_schema.dump(event.items).data
