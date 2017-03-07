@@ -35,7 +35,7 @@
     </footer>
 
     <!-- JS libraries -->
-    {% include "assets/_angular_vendor_js.html" %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/angularjs.min.js') }}"></script>
 
     <!-- AngularJS Project files -->
     <script type="text/javascript" src="{{ url_for('static', filename='host/app/scripts/templates.js') }}"></script>

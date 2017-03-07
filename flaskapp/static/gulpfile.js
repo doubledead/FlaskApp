@@ -30,6 +30,19 @@ gulp.task('clear', function (done) {
   return cache.clearAll(done);
 });
 
+// Copy All Files At The Root Level (app)
+gulp.task('copy', function () {
+  return gulp.src([
+    'app/*',
+    '!app/*.html',
+    '!app/bower_components{,/**}',
+    '!app/vendor{,/**}'
+  ], {
+    dot: true
+  }).pipe(gulp.dest('dist'))
+    .pipe($.size({title: 'copy'}));
+});
+
 // Optimize Images
 gulp.task('images', function () {
   return gulp.src('app/images/**/*')
@@ -89,19 +102,6 @@ gulp.task('csslibs', function () {
     .pipe(gulp.dest('dist/styles'))
 });
 
-// Copy All Files At The Root Level (app)
-gulp.task('copy', function () {
-  return gulp.src([
-    'app/*',
-    '!app/*.html',
-    '!app/bower_components{,/**}',
-    '!app/vendor{,/**}'
-  ], {
-    dot: true
-  }).pipe(gulp.dest('dist'))
-    .pipe($.size({title: 'copy'}));
-});
-
 // Lint JavaScript
 gulp.task('lint', function () {
   return gulp.src([
@@ -148,15 +148,11 @@ gulp.task('jslibs', function () {
     // Note: Since we are not using useref in the scripts build pipeline,
     //       you need to explicitly list your scripts here in the right order
     //       to be correctly concatenated
-    './app/bower_components/jquery/dist/jquery.min.js',
-    './app/bower_components/moment/min/moment.min.js',
-    './app/bower_components/bootstrap/dist/js/bootstrap.min.js',
-    './app/bower_components/angular/angular.min.js',
-    './app/bower_components/angular-route/angular-route.min.js',
-    './app/bower_components/angular-animate/angular-animate.min.js',
-    './app/vendor/angular-bootstrap-datetimepicker/js/datetimepicker.js',
-    './app/vendor/angular-bootstrap-datetimepicker/js/datetimepicker.templates.js',
-    './app/vendor/angular-date-time-input/dateTimeInput.js'
+    './bower_components/jquery/dist/jquery.min.js',
+    './bower_components/moment/min/moment.min.js',
+    './bower_components/bootstrap/dist/js/bootstrap.min.js',
+    './bower_components/angular/angular.min.js',
+    './bower_components/angular-animate/angular-animate.min.js'
   ])
     .pipe($.newer('.tmp/bower_components'))
     .pipe($.sourcemaps.init())
@@ -167,7 +163,46 @@ gulp.task('jslibs', function () {
     // Output files
     .pipe($.size({title: 'jslibs'}))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/scripts'))
+    .pipe(gulp.dest('js'))
+});
+
+// Concatenate and minify JavaScript vendor libraries.
+gulp.task('jsvendor', function () {
+
+  return gulp.src([
+    './js/vendor/datetimepicker.js',
+    './js/vendor/datetimepicker.templates.js',
+    './js/vendor/dateTimeInput.js'
+  ])
+    .pipe($.newer('.tmp/bower_components'))
+    .pipe($.sourcemaps.init())
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('.tmp/bower_components'))
+    .pipe($.concat('vendor.min.js'))
+    .pipe($.uglify({preserveComments: 'some'}))
+    // Output files
+    .pipe($.size({title: 'jsvendor'}))
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('js'))
+});
+
+// Concatenate and minify AngularJS libraries.
+gulp.task('libsangularjs', function () {
+
+  return gulp.src([
+    './bower_components/angular/angular.min.js',
+    './bower_components/angular-animate/angular-animate.min.js'
+  ])
+    .pipe($.newer('.tmp/bower_components'))
+    .pipe($.sourcemaps.init())
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('.tmp/bower_components'))
+    .pipe($.concat('angularjs.min.js'))
+    .pipe($.uglify({preserveComments: 'some'}))
+    // Output files
+    .pipe($.size({title: 'libsangularjs'}))
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('js'))
 });
 
 gulp.task('templates', function () {

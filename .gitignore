@@ -71,6 +71,8 @@ bower_components
 .idea/
 
 # node_modules from JS MVC Apps
+flaskapp/static/.tmp
+flaskapp/static/node_modules
 flaskapp/static/events/node_modules
 flaskapp/static/host/node_modules
 flaskapp/static/jsmvcapp/node_modules

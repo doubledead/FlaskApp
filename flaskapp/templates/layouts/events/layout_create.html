@@ -8,9 +8,6 @@
     </title>
     <meta name="description" content="Flask App">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
     <link href="{{ url_for('static', filename='css/vendor/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/vendor/datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
@@ -38,11 +35,9 @@
   </footer>
 
   <!-- JS libraries -->
-  {% include "assets/_angular_vendor_js.html" %}
+  <script type="text/javascript" src="{{ url_for('static', filename='js/libraries.min.js') }}"></script>
 
-  <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/datetimepicker.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/datetimepicker.templates.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/dateTimeInput.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/vendor.min.js') }}"></script>
 
   <!-- AngularJS Project files -->
   <script type="text/javascript" src="{{ url_for('static', filename='create/app/scripts/templates.js') }}"></script>
