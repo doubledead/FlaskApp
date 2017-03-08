@@ -120,7 +120,7 @@
               </div>
             </div>
             <div ng-repeat="item in params.items_data">
-              <item-row ng-if="item.active === false" item="item"></item-row>
+              <item-row ng-if="item.active === false" item="item" host-id="params.u_id"></item-row>
             </div>
             <!-- End Items -->
             <div class="row">
