@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('events.directives', [])
-.directive('itemRow', function () {
+.directive('itemRow', ['ItemService', function (ItemService) {
   return {
     restrict: 'E',
     templateUrl: 'events/items/item.html',
@@ -11,6 +11,8 @@ angular.module('events.directives', [])
     },
     link: function (scope, element, attrs) {
       scope.subitemId = 0;
+      scope.subitemsFlag = false;
+      scope.hostSubitemsFlag = false;
 
       /*
       scope.$watch('item.quantity_claimed', function () {
@@ -35,11 +37,34 @@ angular.module('events.directives', [])
       });
       */
 
+      scope.$watch('item.quantity_claimed', function () {
+        if (scope.item.quantity_claimed === 0) {
+          console.log('No items claimed!');
+          if (!scope.subitemsFlag) {
+            scope.subitemsFlag = true;
+          }
+          console.log(scope.subitemsFlag);
+
+        } else if (scope.item.subitems.length <= 0) {
+          console.log('No items claimed!');
+          if (!scope.subitemsFlag) {
+            scope.subitemsFlag = true;
+          }
+          console.log(scope.subitemsFlag);
+        }
+      });
+
+      // This needs work.
       scope.$watch('item.subitems', function () {
         for (var i = 0; i < scope.item.subitems.length; i++) {
           var subitem = scope.item.subitems[i];
-          if (scope.item.subitems[i].user_id === scope.hostId) {
+          if (subitem.user_id === scope.hostId) {
             console.log('Test1!');
+          } else {
+            if (subitem.user_id != scope.hostId
+              && (!scope.hostSubitemsFlag)) {
+              // scope.hostSubitemsFlag = true;
+            }
           }
         }
       });
@@ -54,32 +79,30 @@ angular.module('events.directives', [])
         };
         scope.item.subitems.push(subItemRow);
       };
+
+      scope.updateItem = function () {
+        ItemService
+          .updateItem(scope.item)
+          .then(function (response) {
+            if (response.data && response.data.status === 'OK') {
+              console.log('updateitem: OK!');
+            } else if (response.data && response.data.status === 'Error') {
+              console.log('removeItem: Error!');
+            }
+          });
+      };
     }
   };
-})
-.directive('subitemRow', ['SubitemService'], function (SubitemService) {
+}])
+.directive('subitemRow', function () {
   return {
     restrict: 'E',
     templateUrl: 'events/subitems/subitem.html',
     scope: {
       subitem: '=',
-      hostId: '='
-    },
-    link: function (scope, element, attrs) {
-      scope.updateSubitem = function (subitem) {
-
-      };
-
-    }
-  };
-})
-.directive('subitemView', function () {
-  return {
-    restrict: 'E',
-    templateUrl: 'events/subitems/subitem-view.html',
-    scope: {
-      subitem: '=',
-      hostId: '='
+      hostId: '=',
+      hostSubitemsFlag: '=',
+      subitemsFlag: '='
     },
     link: function (scope, element, attrs) {
 

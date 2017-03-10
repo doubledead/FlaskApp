@@ -42,12 +42,10 @@ angular.module('events.event', [])
           EventService
             .removeItem(id)
             .then(function (response) {
-              if (response.data && response.data.status === "OK") {
-                // $scope.params = response.data;
-                console.log("removeItem: OK!");
-              } else if (response.data && response.data.status === "Error") {
-                // scope.stage = "Error";
-                console.log("removeItem: Error!");
+              if (response.data && response.data.status === 'OK') {
+                console.log('removeItem: OK!');
+              } else if (response.data && response.data.status === 'Error') {
+                console.log('removeItem: Error!');
               }
             });
         };

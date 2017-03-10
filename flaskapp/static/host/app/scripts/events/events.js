@@ -5,7 +5,7 @@ angular.module('eventsApp.events', [
   'events.event',
 	'events.directives',
   'events.services',
-  'events.subitem-service'
+  'events.item-service'
 ])
 .run(['$rootScope', function ($rootScope) {
 

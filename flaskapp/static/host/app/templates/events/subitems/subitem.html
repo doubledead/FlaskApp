@@ -1,10 +1,11 @@
-<div class="row">
+<div class="row" ng-if="subitem.id != hostId">
   <!-- Need to add more user information here so Host can view user info. -->
   <div class="col-sx-2 col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
-  <div class="col-sx-2 col-sm-2 col-md-2" ng-if="subitem.id != hostId">
-    Quantity: {{ subitem.quantity }}
-  </div>
-  <div class="col-xs-2 col-sm-2 col-md-1" ng-if="subitem.id === hostId">
+  <div class="col-sx-2 col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
+</div>
+<div class="row" ng-if="subitem.id === hostId">
+  <div class="col-sx-2 col-sm-2 col-md-2">You've claimed:</div>
+  <div class="col-xs-2 col-sm-2 col-md-1">
     <div class="form-group">
       <label for="{{'tb-subitem-quantity-' + subitem.id}}">&nbsp;</label>
       <input type="text"
@@ -13,7 +14,16 @@
              ng-model="subitem.quantity">
     </div>
   </div>
-  <div class="col-xs-2 col-sm-2 col-md-2" ng-if="subitem.id === hostId">
-    <button type="button" class="btn btn-primary btn-sm" ng-click="updateSubitem()">Update</button>
+  <div class="col-xs-2 col-sm-2 col-md-2">
+    <!--Had to add the second $parent because of the ng-if. -->
+    <button type="button" class="btn btn-primary btn-sm" ng-click="$parent.$parent.updateItem()">
+      Update
+    </button>
   </div>
+</div>
+<div class="row" ng-if="hostSubitemsFlag">
+  <div class="col-sx-12 col-sm-12 col-md-12">You've claimed none of this item.</div>
+</div>
+<div class="row" ng-if="subitemsFlag">
+  <div class="col-sx-12 col-sm-12 col-md-12">No items claimed.</div>
 </div>

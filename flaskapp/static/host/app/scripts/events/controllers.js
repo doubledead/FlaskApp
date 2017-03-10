@@ -16,7 +16,7 @@ angular.module('events.controllers', [])
     $scope.carbon = [];
     $scope.formValid = false;
     $scope.rowId = 0;
-    $scope.stage = "";
+    $scope.stage = '';
     $scope.longStage = 0;
     $scope.toggleEventObjView = false;
 
@@ -48,14 +48,30 @@ angular.module('events.controllers', [])
     $scope.claimItems = function () {
       var items = JSON.stringify($scope.params.items_data);
       $scope.direction = 1;
-      $scope.stage = "loading";
+      $scope.stage = 'loading';
       $scope.longStage = 1;
 
       EventService
         .updateItems($scope.params.items_data)
         .then(function (response) {
+          if (response.data && response.data.status === 'OK') {
+            console.log('updateitems: OK!');
+            $scope.reset();
+          } else if (response.data && response.data.status === 'Error') {
+            $scope.direction = 1;
+            $scope.stage = 'error';
+            console.log('removeItem: Error!');
+          }
+        });
+    };
+
+    /*
+    $scope.updateItem = function (item) {
+      ItemService
+        .updateItem(item)
+        .then(function (response) {
           if (response.data && response.data.status === "OK") {
-            console.log("updateitems: OK!");
+            console.log("updateitem: OK!");
             $scope.reset();
           } else if (response.data && response.data.status === "Error") {
             $scope.direction = 1;
@@ -64,6 +80,7 @@ angular.module('events.controllers', [])
           }
         });
     };
+    */
 
     function changeRoute() {
       var returnRoute = location.origin + '/events/';
@@ -84,20 +101,5 @@ angular.module('events.controllers', [])
       $scope.stage = "";
       $scope.longStage = 0;
     };
-
-    // function reset() {
-    //   // Clean up scope before destroying
-    //   $scope.params = {};
-    //   // $scope.carbon = {};
-    //   EventService
-    //     .getItems()
-    //     .then(function (response) {
-    //       $scope.params = response.data;
-    //       // $scope.carbon = response.data;
-    //     });
-    //   $scope.direction = 1;
-    //   $scope.stage = "";
-    //   $scope.longStage = 0;
-    // }
 
 }]);
