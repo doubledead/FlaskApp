@@ -83,7 +83,7 @@ angular.module('events.controllers', [])
       $scope.direction = 1;
       $scope.stage = "";
       $scope.longStage = 0;
-    }
+    };
 
     // function reset() {
     //   // Clean up scope before destroying

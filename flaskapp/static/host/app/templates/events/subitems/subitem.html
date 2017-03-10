@@ -1,7 +1,10 @@
 <div class="row">
-  <!-- Need to add more user information here for Host. -->
+  <!-- Need to add more user information here so Host can view user info. -->
   <div class="col-sx-2 col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
-  <div class="col-xs-2 col-sm-2 col-md-1">
+  <div class="col-sx-2 col-sm-2 col-md-2" ng-if="subitem.id != hostId">
+    Quantity: {{ subitem.quantity }}
+  </div>
+  <div class="col-xs-2 col-sm-2 col-md-1" ng-if="subitem.id === hostId">
     <div class="form-group">
       <label for="{{'tb-subitem-quantity-' + subitem.id}}">&nbsp;</label>
       <input type="text"
@@ -10,5 +13,7 @@
              ng-model="subitem.quantity">
     </div>
   </div>
-  <!--<div class="col-sx-2 col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>-->
+  <div class="col-xs-2 col-sm-2 col-md-2" ng-if="subitem.id === hostId">
+    <button type="button" class="btn btn-primary btn-sm" ng-click="updateSubitem()">Update</button>
+  </div>
 </div>

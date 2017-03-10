@@ -145,19 +145,14 @@ gulp.task('scripts', function () {
 gulp.task('jslibs', function () {
 
   return gulp.src([
-    // Note: Since we are not using useref in the scripts build pipeline,
-    //       you need to explicitly list your scripts here in the right order
-    //       to be correctly concatenated
-    './bower_components/jquery/dist/jquery.min.js',
-    './bower_components/moment/min/moment.min.js',
-    './bower_components/bootstrap/dist/js/bootstrap.min.js',
-    './bower_components/angular/angular.min.js',
-    './bower_components/angular-animate/angular-animate.min.js'
+    './node_modules/jquery/dist/jquery.min.js',
+    './node_modules/moment/min/moment.min.js',
+    './node_modules/bootstrap/dist/js/bootstrap.min.js'
   ])
-    .pipe($.newer('.tmp/bower_components'))
+    .pipe($.newer('.tmp/scripts/libs'))
     .pipe($.sourcemaps.init())
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/bower_components'))
+    .pipe(gulp.dest('.tmp/scripts/libs'))
     .pipe($.concat('libraries.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
@@ -170,14 +165,14 @@ gulp.task('jslibs', function () {
 gulp.task('jsvendor', function () {
 
   return gulp.src([
-    './js/vendor/datetimepicker.js',
-    './js/vendor/datetimepicker.templates.js',
-    './js/vendor/dateTimeInput.js'
+    './node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
+    './node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js',
+    './node_modules/angular-date-time-input/src/dateTimeInput.js'
   ])
-    .pipe($.newer('.tmp/bower_components'))
+    .pipe($.newer('.tmp/scripts/vendor'))
     .pipe($.sourcemaps.init())
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/bower_components'))
+    .pipe(gulp.dest('.tmp/scripts/vendor'))
     .pipe($.concat('vendor.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
@@ -187,20 +182,20 @@ gulp.task('jsvendor', function () {
 });
 
 // Concatenate and minify AngularJS libraries.
-gulp.task('libsangularjs', function () {
+gulp.task('angular-libs', function () {
 
   return gulp.src([
-    './bower_components/angular/angular.min.js',
-    './bower_components/angular-animate/angular-animate.min.js'
+    './node_modules/angular/angular.min.js',
+    './node_modules/angular-animate/angular-animate.min.js'
   ])
-    .pipe($.newer('.tmp/bower_components'))
+    .pipe($.newer('.tmp/scripts/libs'))
     .pipe($.sourcemaps.init())
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/bower_components'))
+    .pipe(gulp.dest('.tmp/scripts/libs'))
     .pipe($.concat('angularjs.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
-    .pipe($.size({title: 'libsangularjs'}))
+    .pipe($.size({title: 'angular-libs'}))
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('js'))
 });

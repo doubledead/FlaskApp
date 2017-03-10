@@ -6,17 +6,22 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
-      Full name:&nbsp;{{ current_user.first_name }}&nbsp;{{ current_user.last_name }}
+      <strong>Full name:</strong>&nbsp;{{ current_user.first_name }}&nbsp;{{ current_user.last_name }}
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
-      Date of birth: {{ current_user.birth_date.strftime('%m-%d-%Y') }}
+      <strong>Date of birth:</strong>&nbsp;{{ current_user.birth_date.strftime('%m-%d-%Y') }}
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
-      Last login: {{ current_user.last_login_at.strftime('%m-%d-%Y') }}
+      <strong>Email:</strong>&nbsp;{{ current_user.email }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <strong>Last login:</strong>&nbsp;{{ current_user.last_login_at.strftime('%m-%d-%Y') }}
     </div>
   </div>
   <div class="row">

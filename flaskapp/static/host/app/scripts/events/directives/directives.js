@@ -57,14 +57,18 @@ angular.module('events.directives', [])
     }
   };
 })
-.directive('subitemRow', function () {
+.directive('subitemRow', ['SubitemService'], function (SubitemService) {
   return {
     restrict: 'E',
     templateUrl: 'events/subitems/subitem.html',
     scope: {
-      subitem: '='
+      subitem: '=',
+      hostId: '='
     },
     link: function (scope, element, attrs) {
+      scope.updateSubitem = function (subitem) {
+
+      };
 
     }
   };
@@ -74,7 +78,8 @@ angular.module('events.directives', [])
     restrict: 'E',
     templateUrl: 'events/subitems/subitem-view.html',
     scope: {
-      subitem: '='
+      subitem: '=',
+      hostId: '='
     },
     link: function (scope, element, attrs) {
 

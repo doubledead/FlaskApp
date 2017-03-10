@@ -373,7 +373,7 @@ def getitemshost():
 
         if event.user_id == u_id:
             items = item_schema.dump(event.items).data
-            payload = {"u_id" : u_id, "items_data" : items, "status" : "OK"}
+            payload = {"u_id" : u_id, "e_id" : event.id, "items_data" : items, "status" : "OK"}
             return json.dumps(payload)
         else:
             return render_template("errors/404.html")
