@@ -613,7 +613,6 @@ def updatehostitem():
         item_max_qty = item.quantity
         item_claimed_current = item.quantity_claimed
 
-        ## Add Item active check here.
         if item.active:
             subitem_data = data['subitems']
             subitems_user = []
@@ -627,6 +626,8 @@ def updatehostitem():
 
             for si_user in subitems_user:
                 # This Subitem query needs to be a try/except
+                # Try/except may not be need. The user SHOULD get a 404 if they
+                # tamper with the data and add user a user id that is not theirs.
                 subitem = Subitem.query.filter_by(id=si_user['id']).first_or_404()
                 subitem_qty_current = subitem.quantity
 

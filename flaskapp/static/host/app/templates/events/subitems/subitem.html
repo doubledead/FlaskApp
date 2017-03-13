@@ -1,9 +1,9 @@
-<div class="row" ng-if="subitem.id != hostId">
+<div class="row" ng-if="subitem.user_id != hostId">
   <!-- Need to add more user information here so Host can view user info. -->
   <div class="col-sx-2 col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
   <div class="col-sx-2 col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
 </div>
-<div class="row" ng-if="subitem.id === hostId">
+<div class="row" ng-if="subitem.user_id === hostId">
   <div class="col-sx-2 col-sm-2 col-md-2">You've claimed:</div>
   <div class="col-xs-2 col-sm-2 col-md-1">
     <div class="form-group">
@@ -21,9 +21,6 @@
     </button>
   </div>
 </div>
-<div class="row" ng-if="hostSubitemsFlag">
-  <div class="col-sx-12 col-sm-12 col-md-12">You've claimed none of this item.</div>
-</div>
-<div class="row" ng-if="subitemsFlag">
-  <div class="col-sx-12 col-sm-12 col-md-12">No items claimed.</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
 </div>

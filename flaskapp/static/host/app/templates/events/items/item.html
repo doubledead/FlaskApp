@@ -21,15 +21,15 @@
   </div>
   <!-- Subitems -->
   <div ng-repeat="subitem in item.subitems">
-    <subitem-row
-      subitem="subitem"
-      host-id="hostId"
-      host-subitems-flag="hostSubitemsFlag"
-      subitems-flag="subitemsFlag">
-
-    </subitem-row>
+    <subitem-row subitem="subitem" host-id="hostId"></subitem-row>
   </div>
   <!--End Subitems -->
+  <div class="row" ng-if="subitemsFlag">
+    <div class="col-sx-12 col-sm-12 col-md-12">No items claimed.</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+  </div>
   <div class="row">
     <hr >
   </div>

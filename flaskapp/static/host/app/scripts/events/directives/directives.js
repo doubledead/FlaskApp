@@ -39,32 +39,12 @@ angular.module('events.directives', [])
 
       scope.$watch('item.quantity_claimed', function () {
         if (scope.item.quantity_claimed === 0) {
-          console.log('No items claimed!');
           if (!scope.subitemsFlag) {
             scope.subitemsFlag = true;
           }
-          console.log(scope.subitemsFlag);
-
         } else if (scope.item.subitems.length <= 0) {
-          console.log('No items claimed!');
           if (!scope.subitemsFlag) {
             scope.subitemsFlag = true;
-          }
-          console.log(scope.subitemsFlag);
-        }
-      });
-
-      // This needs work.
-      scope.$watch('item.subitems', function () {
-        for (var i = 0; i < scope.item.subitems.length; i++) {
-          var subitem = scope.item.subitems[i];
-          if (subitem.user_id === scope.hostId) {
-            console.log('Test1!');
-          } else {
-            if (subitem.user_id != scope.hostId
-              && (!scope.hostSubitemsFlag)) {
-              // scope.hostSubitemsFlag = true;
-            }
           }
         }
       });
@@ -91,6 +71,7 @@ angular.module('events.directives', [])
             }
           });
       };
+
     }
   };
 }])
@@ -100,9 +81,7 @@ angular.module('events.directives', [])
     templateUrl: 'events/subitems/subitem.html',
     scope: {
       subitem: '=',
-      hostId: '=',
-      hostSubitemsFlag: '=',
-      subitemsFlag: '='
+      hostId: '='
     },
     link: function (scope, element, attrs) {
 
