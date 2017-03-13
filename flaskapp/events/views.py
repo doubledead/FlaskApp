@@ -612,6 +612,7 @@ def updatehostitem():
         item = Item.query.filter_by(id=data['id']).first_or_404()
         item_max_qty = item.quantity
         item_claimed_current = item.quantity_claimed
+        print(data)
 
         if item.active:
             subitem_data = data['subitems']

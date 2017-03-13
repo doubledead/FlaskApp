@@ -42,11 +42,43 @@ angular.module('events.directives', [])
           if (!scope.subitemsFlag) {
             scope.subitemsFlag = true;
           }
+          if (!scope.hostSubitemsFlag) {
+            scope.hostSubitemsFlag = true;
+          } else {
+            scope.hostSubitemsFlag = false;
+          }
         } else if (scope.item.subitems.length <= 0) {
           if (!scope.subitemsFlag) {
             scope.subitemsFlag = true;
           }
+          if (!scope.hostSubitemsFlag) {
+            scope.hostSubitemsFlag = true;
+          } else {
+            scope.hostSubitemsFlag = false;
+          }
         }
+      });
+
+      // This needs work.
+      scope.$watch('item.subitems', function () {
+        for (var i = 0; i < scope.item.subitems.length; i++) {
+          var subitem = scope.item.subitems[i];
+          if (subitem.user_id === scope.hostId) {
+
+          }
+          if (subitem.user_id != scope.hostId) {
+            if (!scope.hostSubitemsFlag) {
+              scope.hostSubitemsFlag = true;
+            }
+          } else {
+            scope.hostSubitemsFlag = false;
+          }
+        }
+
+        // if ((scope.hostSubitemsList.length <= 0)
+        //   && (!scope.hostSubitemsFlag)) {
+        //   scope.hostSubitemsFlag = true;
+        // }
       });
 
       scope.addSubitemRow = function () {
@@ -72,6 +104,29 @@ angular.module('events.directives', [])
           });
       };
 
+      /*
+      scope.addNewHostSubitem = function (quantity) {
+        var newHostSubitemRow = {
+          row_id: 0,
+          quantity: quantity,
+          user_id: 0
+        };
+
+        scope.item.subitems = [];
+
+        scope.item.subitems.push(newHostSubitemRow);
+
+        ItemService
+          .updateItem(scope.item)
+          .then(function (response) {
+            if (response.data && response.data.status === 'OK') {
+              console.log('updateitem: OK!');
+            } else if (response.data && response.data.status === 'Error') {
+              console.log('removeItem: Error!');
+            }
+          });
+      };
+      */
     }
   };
 }])

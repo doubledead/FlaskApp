@@ -6,11 +6,13 @@ angular.module('events.controllers', [])
   '$http',
   '$timeout',
   'EventService',
+  'ItemService',
   function (
     $scope,
     $http,
     $timeout,
-    EventService
+    EventService,
+    ItemService
   ){
     $scope.params = [];
     $scope.carbon = [];
@@ -81,6 +83,37 @@ angular.module('events.controllers', [])
         });
     };
     */
+
+    $scope.addNewHostSubitem = function (itemId, quantity) {
+      console.log('Testing!!');
+      var item;
+
+      for (var i = 0; i < $scope.params.items_data.length; i++) {
+        if ($scope.params.items_data[i].id = itemId) {
+          item = $scope.params.items_data[i];
+        }
+      }
+
+      var newHostSubitemRow = {
+        row_id: 0,
+        quantity: quantity,
+        user_id: 0
+      };
+
+      item.subitems = [];
+
+      item.subitems.push(newHostSubitemRow);
+
+      ItemService
+        .updateItem(item)
+        .then(function (response) {
+          if (response.data && response.data.status === 'OK') {
+            console.log('updateitem: OK!');
+          } else if (response.data && response.data.status === 'Error') {
+            console.log('removeItem: Error!');
+          }
+        });
+    };
 
     function changeRoute() {
       var returnRoute = location.origin + '/events/';
