@@ -141,6 +141,60 @@ gulp.task('scripts', function () {
     .pipe(gulp.dest('dist/scripts'))
 });
 
+// Concatenate and minify JavaScript.
+gulp.task('scriptsHost', function () {
+
+  return gulp.src([
+    // Note: Since we are not using useref in the scripts build pipeline,
+    //       you need to explicitly list your scripts here in the right order
+    //       to be correctly concatenated
+    './host/app/scripts/templates.js',
+    './host/app/scripts/main.js',
+    './host/app/scripts/events/events.js',
+    './host/app/scripts/events/controllers/controllers.js',
+    './host/app/scripts/events/directives/directives.js',
+    './host/app/scripts/events/services/item-service.js',
+    './host/app/scripts/events/services/services.js'
+  ])
+    .pipe($.newer('.tmp/js/host'))
+    .pipe($.sourcemaps.init())
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('.tmp/host/js'))
+    .pipe($.concat('host.min.js'))
+    .pipe($.uglify({preserveComments: 'some'}))
+    // Output files
+    .pipe($.size({title: 'scriptsHost'}))
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('js/host'))
+});
+
+// Concatenate and minify JavaScript.
+gulp.task('scriptsEvents', function () {
+
+  return gulp.src([
+    // Note: Since we are not using useref in the scripts build pipeline,
+    //       you need to explicitly list your scripts here in the right order
+    //       to be correctly concatenated
+    './events/app/scripts/templates.js',
+    './events/app/scripts/main.js',
+    './events/app/scripts/events/events.js',
+    './events/app/scripts/events/controllers/controllers.js',
+    './events/app/scripts/events/directives/event.js',
+    './events/app/scripts/events/directives/directives.js',
+    './events/app/scripts/events/services/services.js'
+  ])
+    .pipe($.newer('.tmp/js/events'))
+    .pipe($.sourcemaps.init())
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('.tmp/events/js'))
+    .pipe($.concat('events.min.js'))
+    .pipe($.uglify({preserveComments: 'some'}))
+    // Output files
+    .pipe($.size({title: 'scriptsEvents'}))
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('js/events'))
+});
+
 // Concatenate and minify JavaScript vendor libraries.
 gulp.task('jslibs', function () {
 
@@ -149,36 +203,36 @@ gulp.task('jslibs', function () {
     './node_modules/moment/min/moment.min.js',
     './node_modules/bootstrap/dist/js/bootstrap.min.js'
   ])
-    .pipe($.newer('.tmp/scripts/libs'))
+    .pipe($.newer('.tmp/js/libs'))
     .pipe($.sourcemaps.init())
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/scripts/libs'))
+    .pipe(gulp.dest('.tmp/js/libs'))
     .pipe($.concat('libraries.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
     .pipe($.size({title: 'jslibs'}))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('js'))
+    .pipe(gulp.dest('js/libs'))
 });
 
 // Concatenate and minify JavaScript vendor libraries.
-gulp.task('jsvendor', function () {
+gulp.task('jsDatetimePicker', function () {
 
   return gulp.src([
     './node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
     './node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js',
     './node_modules/angular-date-time-input/src/dateTimeInput.js'
   ])
-    .pipe($.newer('.tmp/scripts/vendor'))
+    .pipe($.newer('.tmp/js/vendor'))
     .pipe($.sourcemaps.init())
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/scripts/vendor'))
-    .pipe($.concat('vendor.min.js'))
+    .pipe(gulp.dest('.tmp/js/vendor'))
+    .pipe($.concat('datetimepicker.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
-    .pipe($.size({title: 'jsvendor'}))
+    .pipe($.size({title: 'jsDatetimePicker'}))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('js'))
+    .pipe(gulp.dest('js/vendor'))
 });
 
 // Concatenate and minify AngularJS libraries.
@@ -188,22 +242,40 @@ gulp.task('angular-libs', function () {
     './node_modules/angular/angular.min.js',
     './node_modules/angular-animate/angular-animate.min.js'
   ])
-    .pipe($.newer('.tmp/scripts/libs'))
+    .pipe($.newer('.tmp/js/libs'))
     .pipe($.sourcemaps.init())
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/scripts/libs'))
+    .pipe(gulp.dest('.tmp/js/libs'))
     .pipe($.concat('angularjs.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
     .pipe($.size({title: 'angular-libs'}))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('js'))
+    .pipe(gulp.dest('js/libs'))
 });
 
 gulp.task('templates', function () {
   return gulp.src('app/templates/**/*.html')
     .pipe(templateCache({standalone: true}))
     .pipe(gulp.dest('app/scripts'));
+});
+
+gulp.task('templatesHost', function () {
+  return gulp.src('host/app/templates/**/*.html')
+    .pipe(templateCache({standalone: true}))
+    .pipe(gulp.dest('host/app/scripts'));
+});
+
+gulp.task('templatesEvents', function () {
+  return gulp.src('events/app/templates/**/*.html')
+    .pipe(templateCache({standalone: true}))
+    .pipe(gulp.dest('events/app/scripts'));
+});
+
+gulp.task('templatesCreate', function () {
+  return gulp.src('create/app/templates/**/*.html')
+    .pipe(templateCache({standalone: true}))
+    .pipe(gulp.dest('create/app/scripts'));
 });
 
 // Scan Your HTML For Assets & Optimize Them
@@ -276,6 +348,12 @@ gulp.task('serve:dist', ['default'], function () {
   });
 });
 
+gulp.task('host', [], function (cb) {
+  runSequence(
+    ['templatesHost'], cb
+  );
+});
+
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
   runSequence(
@@ -284,5 +362,11 @@ gulp.task('default', ['clean'], function (cb) {
     ['html', 'templates', 'scripts', 'jslibs', 'csslibs', 'images', 'fonts', 'copy'],
     'remove',
     cb
+  );
+});
+
+gulp.task('deployBuild', ['clean'], function (cb) {
+  runSequence(
+    ['templatesHost', 'scriptsHost', 'jslibs', 'angular-libs', 'jsDatetimePicker'], cb
   );
 });

@@ -34,15 +34,15 @@
     </footer>
 
     <!-- JS libraries -->
-    {% include "assets/_angular_vendor_js.html" %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/libs/angularjs.min.js') }}"></script>
 
     <!-- AngularJS Project files -->
     <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/templates.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/main.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/events/events.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/events/controllers.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/events/controllers/controllers.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/events/directives/event.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/events/directives.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/events/services.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/events/directives/directives.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='events/app/scripts/events/services/services.js') }}"></script>
   </body>
 </html>

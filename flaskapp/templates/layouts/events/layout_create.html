@@ -34,8 +34,7 @@
   </footer>
 
   <!-- JS libraries -->
-  <script type="text/javascript" src="{{ url_for('static', filename='js/libraries.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/vendor.min.js') }}"></script>
+  {% include "assets/_datetimepicker.html" %}
 
   <!-- AngularJS Project files -->
   <script type="text/javascript" src="{{ url_for('static', filename='create/app/scripts/templates.js') }}"></script>
