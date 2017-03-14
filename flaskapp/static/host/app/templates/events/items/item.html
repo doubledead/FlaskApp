@@ -21,7 +21,7 @@
   </div>
   <!-- Subitems -->
   <div ng-repeat="subitem in item.subitems">
-    <subitem-row subitem="subitem" host-id="hostId"></subitem-row>
+    <subitem-row subitem="subitem" host-id="hostId" item-id="item.id"></subitem-row>
   </div>
   <!--End Subitems -->
   <div class="row" ng-if="subitemsFlag">

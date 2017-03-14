@@ -16,7 +16,7 @@
   </div>
   <div class="col-xs-2 col-sm-2 col-md-2">
     <!--Had to add the second $parent because of the ng-if. -->
-    <button type="button" class="btn btn-primary btn-sm" ng-click="$parent.$parent.updateItem()">
+    <button type="button" class="btn btn-primary btn-sm" ng-click="$parent.$parent.$parent.$parent.updateHostSubitem(subitem, itemId, hostId)">
       Update
     </button>
   </div>

@@ -16,6 +16,19 @@ angular.module('events.item-service', [])
         }, function errorCallback(response) {
           console.log(response);
         });
+      },
+      updateHostSubitem: function(payload) {
+        var data = JSON.stringify(payload);
+
+        return $http({
+          method: 'POST',
+          url: '/events/updatehostsubitem',
+          data: data
+        }).then(function successCallback(response) {
+          return response;
+        }, function errorCallback(response) {
+          console.log(response);
+        });
       }
     }
   });

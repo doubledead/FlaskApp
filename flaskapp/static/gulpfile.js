@@ -348,9 +348,16 @@ gulp.task('serve:dist', ['default'], function () {
   });
 });
 
+// Default task for Host JS module
 gulp.task('host', [], function (cb) {
   runSequence(
     ['templatesHost'], cb
+  );
+});
+
+gulp.task('create', [], function (cb) {
+  runSequence(
+    ['templatesCreate'], cb
   );
 });
 

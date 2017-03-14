@@ -11,17 +11,28 @@
         <div class="animate-switch" ng-switch-default>
           <p>Welcome to the form.</p>
           <p>Validation is disabled for this test app so please add data to every field.</p>
-          <button type="button" class="btn btn-success btn-sm" ng-click="next('stage1')">Start</button>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4">&nbsp;</div>
+            <div class="col-xs-4 col-sm-4 col-md-4">
+              <button type="button" class="btn btn-success btn-lg" ng-click="next('stage1')">
+                Start
+              </button>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4">&nbsp;</div>
+          </div>
         </div>
         <div class="animate-switch" ng-switch-when="stage1">
           <div class="row">
-            <div class="col-sm-5 col-md-6">
+            <div class="col-xs-5 col-sm-5 col-md-6">
               <div class="form-group">
                 <label for="tb-name">Event Name:</label>
                 <input type="text" class="form-control" id="tb-name" ng-model="params.name">
               </div>
             </div>
-            <div class="col-sm-7 col-md-6">&nbsp;</div>
+            <div class="col-xs-7 col-sm-7 col-md-6">&nbsp;</div>
           </div>
           <div class="row">
             <div class="col-xs-6 col-sm-8 col-lg-8">
@@ -51,7 +62,7 @@
             <div class="col-xs-5 col-sm-5 col-md-5">
               <div class="dropdown form-group">
                 <label>Start Date</label>
-                <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="#">
+                <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="">
                   <div class="input-group date">
                     <input type="text" class="form-control"
                            data-date-time-input="M/D/YYYY hh:mm A"
@@ -73,7 +84,7 @@
             <div class="col-xs-5 col-sm-5 col-md-5">
               <div class="dropdown form-group">
                 <label>End Date</label>
-                <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#">
+                <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="">
                   <div class="input-group date">
                     <input type="text" class="form-control"
                            data-date-time-input="M/D/YYYY hh:mm A"

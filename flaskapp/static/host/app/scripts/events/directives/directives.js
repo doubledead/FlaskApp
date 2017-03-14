@@ -92,6 +92,7 @@ angular.module('events.directives', [])
         scope.item.subitems.push(subItemRow);
       };
 
+      /*
       scope.updateItem = function () {
         ItemService
           .updateItem(scope.item)
@@ -104,7 +105,6 @@ angular.module('events.directives', [])
           });
       };
 
-      /*
       scope.addNewHostSubitem = function (quantity) {
         var newHostSubitemRow = {
           row_id: 0,
@@ -136,7 +136,8 @@ angular.module('events.directives', [])
     templateUrl: 'events/subitems/subitem.html',
     scope: {
       subitem: '=',
-      hostId: '='
+      hostId: '=',
+      itemId: '='
     },
     link: function (scope, element, attrs) {
 

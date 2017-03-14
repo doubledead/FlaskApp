@@ -31,18 +31,20 @@ angular.module('events.controllers', [])
 
     $scope.removeItem = function (id) {
       $scope.direction = 1;
-      $scope.stage = "loading";
+      $scope.stage = 'loading';
 
       EventService
         .removeItem(id)
         .then(function (response) {
-          if (response.data && response.data.status === "OK") {
-            console.log("removeItem: OK!");
+          if (response.data
+            && (response.data.status === 'OK')) {
+            console.log('removeItem: OK!');
             $scope.reset();
-          } else if (response.data && response.data.status === "Error") {
+          } else if (response.data
+            && (response.data.status === 'Error')) {
             $scope.direction = 1;
-            scope.stage = "error";
-            console.log("removeItem: Error!");
+            $scope.stage = 'error';
+            console.log('removeItem: Error!');
           }
         });
     };
@@ -57,17 +59,16 @@ angular.module('events.controllers', [])
         .updateItems($scope.params.items_data)
         .then(function (response) {
           if (response.data && response.data.status === 'OK') {
-            console.log('updateitems: OK!');
+            console.log('claimItems: OK!');
             $scope.reset();
           } else if (response.data && response.data.status === 'Error') {
             $scope.direction = 1;
             $scope.stage = 'error';
-            console.log('removeItem: Error!');
+            console.log('claimItems: Error!');
           }
         });
     };
 
-    /*
     $scope.updateItem = function (item) {
       ItemService
         .updateItem(item)
@@ -82,7 +83,29 @@ angular.module('events.controllers', [])
           }
         });
     };
-    */
+
+    $scope.updateHostSubitem = function (subitem, itemId, hostId) {
+      var payload = {
+        'item_id': itemId,
+        'host_id': hostId,
+        'subitem': subitem
+      };
+
+      ItemService
+        .updateHostSubitem(payload)
+        .then(function (response) {
+          if (response.data
+            && (response.data.status === 'OK')) {
+            console.log('updateHostItem: OK!');
+            $scope.reset();
+          } else if (response.data
+            && (response.data.status === 'Error')) {
+            // $scope.direction = 1;
+            // $scope.stage = 'error';
+            console.log('updateHostItem: Error!');
+          }
+        });
+    };
 
     $scope.addNewHostSubitem = function (itemId, quantity) {
       console.log('Testing!!');
@@ -107,9 +130,12 @@ angular.module('events.controllers', [])
       ItemService
         .updateItem(item)
         .then(function (response) {
-          if (response.data && response.data.status === 'OK') {
+          if (response.data
+            && (response.data.status === 'OK')) {
             console.log('updateitem: OK!');
-          } else if (response.data && response.data.status === 'Error') {
+            $scope.reset();
+          } else if (response.data
+            && (response.data.status === 'Error')) {
             console.log('removeItem: Error!');
           }
         });
@@ -131,7 +157,7 @@ angular.module('events.controllers', [])
           // $scope.carbon = response.data;
         });
       $scope.direction = 1;
-      $scope.stage = "";
+      $scope.stage = '';
       $scope.longStage = 0;
     };
 
