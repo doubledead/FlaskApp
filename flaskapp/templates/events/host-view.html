@@ -109,7 +109,13 @@
         <div class="animate-switch-host-container" ng-switch on="stage" ng-class="{forward: direction, backward:!direction,longStage: longStage}">
           <div class="animate-switch" ng-switch-default>
             <div ng-repeat="item in params.items_data">
-              <item-row ng-if="item.active === true" item="item" host-id="params.u_id"></item-row>
+              <item-row
+                ng-if="item.active === true"
+                item="item"
+                host-id="params.u_id"
+                host-subitem="params.host_subitem">
+
+              </item-row>
             </div>
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>

@@ -7,90 +7,24 @@ angular.module('events.directives', [])
     templateUrl: 'events/items/item.html',
     scope: {
       item: '=',
-      hostId: '='
+      hostId: '=',
+      hostSubitem: '='
     },
     link: function (scope, element, attrs) {
       scope.subitemId = 0;
       scope.subitemsFlag = false;
-      scope.hostSubitemsFlag = false;
-
-      /*
-      scope.$watch('item.quantity_claimed', function () {
-        if (scope.item.quantity_claimed === 0) {
-          scope.subitemId++;
-          var subitemRow = {
-            row_id: scope.subitemId,
-            quantity: 0,
-            user_id: 0
-          };
-          scope.item.subitems.push(subitemRow);
-        } else if (scope.item.subitems.length <= 0) {
-          scope.subitemId++;
-          var subitemRow = {
-            row_id: scope.subitemId,
-            quantity: 0,
-            user_id: 0
-          };
-
-          scope.item.subitems.push(subitemRow);
-        }
-      });
-      */
 
       scope.$watch('item.quantity_claimed', function () {
         if (scope.item.quantity_claimed === 0) {
           if (!scope.subitemsFlag) {
             scope.subitemsFlag = true;
           }
-          if (!scope.hostSubitemsFlag) {
-            scope.hostSubitemsFlag = true;
-          } else {
-            scope.hostSubitemsFlag = false;
-          }
         } else if (scope.item.subitems.length <= 0) {
           if (!scope.subitemsFlag) {
             scope.subitemsFlag = true;
           }
-          if (!scope.hostSubitemsFlag) {
-            scope.hostSubitemsFlag = true;
-          } else {
-            scope.hostSubitemsFlag = false;
-          }
         }
       });
-
-      // This needs work.
-      scope.$watch('item.subitems', function () {
-        for (var i = 0; i < scope.item.subitems.length; i++) {
-          var subitem = scope.item.subitems[i];
-          if (subitem.user_id === scope.hostId) {
-
-          }
-          if (subitem.user_id != scope.hostId) {
-            if (!scope.hostSubitemsFlag) {
-              scope.hostSubitemsFlag = true;
-            }
-          } else {
-            scope.hostSubitemsFlag = false;
-          }
-        }
-
-        // if ((scope.hostSubitemsList.length <= 0)
-        //   && (!scope.hostSubitemsFlag)) {
-        //   scope.hostSubitemsFlag = true;
-        // }
-      });
-
-      scope.addSubitemRow = function () {
-        scope.subitemId++;
-
-        var subItemRow = {
-          row_id: scope.subitemId,
-          quantity: 0,
-          user_id: 0
-        };
-        scope.item.subitems.push(subItemRow);
-      };
 
       /*
       scope.updateItem = function () {
@@ -134,6 +68,18 @@ angular.module('events.directives', [])
   return {
     restrict: 'E',
     templateUrl: 'events/subitems/subitem.html',
+    scope: {
+      subitem: '='
+    },
+    link: function (scope, element, attrs) {
+
+    }
+  };
+})
+.directive('hostSubitem', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'events/subitems/host-subitem.html',
     scope: {
       subitem: '=',
       hostId: '=',

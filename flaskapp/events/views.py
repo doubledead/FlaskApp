@@ -366,14 +366,26 @@ def getitemshost():
         data = request.get_json()
         param_id = data['paramId']
         u_id = current_user.id
+        host_subitem = {}
+        subitems = []
 
         event = Event.query.filter_by(id=param_id).first_or_404()
-        ## Add extra data to this call. Maybe append things to each subitem like
-        ## user email address.
 
         if event.user_id == u_id:
+            for item in event.items:
+                for i in xrange(len(item.subitems) - 1, -1, -1):
+                    subitem = item.subitems[i]
+                    if subitem.user_id == u_id:
+                        host_subitem = subitem_schema.dump(subitem).data
+                        del item.subitems[i]
+                        break
+
             items = item_schema.dump(event.items).data
-            payload = {"u_id" : u_id, "e_id" : event.id, "items_data" : items, "status" : "OK"}
+            payload = {"u_id" : u_id,
+                       "e_id" : event.id,
+                       "items_data" : items,
+                       "host_subitem" : host_subitem,
+                       "status" : "OK"}
             return json.dumps(payload)
         else:
             return render_template("errors/404.html")
@@ -741,7 +753,7 @@ def updatehostsubitem():
             subitem_data = data['subitem']
             subitem_qty_data = 0
 
-            if subitem_data['user_id'] == u_id:
+            if subitem_data['user_id'] and subitem_data['user_id'] == u_id:
                 subitem = Subitem.query.filter_by(id=subitem_data['id']).first_or_404()
                 subitem_qty_current = subitem.quantity
 

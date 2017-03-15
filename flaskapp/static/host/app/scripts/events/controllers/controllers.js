@@ -85,6 +85,8 @@ angular.module('events.controllers', [])
     };
 
     $scope.updateHostSubitem = function (subitem, itemId, hostId) {
+      $scope.direction = 1;
+      $scope.stage = 'loading';
       var payload = {
         'item_id': itemId,
         'host_id': hostId,

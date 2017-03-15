@@ -16,12 +16,21 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
   </div>
+  <host-subitem
+    subitem="hostSubitem"
+    host-id="hostId"
+    item-id="item.id">
+
+  </host-subitem>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+  </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12"><strong>Claimed:</strong></div>
   </div>
   <!-- Subitems -->
   <div ng-repeat="subitem in item.subitems">
-    <subitem-row subitem="subitem" host-id="hostId" item-id="item.id"></subitem-row>
+    <subitem-row subitem="subitem"></subitem-row>
   </div>
   <!--End Subitems -->
   <div class="row" ng-if="subitemsFlag">
@@ -30,31 +39,8 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
   </div>
-  <div class="row" ng-if="hostSubitemsFlag">
-    <div class="col-sx-4 col-sm-4 col-md-4">You've claimed none of this item.</div>
-    <!--
-    <div class="col-xs-2 col-sm-2 col-md-2">
-      <button type="button" class="btn btn-primary btn-sm" ng-click="addSubitemRow()">
-        Claim
-      </button>
-    </div>
-    -->
-  </div>
-  <div class="row" ng-if="hostSubitemsFlag">
-    <div class="col-xs-2 col-sm-2 col-md-1">
-      <div class="form-group">
-        <label for="{{'tb-subitem-quantity-' + subitem.id}}">&nbsp;</label>
-        <input type="text"
-               id="{{'tb-subitem-quantity-' + subitem.id}}"
-               class="form-control"
-               ng-model="quantity">
-      </div>
-    </div>
-    <div class="col-xs-2 col-sm-2 col-md-2">
-      <button type="button" class="btn btn-primary btn-sm" ng-click="$parent.$parent.addNewHostSubitem(item.id, quantity)">
-        Add
-      </button>
-    </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
     <hr >

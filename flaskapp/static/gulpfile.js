@@ -361,7 +361,7 @@ gulp.task('create', [], function (cb) {
   );
 });
 
-// Build Production Files, the Default Task
+/* / Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
   runSequence(
     'styles',
@@ -371,9 +371,10 @@ gulp.task('default', ['clean'], function (cb) {
     cb
   );
 });
+*/
 
 gulp.task('deployBuild', ['clean'], function (cb) {
   runSequence(
-    ['templatesHost', 'scriptsHost', 'jslibs', 'angular-libs', 'jsDatetimePicker'], cb
+    ['scriptsHost', 'jslibs', 'angular-libs', 'jsDatetimePicker'], cb
   );
 });
