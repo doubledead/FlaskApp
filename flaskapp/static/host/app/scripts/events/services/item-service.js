@@ -17,12 +17,25 @@ angular.module('events.item-service', [])
           console.log(response);
         });
       },
-      updateHostSubitem: function(payload) {
+      updateSubitem: function(payload) {
         var data = JSON.stringify(payload);
 
         return $http({
           method: 'POST',
-          url: '/events/updatehostsubitem',
+          url: '/events/updatesubitem',
+          data: data
+        }).then(function successCallback(response) {
+          return response;
+        }, function errorCallback(response) {
+          console.log(response);
+        });
+      },
+      addSubitem: function(payload) {
+        var data = JSON.stringify(payload);
+
+        return $http({
+          method: 'POST',
+          url: '/events/addsubitem',
           data: data
         }).then(function successCallback(response) {
           return response;

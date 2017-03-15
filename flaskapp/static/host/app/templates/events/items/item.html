@@ -10,6 +10,7 @@
       </button>
     </div>
   </div>
+  <!--
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
   </div>
@@ -17,11 +18,12 @@
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
   </div>
   <host-subitem
-    subitem="hostSubitem"
+    subitem="item.host_subitem"
     host-id="hostId"
     item-id="item.id">
 
   </host-subitem>
+  -->
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
   </div>
@@ -30,7 +32,7 @@
   </div>
   <!-- Subitems -->
   <div ng-repeat="subitem in item.subitems">
-    <subitem-row subitem="subitem"></subitem-row>
+    <subitem-row subitem="subitem" host-id="hostId" item-id="item.id"></subitem-row>
   </div>
   <!--End Subitems -->
   <div class="row" ng-if="subitemsFlag">
@@ -38,6 +40,26 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <div class="row" ng-show="subitemsFlag || hostSubitemsFlag">
+    <div class="col-sx-2 col-sm-2 col-md-2">You've claimed:</div>
+    <div class="col-xs-2 col-sm-2 col-md-1">
+      <div class="form-group">
+        <label for="{{'tb-subitem-quantity-' + hostId}}">&nbsp;</label>
+        <input type="text"
+               id="{{'tb-subitem-quantity-' + hostId}}"
+               class="form-control"
+               ng-model="subitem.quantity">
+      </div>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2">
+      <!--Four inception layers up to the controller-->
+      <button type="button"
+              class="btn btn-primary btn-sm"
+              ng-click="$parent.$parent.addSubitem(subitem, item.id)">
+        Add
+      </button>
+    </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>

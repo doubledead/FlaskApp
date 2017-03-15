@@ -1,8 +1,28 @@
-<div class="row">
+<div class="row" ng-show="subitem.user_id != hostId">
   <!-- Need to add more user information here so Host can view user info. -->
   <div class="col-sx-2 col-sm-2 col-md-2">User: {{ subitem.user_id }}</div>
   <div class="col-sx-2 col-sm-2 col-md-2">Quantity: {{ subitem.quantity }}</div>
 </div>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+</div>
+<div class="row" ng-show="subitem.user_id === hostId">
+  <div class="col-sx-2 col-sm-2 col-md-2">You've claimed:</div>
+  <div class="col-xs-2 col-sm-2 col-md-1">
+    <div class="form-group">
+      <label for="{{'tb-subitem-quantity-' + hostId}}">&nbsp;</label>
+      <input type="text"
+             id="{{'tb-subitem-quantity-' + hostId}}"
+             class="form-control"
+             ng-model="subitem.quantity">
+    </div>
+  </div>
+  <div class="col-xs-2 col-sm-2 col-md-2" ng-show="subitem.id">
+    <!--Four inception layers up to the controller-->
+    <button type="button"
+            class="btn btn-primary btn-sm"
+            ng-click="$parent.$parent.$parent.updateSubitem(subitem, itemId, hostId)">
+      Update
+    </button>
+  </div>
 </div>

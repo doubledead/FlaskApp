@@ -84,7 +84,7 @@ angular.module('events.controllers', [])
         });
     };
 
-    $scope.updateHostSubitem = function (subitem, itemId, hostId) {
+    $scope.updateSubitem = function (subitem, itemId, hostId) {
       $scope.direction = 1;
       $scope.stage = 'loading';
       var payload = {
@@ -94,7 +94,7 @@ angular.module('events.controllers', [])
       };
 
       ItemService
-        .updateHostSubitem(payload)
+        .updateSubitem(payload)
         .then(function (response) {
           if (response.data
             && (response.data.status === 'OK')) {
@@ -109,36 +109,26 @@ angular.module('events.controllers', [])
         });
     };
 
-    $scope.addNewHostSubitem = function (itemId, quantity) {
-      console.log('Testing!!');
-      var item;
-
-      for (var i = 0; i < $scope.params.items_data.length; i++) {
-        if ($scope.params.items_data[i].id = itemId) {
-          item = $scope.params.items_data[i];
-        }
-      }
-
-      var newHostSubitemRow = {
-        row_id: 0,
-        quantity: quantity,
-        user_id: 0
+    $scope.addSubitem = function (subitem, itemId) {
+      $scope.direction = 1;
+      $scope.stage = 'loading';
+      var payload = {
+        'item_id': itemId,
+        'subitem': subitem
       };
 
-      item.subitems = [];
-
-      item.subitems.push(newHostSubitemRow);
-
       ItemService
-        .updateItem(item)
+        .addSubitem(payload)
         .then(function (response) {
           if (response.data
             && (response.data.status === 'OK')) {
-            console.log('updateitem: OK!');
+            console.log('addSubitem: OK!');
             $scope.reset();
           } else if (response.data
             && (response.data.status === 'Error')) {
-            console.log('removeItem: Error!');
+            // $scope.direction = 1;
+            // $scope.stage = 'error';
+            console.log('addSubitem: Error!');
           }
         });
     };
