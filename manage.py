@@ -12,7 +12,7 @@ from flaskapp import app
 from flaskapp.core import db, mail
 from flaskapp.users.models import User
 from flaskapp.events.models import Category, Event, event_schema, Status
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from sqlalchemy import exc
 from flask_mail import Message
 
@@ -24,11 +24,13 @@ def populate():
     status_inactive = Status(name='inactive', status_code=200)
     status_cancelled = Status(name='cancelled', status_code=300)
     status_completed = Status(name='completed', status_code=400)
+    status_archived = Status(name='completed', status_code=500)
 
     db.session.add(status_active)
     db.session.add(status_inactive)
     db.session.add(status_cancelled)
     db.session.add(status_completed)
+    db.session.add(status_archived)
     db.session.commit()
 
 @manager.command
@@ -78,22 +80,43 @@ def event_status_check():
         if event.end_date <= datetime.utcnow():
             event.status_id = 400
 
-            event_creator = User.query.filter_by(id=event.user_id)
-            confmsg = Message()
-            confmsg.add_recipient(event_creator.email)
-            confmsg.body = "The following event has ended: " + event.name
+            # event_creator = User.query.filter_by(id=event.user_id)
+            # confmsg = Message()
+            # confmsg.add_recipient(event_creator.email)
+            # confmsg.body = "The following event has ended: " + event.name
 
             try:
                 db.session.add(event)
-                mail.send(confmsg)
-                print 'Success'
+                # mail.send(confmsg)
+                print("Event Status Check: Success")
             except exc.SQLAlchemyError as e:
                 current_app.logger.error(e)
-                print 'Error'
+                print("Event Status Check: Error")
 
 
     # Commit the db session back.
     db.session.commit()
+
+
+@manager.command
+def event_archive_check():
+    events = Event.query.filter_by(status_id=400).all()
+    margin = timedelta(minutes = 30)
+
+    for event in events:
+        if event.end_date < margin:
+            event.status_id = 500
+            db.session.add(event)
+
+    try:
+        db.session.commit()
+        print("Archive check: Success")
+    except exc.SQLAlchemyError as e:
+        # Email errors.
+        current_app.logger.error(e)
+        print("Archive check: Error")
+
+
 
 
 if __name__ == "__main__":
