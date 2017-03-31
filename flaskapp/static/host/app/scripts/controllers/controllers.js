@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('events.controllers', [])
+angular.module('controllers', [])
 .controller('eventsCtrl', [
   '$scope',
   '$http',

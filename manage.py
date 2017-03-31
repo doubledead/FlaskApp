@@ -14,7 +14,6 @@ from flaskapp.users.models import User
 from flaskapp.events.models import Category, Event, event_schema, Status
 from datetime import datetime, date, timedelta
 from sqlalchemy import exc
-from flask_mail import Message
 
 manager = Manager(app)
 
@@ -101,12 +100,14 @@ def event_status_check():
 @manager.command
 def event_archive_check():
     events = Event.query.filter_by(status_id=400).all()
-    margin = timedelta(minutes = 30)
+    margin = timedelta(days = 3)
 
     for event in events:
         if event.end_date < margin:
             event.status_id = 500
             db.session.add(event)
+            print("ID:")
+            print(event.id)
 
     try:
         db.session.commit()

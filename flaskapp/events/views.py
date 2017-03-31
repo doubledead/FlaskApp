@@ -4,8 +4,8 @@ from ..core import db, mail
 from flask_mail import Message
 from flask_security import login_required, current_user
 from datetime import datetime
-from .forms import NewEventForm, UpdateEventForm, UpdateItemForm, SubItemForm
-from .models import Event, event_schema, Guest, Item, item_schema, Subitem, subitem_schema
+from .forms import NewEventForm, UpdateEventForm, SubItemForm
+from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem, subitem_schema
 from sqlalchemy import exc
 from ..utils import representsint
 
@@ -366,13 +366,18 @@ def getitemshost():
         data = request.get_json()
         param_id = data['paramId']
         u_id = current_user.id
-        items = []
+        # items = []
 
         event = Event.query.filter_by(id=param_id).first_or_404()
 
         if event.user_id == u_id:
             items = item_schema.dump(event.items).data
-            payload = {"u_id" : u_id, "e_id" : event.id, "items_data" : items, "status" : "OK"}
+            guests = guest_schema.dump(event.guests).data
+            payload = {"u_id" : u_id,
+                       "e_id" : event.id,
+                       "guests_data" : guests,
+                       "items_data" : items,
+                       "status" : "OK"}
             return json.dumps(payload)
         else:
             return render_template("errors/404.html")

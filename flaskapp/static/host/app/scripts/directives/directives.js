@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('events.directives', [])
+angular.module('directives', [])
 .directive('itemRow', ['ItemService', function (ItemService) {
   return {
     restrict: 'E',
@@ -33,51 +33,8 @@ angular.module('events.directives', [])
             scope.hostSubitemsFlag = false;
             break
           }
-          // if (subitem.user_id != scope.hostId) {
-          //   if (!scope.hostSubitemsFlag) {
-          //     scope.hostSubitemsFlag = true;
-          //   }
-          // } else {
-          //   scope.hostSubitemsFlag = false;
-          // }
         }
       });
-
-      /*
-      scope.updateItem = function () {
-        ItemService
-          .updateItem(scope.item)
-          .then(function (response) {
-            if (response.data && response.data.status === 'OK') {
-              console.log('updateitem: OK!');
-            } else if (response.data && response.data.status === 'Error') {
-              console.log('removeItem: Error!');
-            }
-          });
-      };
-
-      scope.addNewHostSubitem = function (quantity) {
-        var newHostSubitemRow = {
-          row_id: 0,
-          quantity: quantity,
-          user_id: 0
-        };
-
-        scope.item.subitems = [];
-
-        scope.item.subitems.push(newHostSubitemRow);
-
-        ItemService
-          .updateItem(scope.item)
-          .then(function (response) {
-            if (response.data && response.data.status === 'OK') {
-              console.log('updateitem: OK!');
-            } else if (response.data && response.data.status === 'Error') {
-              console.log('removeItem: Error!');
-            }
-          });
-      };
-      */
     }
   };
 }])
