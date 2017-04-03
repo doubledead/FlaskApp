@@ -4,9 +4,10 @@ from ..core import db, mail
 from flask_mail import Message
 from flask_security import login_required, current_user
 from datetime import datetime
-from .forms import NewEventForm, UpdateEventForm, SubItemForm
+from .forms import UpdateEventForm
 from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem, subitem_schema
 from sqlalchemy import exc
+from flaskapp import page_forbidden
 from ..utils import representsint
 
 events = Blueprint('events', __name__, template_folder='templates')
@@ -52,42 +53,6 @@ def display_events():
     return render_template("events/events.html", events=events)
 
 
-# Flask WTForms Create endpoint
-@events.route('/create_event', methods=['GET', 'POST'])
-@login_required
-def create_event():
-    form = NewEventForm(request.form)
-
-    if request.method == 'POST' and form.validate():
-        address = form.address.data
-        city = form.city.data
-        state = form.state.data
-        zip_code = form.zip_code.data
-        country = form.country.data
-        start_date = form.start_date.data
-        end_date = form.end_date.data
-        last_edit_date = datetime.utcnow()
-        name = form.name.data
-        user_id = current_user.id
-        # category = Category(name='event', status_code=100)
-        # status = Status(name='active', status_code=100)
-        category_id = 100
-        status_id = 100
-        event = Event(address, city, state, zip_code, country, start_date,
-                      end_date, last_edit_date, name, user_id, status_id, category_id)
-
-        try:
-            db.session.add(event)
-            db.session.commit()
-        except exc.SQLAlchemyError as e:
-            current_app.logger.error(e)
-
-        return redirect(url_for('events.display_events'))
-
-    return render_template("events/create_event.html", form=form)
-
-
-# JSON format endpoint
 @events.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
@@ -186,6 +151,7 @@ def show(event_id):
 
         return render_template("events/show.html", event=event, u_id=u_id)
 
+
 @events.route('/host/<event_id>', methods=['GET', 'POST'])
 @login_required
 def host(event_id):
@@ -208,25 +174,7 @@ def host(event_id):
                 current_app.logger.error(e)
                 return json.dumps({'status':'Error'})
         else:
-            return render_template("errors/404.html")
-
-
-
-# Endpoint for Jinja2 template
-@events.route('/view/<event_id>', methods=['GET', 'POST'])
-@login_required
-def view(event_id):
-    if request.method =="GET":
-        user_id = current_user.id
-        event = Event.query.filter_by(id=event_id).first_or_404()
-
-        guests = event.guests
-
-        items = event.items
-
-        form = SubItemForm()
-
-        return render_template("events/view.html", event=event, guests=guests, items=items, user_id=user_id, form=form)
+            return page_forbidden("Forbidden page access attempt.")
 
 
 ## Update Event details
@@ -237,35 +185,40 @@ def update(event_id):
 
     user_id = current_user.id
     form = UpdateEventForm()
-    if request.method == "POST" and form.validate():
-        event.address = form.address.data
-        event.city = form.city.data
-        event.country = form.country.data
-        event.end_date = form.end_date.data
-        event.last_edit_date = datetime.utcnow()
-        event.name = form.name.data
-        event.start_date = form.start_date.data
-        event.state = form.state.data
-        event.user_id = user_id
-        event.zip_code = form.zip_code.data
+    if event.user_id == user_id:
+        if request.method == "POST" and form.validate():
+            event.address = form.address.data
+            event.address_line_two = form.address_line_two.data
+            event.city = form.city.data
+            event.country = form.country.data
+            event.end_date = form.end_date.data
+            event.last_edit_date = datetime.utcnow()
+            event.name = form.name.data
+            event.start_date = form.start_date.data
+            event.state = form.state.data
+            event.user_id = user_id
+            event.zip_code = form.zip_code.data
 
-        try:
-            db.session.commit()
-        except exc.SQLAlchemyError as e:
-            current_app.logger.error(e)
+            try:
+                db.session.commit()
+            except exc.SQLAlchemyError as e:
+                current_app.logger.error(e)
 
-        return redirect(url_for('events.show', event_id=event.id))
-    elif request.method != "POST":
-        form.address.data = event.address
-        form.city.data = event.city
-        form.country.data = event.country
-        form.end_date.data = event.end_date
-        form.name.data = event.name
-        form.start_date.data = event.start_date
-        form.state.data = event.state
-        form.zip_code.data = event.zip_code
+            return redirect(url_for('events.host', event_id=event.id))
+        elif request.method != "POST":
+            form.address.data = event.address
+            form.address_line_two.data = event.address_line_two
+            form.city.data = event.city
+            form.country.data = event.country
+            form.end_date.data = event.end_date
+            form.name.data = event.name
+            form.start_date.data = event.start_date
+            form.state.data = event.state
+            form.zip_code.data = event.zip_code
 
-    return render_template("events/update.html", event=event, form=form)
+        return render_template("events/update.html", event=event, form=form)
+    else:
+        return page_forbidden("Forbidden page access attempt.")
 
 
 @events.route('/delete/<event_id>', methods=['GET', 'POST'])
@@ -286,19 +239,6 @@ def delete(event_id):
 
 
 #################### Items ################
-
-@events.route('/item/<item_id>', methods=['GET'])
-@login_required
-def showitem(item_id):
-    if request.method == "GET":
-        user_id = current_user.id
-        item = Item.query.filter_by(id=item_id).first_or_404()
-
-        subitems = item.subitems
-
-        return render_template("events/items/show.html", item=item, subitems=subitems, user_id=user_id)
-
-
 @events.route('/removeitem', methods=['GET', 'POST'])
 @login_required
 def removeitem():
@@ -366,21 +306,24 @@ def getitemshost():
         data = request.get_json()
         param_id = data['paramId']
         u_id = current_user.id
-        # items = []
 
         event = Event.query.filter_by(id=param_id).first_or_404()
 
         if event.user_id == u_id:
             items = item_schema.dump(event.items).data
-            guests = guest_schema.dump(event.guests).data
+            guest_data = []
+
+            for guest in event.guests:
+                guest_data.append(guest_schema.dump(guest).data)
+
             payload = {"u_id" : u_id,
                        "e_id" : event.id,
-                       "guests_data" : guests,
+                       "guest_data" : guest_data,
                        "items_data" : items,
                        "status" : "OK"}
             return json.dumps(payload)
         else:
-            return render_template("errors/404.html")
+            return page_forbidden("Forbidden page access attempt.")
 
 
 @events.route('/updateitems', methods=['GET', 'POST'])

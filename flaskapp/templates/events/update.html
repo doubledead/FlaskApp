@@ -1,56 +1,109 @@
 {% extends 'layouts/_datepicker_layout.html' %}
 {% block container %}
-  <div class="jumbotron">
-    <h3>Update Event Details</h3>
+  <div class="page-header">
+    <h3>Update Event Details - {{ event.name }}</h3>
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-12">&nbsp;</div>
   </div>
-  <div class="row">
-    <div class="col-sm-3 col-md-6">
-      <div class="top-pad">
-          {% from "macros/_formhelpers.html" import render_field_with_errors, render_field %}
-        <form method="POST" action="" name="update">
-            {{ form.csrf_token }}
-          <div class="form-group">
-            {{ render_field_with_errors(form.name, size=20, class='form-control') }}
-          </div>
-          <div class="form-group">
-            {{ render_field_with_errors(form.address, size=20, class='form-control') }}
-          </div>
-          <div class="form-group">
-            {{ render_field_with_errors(form.city, size=20, class='form-control') }}
-          </div>
-          <div class="form-group">
-            {{ render_field_with_errors(form.state, size=20, class='form-control') }}
-          </div>
-          <div class="form-group">
-            {{ render_field_with_errors(form.zip_code, size=20, class='form-control') }}
-          </div>
-          <div class="form-group">
-            {{ render_field_with_errors(form.country, size=20, class='form-control') }}
-          </div>
-          <div class="form-group">
-            {{ render_field_with_errors(form.start_date, size=20, class='form-control datepicker') }}
-          </div>
-          <div class="form-group">
-            {{ render_field_with_errors(form.end_date, size=20, class='form-control datepicker') }}
-          </div>
-          <input type="submit" value="Save" class="btn btn-success btn-sm">
-        </form>
+  {% from "macros/_formhelpers.html" import render_field_with_errors, render_field %}
+  <form method="POST" action="" name="update">
+    {{ form.csrf_token }}
+    <div class="row">
+      <div class="col-xs-4 col-sm-4 col-md-4">
+        <div class="form-group">
+          {{ render_field_with_errors(form.name, size=20, class='form-control') }}
+        </div>
       </div>
     </div>
-    <div class="col-sm-3 col-md-6">&nbsp;</div>
-  </div>
+    <div class="row">
+      <div class="col-xs-4 col-sm-4 col-md-4">
+        <div class="form-group">
+          {{ render_field_with_errors(form.address, size=20, class='form-control') }}
+        </div>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2">
+        <div class="form-group">
+          {{ render_field_with_errors(form.address_line_two, size=10, class='form-control') }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 col-sm-3 col-md-2">
+        <div class="form-group">
+          {{ render_field_with_errors(form.city, size=20, class='form-control') }}
+        </div>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-1">
+        <div class="form-group">
+          {{ render_field_with_errors(form.state, size=20, class='form-control') }}
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3 col-md-2">
+        <div class="form-group">
+          {{ render_field_with_errors(form.zip_code, size=20, class='form-control') }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 col-sm-3 col-md-2">
+        <div class="form-group">
+          {{ render_field_with_errors(form.country, size=20, class='form-control') }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 col-sm-3 col-md-4">
+        <div class="form-group">
+          {{ render_field_with_errors(form.start_date, size=20, class='form-control datepicker') }}
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3 col-md-4">
+        <div class="form-group">
+          {{ render_field_with_errors(form.end_date, size=20, class='form-control datepicker') }}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <h4><strong>Guests</strong></h4>
+      </div>
+    </div>
+    {% for g in event.guests %}
+      <div class="row">
+        <div class="col-xs-5 col-sm-5 col-md-12">{{ g.email }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+      </div>
+    {% endfor %}
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6">
+
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-6">
+
+      </div>
+    </div>
+    <input type="submit" value="Save" class="btn btn-success btn-sm">
+  </form>
   <div class="row">
     <div class="col-sm-3 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
+    <!--
     <div class="col-sm-2 col-md-2">
       <a href="{{ url_for('events.delete', event_id=event.id) }}" class="btn btn-danger btn-xs">
         Delete Event
       </a>
     </div>
+    -->
     <div class="col-sm-1 col-md-1">
       <a href="{{ url_for('events.show', event_id=event.id) }}" class="btn btn-info btn-xs">
         Back

@@ -76,6 +76,10 @@
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
   </div>
   <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+  </div>
+  <!--
+  <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
       <h4><strong>Guests</strong></h4>
     </div>
@@ -91,23 +95,33 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
   </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-      <h4><strong>Items</strong></h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
-  </div>
+  -->
   {% raw %}
     <div class="top-pad" ng-app="eventsApp" ng-controller="eventsCtrl" ng-cloak>
       <form name="eventsForm" role="form" novalidate>
-        <!-- Events
-        <event-row event="params"></event-row>
-        End Events -->
-        <!-- Items -->
         <div class="animate-switch-host-container" ng-switch on="stage" ng-class="{forward: direction, backward:!direction,longStage: longStage}">
           <div class="animate-switch" ng-switch-default>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <h4><strong>Guests</strong></h4>
+              </div>
+            </div>
+            <!-- Guests -->
+            <div ng-repeat="guest in params.guest_data">
+              <guest-row guest="guest"></guest-row>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <h4><strong>Items</strong></h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
+            </div>
+            <!-- Items -->
             <div ng-repeat="item in params.items_data">
               <item-row
                 ng-if="item.active === true"

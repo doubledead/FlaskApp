@@ -8,6 +8,8 @@ def get_app_base_path():
 def get_instance_folder_path():
     return os.path.join(get_app_base_path(), 'instance')
 
+
+# Helper/util function for integer check.
 def representsint(object):
     try:
         int(object)
