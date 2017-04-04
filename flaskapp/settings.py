@@ -11,9 +11,9 @@ CACHE_TYPE = 'simple'
 ## SQLite Connection
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
 ## PostgreSQL local connection
-SQLALCHEMY_DATABASE_URI = 'postgresql://puser:Password1@localhost/devdb1'
+# SQLALCHEMY_DATABASE_URI = 'postgresql://puser:Password1@localhost/devdb1'
 ## Heroku flaskapp-pro PostgreSQL database
-# SQLALCHEMY_DATABASE_URI = 'postgres://henizvlbiygjoa:Ze4ZM7v9ApX2CK0HFQAi8EpdX-@ec2-54-235-125-172.compute-1.amazonaws.com:5432/dfgb1crsk1t3d9'
+SQLALCHEMY_DATABASE_URI = 'postgres://henizvlbiygjoa:Ze4ZM7v9ApX2CK0HFQAi8EpdX-@ec2-54-235-125-172.compute-1.amazonaws.com:5432/dfgb1crsk1t3d9'
 SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39a'
 
 # Flask-Mail
