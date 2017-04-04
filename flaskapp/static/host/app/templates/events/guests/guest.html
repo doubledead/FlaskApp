@@ -8,16 +8,20 @@
              ng-model="guest.email">
     </div>
   </div>
-  <div class="col-xs-2 col-sm-2 col-md-2">
-    <!--Four inception layers up to the controller-->
+  <div class="col-xs-2 col-sm-2 col-md-2" ng-hide="toggleEdit">
+    <p>&nbsp;</p>
+    <button type="button" class="btn btn-primary btn-sm" ng-click="toggleEdit = !toggleEdit">
+      Edit
+    </button>
+  </div>
+  <div class="col-xs-2 col-sm-2 col-md-1" ng-show="toggleEdit">
     <p>&nbsp;</p>
     <button type="button"
             class="btn btn-primary btn-sm">
-      Update
+      Save
     </button>
   </div>
-  <div class="col-xs-2 col-sm-2 col-md-2">
-    <!--Four inception layers up to the controller-->
+  <div class="col-xs-2 col-sm-2 col-md-1" ng-show="toggleEdit">
     <p>&nbsp;</p>
     <button type="button"
             class="btn btn-danger btn-sm">

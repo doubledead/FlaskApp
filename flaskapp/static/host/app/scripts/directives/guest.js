@@ -4,9 +4,11 @@ angular.module('guest', [])
     restrict: 'E',
     templateUrl: 'events/guests/guest.html',
     scope: {
-      guest: '='
+      guest: '=',
+      toggleEdit: '='
     },
     link: function (scope, element, attrs) {
+      scope.toggleEdit = false;
 
     }
   };
