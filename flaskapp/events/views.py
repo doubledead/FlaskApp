@@ -80,7 +80,7 @@ def create():
         event = Event(active=True, address=address, address_line_two=address_line_two, category_id=category_id, city=city,
                       country=country, description=description, end_date=end_date, last_edit_date=last_edit_date,
                       last_host_view=last_host_view, name=name, start_date=start_date, state=state, status_id=status_id,
-                      user_id=user_id, zip_code=zip_code)
+                      use_host_email=True, user_id=user_id, zip_code=zip_code)
 
         # Guest invite email
         guestmsg = Message()

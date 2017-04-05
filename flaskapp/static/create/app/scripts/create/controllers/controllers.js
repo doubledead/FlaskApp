@@ -1,5 +1,5 @@
 angular.module('create.controllers', [])
-.controller('formCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+.controller('formCtrl', ['$scope', '$http', '$timeout', 'CreateService', function ($scope, $http, $timeout, CreateService) {
   $scope.params = {};
   $scope.stage = '';
   //$scope.direction = 0;
@@ -73,25 +73,21 @@ angular.module('create.controllers', [])
     //
     // });
     // return deferred.promise();
-
-    $http({
-      method: 'POST',
-      url: '/events/create',
-      data: data
-    }).then(function successCallback(response) {
-      if (response
-        && response.data
-        && response.data.status === 'OK') {
-        reset();
-      } else if (response
-        && response.data
-        && response.data.status === 'Error') {
-        $scope.stage = "error";
-      }
-    }, function errorCallback(response) {
-      console.log(response);
-      $scope.stage = "error";
-    });
+    CreateService
+      .createEvent(data)
+      .then(function (response) {
+        if (response.data
+          && (response.data.status === 'OK')) {
+          $scope.direction = 1;
+          $scope.stage = 'success';
+          $scope.reset();
+        } else if (response.data
+          && (response.data.status === 'Error')) {
+          $scope.direction = 1;
+          $scope.stage = 'error';
+          console.log('Create Event: Error!');
+        }
+      });
   };
 
   function changeRoute() {
@@ -99,11 +95,9 @@ angular.module('create.controllers', [])
     location.assign(returnRoute);
   }
 
-  function reset() {
+  $scope.reset = function () {
     // Clean up scope before destroying
     $scope.params = {};
-    $scope.direction = 1;
-    $scope.stage = 'createSuccess';
 
     // Send the app back to a Flask route
     // This method is kind of experimental at the moment.
@@ -179,10 +173,10 @@ angular.module('create.controllers', [])
   };
 
   // AngularJS Datetimepicker
-  $scope.endDateBeforeRender = endDateBeforeRender
-  $scope.endDateOnSetTime = endDateOnSetTime
-  $scope.startDateBeforeRender = startDateBeforeRender
-  $scope.startDateOnSetTime = startDateOnSetTime
+  $scope.endDateBeforeRender = endDateBeforeRender;
+  $scope.endDateOnSetTime = endDateOnSetTime;
+  $scope.startDateBeforeRender = startDateBeforeRender;
+  $scope.startDateOnSetTime = startDateOnSetTime;
 
   function startDateOnSetTime () {
     $scope.$broadcast('start-date-changed');

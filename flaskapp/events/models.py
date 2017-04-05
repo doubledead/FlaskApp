@@ -126,6 +126,7 @@ class Event(db.Model):
     start_date = db.Column(db.DateTime())
     state = db.Column(db.String(225))
     status_id = db.Column(db.Integer())
+    use_host_email = db.Column(db.Boolean(), default=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     zip_code = db.Column(db.String(225))
 
@@ -140,7 +141,7 @@ class Event(db.Model):
 
     def __init__(self, active, address, address_line_two, category_id, city, country,
                  description, end_date, last_edit_date, last_host_view, name, start_date, state,
-                 status_id, user_id, zip_code, create_date=None):
+                 status_id, use_host_email, user_id, zip_code, create_date=None):
         self.active = active
         self.address = address
         self.address_line_two = address_line_two
@@ -158,6 +159,7 @@ class Event(db.Model):
         self.start_date = start_date
         self.state = state
         self.status_id = status_id
+        self.use_host_email = use_host_email
         self.user_id = user_id
         self.zip_code = zip_code
 
