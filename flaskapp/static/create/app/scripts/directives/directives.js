@@ -1,4 +1,4 @@
-angular.module('create.directives', [])
+angular.module('directives', [])
 .directive('itemRow', function () {
   return {
     restrict: 'E',

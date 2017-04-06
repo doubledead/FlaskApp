@@ -1,4 +1,4 @@
-angular.module('create.controllers', [])
+angular.module('controllers', [])
 .controller('formCtrl', ['$scope', '$http', '$timeout', 'CreateService', function ($scope, $http, $timeout, CreateService) {
   $scope.params = {};
   $scope.stage = '';

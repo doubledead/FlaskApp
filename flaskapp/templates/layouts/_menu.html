@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Flask App</a>
+      <a class="navbar-brand">Flask App</a>
 {#      <a class="navbar-brand" href="{{ url_for('home') }}">Flask App</a>#}
     </div>
     <div>
@@ -9,7 +9,6 @@
         <li><a href="/main">Main</a></li>
           {% if user.is_authenticated() %}
             <li><a href="/events">Events</a></li>
-            <li><a href="/entries">Entries</a></li>
           {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">

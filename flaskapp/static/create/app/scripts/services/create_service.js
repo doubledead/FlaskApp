@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('create.services', [])
+angular.module('services', [])
   .factory('CreateService', function($http){
 
     return {
