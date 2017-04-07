@@ -108,7 +108,12 @@
             </div>
             <!-- Guests -->
             <div ng-repeat="guest in params.guest_data">
-              <guest-row guest="guest" toggle-edit="toggleEdit"></guest-row>
+              <guest-row
+                guest="guest"
+                toggle-edit="toggleEdit"
+                toggle-remove="toggleRemove">
+
+              </guest-row>
             </div>
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>

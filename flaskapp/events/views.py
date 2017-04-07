@@ -299,9 +299,9 @@ def getitems():
         return json.dumps(payload)
 
 
-@events.route('/getitemshost', methods=['GET', 'POST'])
+@events.route('/get_host_items', methods=['GET', 'POST'])
 @login_required
-def getitemshost():
+def get_host_items():
     if request.method == "POST":
         data = request.get_json()
         param_id = data['paramId']
@@ -686,6 +686,57 @@ def addsubitem():
             db.session.add(item)
         else:
             response_payload.item_codes.append({"id" : item.id, "name" : item.name, "status" : 202})
+
+        try:
+            db.session.commit()
+            # Eventually return response_payload
+            return json.dumps({'status':'OK'})
+        except exc.SQLAlchemyError as e:
+            current_app.logger.error(e)
+            return json.dumps({'status':'Error'})
+
+
+########## Guest ######
+@events.route('/add_guest', methods=['GET', 'POST'])
+@login_required
+def add_guest():
+    if request.method == "POST":
+        data = request.get_json()
+        u_id = current_user.id
+        # response_payload will contain status codes for each item and subitem
+        response_payload = {"item_codes" : [], "status" : ""}
+
+        item = Item.query.filter_by(id=data['item_id']).first_or_404()
+        item_max_qty = item.quantity
+        item_claimed_current = item.quantity_claimed
+
+
+
+
+        try:
+            db.session.commit()
+            # Eventually return response_payload
+            return json.dumps({'status':'OK'})
+        except exc.SQLAlchemyError as e:
+            current_app.logger.error(e)
+            return json.dumps({'status':'Error'})
+
+
+@events.route('/remove_guest', methods=['GET', 'POST'])
+@login_required
+def remove_guest():
+    if request.method == "POST":
+        data = request.get_json()
+        u_id = current_user.id
+        # response_payload will contain status codes for each item and subitem
+        response_payload = {"item_codes" : [], "status" : ""}
+
+        item = Item.query.filter_by(id=data['item_id']).first_or_404()
+        item_max_qty = item.quantity
+        item_claimed_current = item.quantity_claimed
+
+
+
 
         try:
             db.session.commit()

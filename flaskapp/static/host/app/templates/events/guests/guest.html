@@ -23,11 +23,25 @@
       Save
     </button>
   </div>
-  <div class="col-xs-2 col-sm-2 col-md-1">
+  <div class="col-xs-2 col-sm-2 col-md-1" ng-hide="toggleRemove">
     <p>&nbsp;</p>
     <button type="button"
-            class="btn btn-danger btn-xs">
+            class="btn btn-danger btn-xs" ng-click="toggleRemove = !toggleRemove">
       Remove
+    </button>
+  </div>
+  <div class="col-xs-2 col-sm-2 col-md-1" ng-show="toggleRemove">
+    <p>&nbsp;</p>
+    <button type="button"
+            class="btn btn-primary btn-xs" ng-click="removeGuest">
+      Yes
+    </button>
+  </div>
+  <div class="col-xs-2 col-sm-2 col-md-1" ng-show="toggleRemove">
+    <p>&nbsp;</p>
+    <button type="button"
+            class="btn btn-danger btn-xs" ng-click="toggleRemove = !toggleRemove">
+      Cancel
     </button>
   </div>
 </div>

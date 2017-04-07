@@ -9,7 +9,7 @@ angular.module('guest-service', [])
 
         return $http({
           method: 'POST',
-          url: '/events/updatehostitem',
+          url: '/events/update_guest',
           data: data
         }).then(function successCallback(response) {
           return response;
@@ -17,12 +17,12 @@ angular.module('guest-service', [])
           console.log(response);
         });
       },
-      addGuest: function(payload) {
+      removeGuest: function(payload) {
         var data = JSON.stringify(payload);
 
         return $http({
           method: 'POST',
-          url: '/events/addsubitem',
+          url: '/events/remove_guest',
           data: data
         }).then(function successCallback(response) {
           return response;

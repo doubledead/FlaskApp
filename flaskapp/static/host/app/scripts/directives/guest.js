@@ -5,10 +5,16 @@ angular.module('guest', [])
     templateUrl: 'events/guests/guest.html',
     scope: {
       guest: '=',
-      toggleEdit: '='
+      toggleEdit: '=',
+      toggleRemove: '='
     },
     link: function (scope, element, attrs) {
       scope.toggleEdit = false;
+      scope.toggleRemove = false;
+
+      scope.removeGuest = function () {
+
+      };
 
     }
   };

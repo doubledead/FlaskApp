@@ -15,7 +15,7 @@ angular.module('services', [])
 
           return $http({
             method: 'POST',
-            url: '/events/getitemshost',
+            url: '/events/get_host_items',
             data: JSON.stringify(data)
           }).then(function successCallback(response) {
             return response;
