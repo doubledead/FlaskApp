@@ -278,6 +278,12 @@ gulp.task('templatesCreate', function () {
     .pipe(gulp.dest('create/app/scripts'));
 });
 
+gulp.task('watch', ['templatesCreate', 'templatesEvents', 'templatesHost'], function () {
+  gulp.watch(['create/app/templates/**/*.html'], ['templatesCreate']);
+  gulp.watch(['events/app/templates/**/*.html'], ['templatesEvents']);
+  gulp.watch(['host/app/templates/**/*.html'], ['templatesHost']);
+});
+
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function () {
 
