@@ -51,18 +51,4 @@ angular.module('directives', [])
 
     }
   };
-})
-.directive('hostSubitem', function () {
-  return {
-    restrict: 'E',
-    templateUrl: 'events/subitems/host-subitem.html',
-    scope: {
-      subitem: '=',
-      hostId: '=',
-      itemId: '='
-    },
-    link: function (scope, element, attrs) {
-
-    }
-  };
 });
