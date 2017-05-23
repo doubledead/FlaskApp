@@ -18,12 +18,13 @@ angular.module('guest-service', [])
         });
       },
       removeGuest: function(payload) {
-        var data = JSON.stringify(payload);
+        // var data = JSON.stringify(payload);
 
         return $http({
           method: 'POST',
           url: '/events/remove_guest',
-          data: data
+          // data: data
+          data: JSON.stringify(payload)
         }).then(function successCallback(response) {
           return response;
         }, function errorCallback(response) {

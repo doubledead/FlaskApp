@@ -109,6 +109,7 @@
             <!-- Guests -->
             <div ng-repeat="guest in params.guest_data">
               <guest-row
+                host-id="params.u_id"
                 guest="guest"
                 toggle-edit="toggleEdit"
                 toggle-remove="toggleRemove">

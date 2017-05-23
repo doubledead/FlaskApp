@@ -727,21 +727,22 @@ def add_guest():
 def remove_guest():
     if request.method == "POST":
         data = request.get_json()
-        u_id = current_user.id
-        # response_payload will contain status codes for each item and subitem
-        response_payload = {"item_codes" : [], "status" : ""}
 
-        item = Item.query.filter_by(id=data['item_id']).first_or_404()
-        item_max_qty = item.quantity
-        item_claimed_current = item.quantity_claimed
+        if current_user.id == data['u_id']:
+            guest = Guest.query.filter_by(id=data['g_id']).first_or_404()
+
+            if data['g_id'] == guest.id and guest.active:
+                guest.active = False
+            elif data['g_id'] == guest.id and guest.active == False:
+                guest.active = True
+            else:
+                return json.dumps({'status':'Error'})
 
 
-
-
-        try:
-            db.session.commit()
-            # Eventually return response_payload
-            return json.dumps({'status':'OK'})
-        except exc.SQLAlchemyError as e:
-            current_app.logger.error(e)
-            return json.dumps({'status':'Error'})
+            try:
+                db.session.add(guest)
+                db.session.commit()
+                return json.dumps({'status':'OK'})
+            except exc.SQLAlchemyError as e:
+                current_app.logger.error(e)
+                return json.dumps({'status':'Error'})

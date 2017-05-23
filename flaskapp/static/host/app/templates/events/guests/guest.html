@@ -1,47 +1,52 @@
-<div class="row" ng-hide="toggleEdit">
-  <div class="col-xs-2 col-sm-2 col-md-3">{{ guest.email }}</div>
-  <div class="col-xs-2 col-sm-2 col-md-2">
-    <button type="button" class="btn btn-primary btn-xs" ng-click="toggleEdit = !toggleEdit">
-      Edit
-    </button>
-  </div>
-</div>
-<div class="row" ng-show="toggleEdit">
-  <div class="col-xs-2 col-sm-2 col-md-3">
-    <div class="form-group">
-      <label for="{{'tb-guest-email-' + guest.id}}">&nbsp;</label>
-      <input type="text"
-             id="{{'tb-guest-email-' + guest.id}}"
-             class="form-control"
-             ng-model="guest.email">
+<div ng-class="{'item-removed': !guest.active}">
+  <div class="row" ng-hide="toggleEdit">
+    <div class="col-xs-2 col-sm-2 col-md-3">{{ guest.email }}</div>
+    <div class="col-xs-2 col-sm-2 col-md-2">
+      <button type="button" class="btn btn-primary btn-xs" ng-click="toggleEdit = !toggleEdit">
+        Edit
+      </button>
     </div>
   </div>
-  <div class="col-xs-2 col-sm-2 col-md-1">
-    <p>&nbsp;</p>
-    <button type="button"
-            class="btn btn-primary btn-xs">
-      Save
-    </button>
+  <div class="row" ng-show="toggleEdit">
+    <div class="col-xs-2 col-sm-2 col-md-3">
+      <div class="form-group">
+        <label for="{{'tb-guest-email-' + guest.id}}">&nbsp;</label>
+        <input type="text"
+               id="{{'tb-guest-email-' + guest.id}}"
+               class="form-control"
+               ng-model="guest.email">
+      </div>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-1">
+      <p>&nbsp;</p>
+      <button type="button"
+              class="btn btn-primary btn-xs">
+        Save
+      </button>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-1" ng-hide="toggleRemove">
+      <p>&nbsp;</p>
+      <button type="button"
+              class="btn btn-danger btn-xs" ng-click="toggleRemove = !toggleRemove">
+        Remove
+      </button>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-1" ng-show="toggleRemove">
+      <p>&nbsp;</p>
+      <button type="button"
+              class="btn btn-primary btn-xs" ng-click="removeGuest()">
+        Yes
+      </button>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-1" ng-show="toggleRemove">
+      <p>&nbsp;</p>
+      <button type="button"
+              class="btn btn-danger btn-xs" ng-click="toggleRemove = !toggleRemove">
+        Cancel
+      </button>
+    </div>
   </div>
-  <div class="col-xs-2 col-sm-2 col-md-1" ng-hide="toggleRemove">
-    <p>&nbsp;</p>
-    <button type="button"
-            class="btn btn-danger btn-xs" ng-click="toggleRemove = !toggleRemove">
-      Remove
-    </button>
-  </div>
-  <div class="col-xs-2 col-sm-2 col-md-1" ng-show="toggleRemove">
-    <p>&nbsp;</p>
-    <button type="button"
-            class="btn btn-primary btn-xs" ng-click="removeGuest">
-      Yes
-    </button>
-  </div>
-  <div class="col-xs-2 col-sm-2 col-md-1" ng-show="toggleRemove">
-    <p>&nbsp;</p>
-    <button type="button"
-            class="btn btn-danger btn-xs" ng-click="toggleRemove = !toggleRemove">
-      Cancel
-    </button>
-  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
 </div>

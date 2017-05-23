@@ -1,4 +1,4 @@
-angular.module('events.event', [])
+angular.module('event', [])
   .directive('eventRow', ['$http', function ($http) {
     return {
       restrict: 'E',

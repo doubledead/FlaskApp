@@ -5,6 +5,7 @@ angular.module('guest', [])
     templateUrl: 'events/guests/guest.html',
     scope: {
       guest: '=',
+      hostId: '=',
       toggleEdit: '=',
       toggleRemove: '='
     },
@@ -12,8 +13,21 @@ angular.module('guest', [])
       scope.toggleEdit = false;
       scope.toggleRemove = false;
 
-      scope.removeGuest = function () {
+      var payload = {
+        g_id: scope.guest.id,
+        u_id: scope.hostId
+      };
 
+      scope.removeGuest = function () {
+        GuestService
+          .removeGuest(payload)
+          .then(function (response) {
+            if (response.data && response.data.status === 'OK') {
+              console.log('Guest removed!');
+            } else {
+              console.log('Error removing guest!');
+            }
+          });
       };
 
     }

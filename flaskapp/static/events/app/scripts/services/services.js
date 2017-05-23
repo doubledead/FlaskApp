@@ -1,4 +1,4 @@
-angular.module('events.services', [])
+angular.module('services', [])
   .factory('EventService', function($http){
 
       return {
