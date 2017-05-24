@@ -21,6 +21,7 @@ angular.module('controllers', [])
     $scope.stage = '';
     $scope.longStage = 0;
     $scope.toggleEventObjView = false;
+    $scope.additionalGuestEmail = '';
 
     EventService
       .getItems()
