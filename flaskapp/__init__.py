@@ -47,8 +47,8 @@ def page_forbidden(error):
 
 @app.errorhandler(404)
 def page_not_found(error):
-	app.logger.error('Page not found: %s', (request.path, error))
-	return render_template('errors/404.html'), 404
+    app.logger.error('Page not found: %s', (request.path, error))
+    return render_template('errors/404.html'), 404
 
 
 @app.errorhandler(500)
