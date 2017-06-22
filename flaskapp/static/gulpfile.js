@@ -319,41 +319,6 @@ gulp.task('remove', function() {
   ]);
 });
 
-// Watch Files For Changes & Reload
-gulp.task('serve', ['templates', 'scripts', 'jslibs', 'styles'], function () {
-  browserSync.init({
-    notify: false,
-    // Customize the BrowserSync console logging prefix
-    logPrefix: 'WSK',
-    // Run as an https by uncommenting 'https: true'
-    // Note: this uses an unsigned certificate which on first access
-    // will present a certificate warning in the browser.
-    // https: true,
-    server: ['.tmp/', 'app'],
-    port: 3000
-  });
-  gulp.watch(['app/index.html'], reload);
-  gulp.watch(['app/templates/**/*.html'], ['templates', reload]);
-  // gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['scripts', reload]);
-  gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/images/**/*'], reload);
-});
-
-// Build and serve the output from the dist build
-gulp.task('serve:dist', ['default'], function () {
-  browserSync({
-    notify: false,
-    logPrefix: 'WSK',
-    // Run as an https by uncommenting 'https: true'
-    // Note: this uses an unsigned certificate which on first access
-    //       will present a certificate warning in the browser.
-    // https: true,
-    server: 'dist',
-    port: 3001
-  });
-});
-
 // Default task for Host JS module
 gulp.task('host', [], function (cb) {
   runSequence(
@@ -366,18 +331,6 @@ gulp.task('create', [], function (cb) {
     ['templatesCreate'], cb
   );
 });
-
-/* / Build Production Files, the Default Task
-gulp.task('default', ['clean'], function (cb) {
-  runSequence(
-    'styles',
-    // ['lint', 'html', 'templates', 'scripts', 'jslibs', 'csslibs', 'images', 'fonts', 'copy'],
-    ['html', 'templates', 'scripts', 'jslibs', 'csslibs', 'images', 'fonts', 'copy'],
-    'remove',
-    cb
-  );
-});
-*/
 
 gulp.task('deployBuild', ['clean'], function (cb) {
   runSequence(

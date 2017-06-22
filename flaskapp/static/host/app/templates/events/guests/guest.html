@@ -1,4 +1,5 @@
-<div ng-class="{'item-removed': !guest.active}">
+<!--<div ng-class="{'item-removed': !guest.active}">-->
+<div ng-hide="!guest.active">
   <div class="row" ng-hide="toggleEdit">
     <div class="col-xs-2 col-sm-2 col-md-3">{{ guest.email }}</div>
     <div class="col-xs-2 col-sm-2 col-md-2">
@@ -8,6 +9,8 @@
     </div>
   </div>
   <div class="row" ng-show="toggleEdit">
+    <div class="col-xs-2 col-sm-2 col-md-3">{{ guest.email }}</div>
+    <!--
     <div class="col-xs-2 col-sm-2 col-md-3">
       <div class="form-group">
         <label for="{{'tb-guest-email-' + guest.id}}">&nbsp;</label>
@@ -24,8 +27,8 @@
         Save
       </button>
     </div>
+    -->
     <div class="col-xs-2 col-sm-2 col-md-1" ng-hide="toggleRemove">
-      <p>&nbsp;</p>
       <button type="button"
               class="btn btn-danger btn-xs" ng-click="toggleRemove = !toggleRemove">
         Remove
@@ -41,7 +44,7 @@
     <div class="col-xs-2 col-sm-2 col-md-1" ng-show="toggleRemove">
       <p>&nbsp;</p>
       <button type="button"
-              class="btn btn-danger btn-xs" ng-click="toggleRemove = !toggleRemove">
+              class="btn btn-danger btn-xs" ng-click="cancelEdit()">
         Cancel
       </button>
     </div>

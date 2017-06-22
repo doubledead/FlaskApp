@@ -1,5 +1,5 @@
 angular.module('guest', [])
-.directive('guestRow', ['$http', 'GuestService', function ($http, GuestService) {
+.directive('recordGuest', ['$http', 'GuestService', function ($http, GuestService) {
   return {
     restrict: 'E',
     templateUrl: 'events/guests/guest.html',
@@ -18,11 +18,18 @@ angular.module('guest', [])
         u_id: scope.hostId
       };
 
+      scope.cancelEdit = function () {
+        scope.toggleEdit = !scope.toggleEdit;
+        scope.toggleRemove = !scope.toggleRemove;
+      };
+
       scope.removeGuest = function () {
         GuestService
           .removeGuest(payload)
           .then(function (response) {
             if (response.data && response.data.status === 'OK') {
+              scope.guest.active = false;
+              scope.cancelEdit();
               console.log('Guest removed!');
             } else {
               console.log('Error removing guest!');

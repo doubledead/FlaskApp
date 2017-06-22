@@ -4,17 +4,17 @@ angular.module('guest-service', [])
   .factory('GuestService', function($http){
 
     return {
-      updateGuest: function(item) {
-        var data = JSON.stringify(item);
+      addGuest: function(payload) {
 
         return $http({
           method: 'POST',
-          url: '/events/update_guest',
-          data: data
+          url: '/events/add_guest',
+          data: JSON.stringify(payload)
         }).then(function successCallback(response) {
           return response;
         }, function errorCallback(response) {
           console.log(response);
+          return response;
         });
       },
       removeGuest: function(payload) {
@@ -29,6 +29,7 @@ angular.module('guest-service', [])
           return response;
         }, function errorCallback(response) {
           console.log(response);
+          return response;
         });
       }
     }

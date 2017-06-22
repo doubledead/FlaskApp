@@ -177,11 +177,15 @@ event_schema = EventSchema()
 
 
 class Category(db.Model):
+    __tablename__ = 'categories'
+
     id = db.Column(db.Integer(), primary_key=True)
+    active = db.Column(db.Boolean(), default=True)
     name = db.Column(db.String(225))
     status_code = db.Column(db.Integer())
 
-    def __init__(self, name, status_code):
+    def __init__(self, active, name, status_code):
+        self.active = active
         self.name = name
         self.status_code = status_code
 
@@ -194,6 +198,31 @@ class CategorySchema(ma.ModelSchema):
         model = Category
 
 category_schema = CategorySchema()
+
+
+class ItemCategory(db.Model):
+    __tablename__ = 'item_categories'
+
+    id = db.Column(db.Integer(), primary_key=True)
+    active = db.Column(db.Boolean(), default=True)
+    name = db.Column(db.String(225))
+    category_code = db.Column(db.Integer())
+
+    def __init__(self, active, name, category_code):
+        self.active = active
+        self.name = name
+        self.category_code = category_code
+
+        def __repr__(self):
+            return 'ItemCategory %r>' % self.name
+
+
+class ItemCategorySchema(ma.ModelSchema):
+    class Meta:
+        model = ItemCategory
+
+item_category_schema = ItemCategorySchema()
+
 
 class Status(db.Model):
     id = db.Column(db.Integer(), primary_key=True)

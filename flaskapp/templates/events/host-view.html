@@ -106,15 +106,33 @@
                 <h4><strong>Guests</strong></h4>
               </div>
             </div>
+            <div class="row">
+              <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="form-group">
+                  <label for="tb-additonal-guest-email">&nbsp;</label>
+                  <input type="text"
+                         id="tb-additional-guest-email"
+                         class="form-control"
+                         ng-model="additionalGuestEmail">
+                </div>
+              </div>
+              <div class="col-xs-2 col-sm-2 col-md-1">
+                <p>&nbsp;</p>
+                <button type="button"
+                        class="btn btn-primary btn-xs">
+                  Add
+                </button>
+              </div>
+            </div>
             <!-- Guests -->
             <div ng-repeat="guest in params.guest_data">
-              <guest-row
+              <record-guest
                 host-id="params.u_id"
                 guest="guest"
                 toggle-edit="toggleEdit"
                 toggle-remove="toggleRemove">
 
-              </guest-row>
+              </record-guest>
             </div>
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12">&nbsp;</div>
