@@ -33,6 +33,7 @@ MAIL_PASSWORD = '05f20eb390515bce00f8d19d7fb5bbd5'
 
 # Flask-Security
 # SECURITY_CONFIRMABLE = False
+# User Model 'confirmed_at' needs to be uncommented
 SECURITY_CONFIRMABLE = True
 SECURITY_CHANGEABLE = True
 SECURITY_REGISTERABLE = True
