@@ -34,11 +34,17 @@ class Guest(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     active = db.Column(db.Boolean(), default=True)
     email = db.Column(db.String(225))
+    first_name = db.Column(db.String(255))
+    last_name = db.Column(db.String(255))
+    rsvp_flag = db.Column(db.Boolean(), default=False)
     user_id = db.Column(db.Integer())
 
-    def __init__(self, active, email, user_id):
+    def __init__(self, active, email, first_name, last_name, rsvp_flag, user_id):
         self.active = active
         self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
+        self.rsvp_flag = rsvp_flag
         self.user_id = user_id
 
 

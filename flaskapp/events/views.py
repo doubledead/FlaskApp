@@ -92,7 +92,12 @@ def create():
         for g in guests_data:
             e = g['email']
 
-            guest = Guest(active=True, email=e, user_id=u_id)
+            guest = Guest(active=True,
+                          email=e,
+                          first_name="First",
+                          last_name="Last",
+                          rsvp_flag=False,
+                          user_id=u_id)
             event.guests.append(guest)
             guestmsg.add_recipient(e)
 
