@@ -102,7 +102,7 @@ angular.module('controllers', [])
     // Send the app back to a Flask route
     // This method is kind of experimental at the moment.
     $timeout(changeRoute, 1000);
-  }
+  };
 
   // Guest item functions
   $scope.addGuestEmail = function () {
