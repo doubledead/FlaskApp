@@ -5,7 +5,7 @@ from flask_security import SQLAlchemyUserDatastore, current_user
 import logging
 
 from flaskapp.utils import get_instance_folder_path
-from flaskapp.cache import cache
+# from flaskapp.cache import cache
 
 from .core import db, ma, mail, security, moment, scheduler
 from .models import User, Role
@@ -22,7 +22,7 @@ app.config.from_pyfile('config.cfg', silent=True)
 
 # logging.basicConfig(format=app.config['LOGGING_FORMAT'],filename='logs.log',level=logging.DEBUG)
 
-cache.init_app(app)
+# cache.init_app(app)
 
 db.init_app(app)
 ma.init_app(app)
