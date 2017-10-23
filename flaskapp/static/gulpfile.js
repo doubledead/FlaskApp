@@ -102,19 +102,6 @@ gulp.task('csslibs', function () {
     .pipe(gulp.dest('dist/styles'))
 });
 
-// Lint JavaScript
-gulp.task('lint', function () {
-  return gulp.src([
-    'app/scripts/**/*.js',
-    '!node_modules/**',
-    '!bower_components/**',
-    '!app/scripts/templates.js'
-  ])
-    .pipe($.eslint())
-    .pipe($.eslint.format())
-    .pipe($.if(!browserSync.active, $.eslint.failAfterError()))
-});
-
 // Concatenate and minify JavaScript.
 gulp.task('scripts', function () {
 
