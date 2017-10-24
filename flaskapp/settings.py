@@ -18,6 +18,8 @@ CACHE_TYPE = 'simple'
 SQLALCHEMY_DATABASE_URI = 'postgres://nljweakzhspxaa:Cl3n7ipIY1AvTk1MLyslOfZgLz@ec2-54-235-111-59.compute-1.amazonaws.com:5432/dc4t9bjie4nrtc'
 SECRET_KEY = 'a9eec0e0-23b7-4788-9a92-318347b9a39a'
 
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 # Flask-Mail
 # Required for Flask-Security registration to function properly
 MAIL_DEFAULT_SENDER = 'service@loveschaos.com'
@@ -47,7 +49,6 @@ SECURITY_POST_REGISTER_VIEW = '/main/confirmation'
 SECURITY_SEND_REGISTER_EMAIL = True
 SECURITY_TRACKABLE = True
 SECURITY_PASSWORD_SALT = 'Some_salt'
-SECURITY_RETYPABLE = True
 
 # Configure logging
 LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
