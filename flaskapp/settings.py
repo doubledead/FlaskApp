@@ -49,6 +49,7 @@ SECURITY_POST_REGISTER_VIEW = '/main/confirmation'
 SECURITY_SEND_REGISTER_EMAIL = True
 SECURITY_TRACKABLE = True
 SECURITY_PASSWORD_SALT = 'Some_salt'
+SECURITY_EMAIL_SENDER = 'service@loveschaos.com'
 
 # Configure logging
 LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
