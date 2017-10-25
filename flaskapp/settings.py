@@ -52,7 +52,7 @@ SECURITY_PASSWORD_SALT = 'Some_salt'
 SECURITY_EMAIL_SENDER = 'service@loveschaos.com'
 
 # Configure logging
-LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+# LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 
 # Flask-APScheduler
 JOBS = [
