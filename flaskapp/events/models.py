@@ -126,6 +126,7 @@ class Event(db.Model):
     country = db.Column(db.String(225))
     description = db.Column(db.String(425))
     end_date = db.Column(db.DateTime())
+    invite_status_id = db.Column(db.Integer())
     last_edit_date = db.Column(db.DateTime())
     last_host_view = db.Column(db.DateTime())
     name = db.Column(db.String(225))
@@ -146,8 +147,8 @@ class Event(db.Model):
                             backref=db.backref('events', lazy='joined'))
 
     def __init__(self, active, address, address_line_two, category_id, city, country,
-                 description, end_date, last_edit_date, last_host_view, name, start_date, state,
-                 status_id, use_host_email, user_id, zip_code, create_date=None):
+                 description, end_date, invite_status_id, last_edit_date, last_host_view, name,
+                 start_date, state, status_id, use_host_email, user_id, zip_code, create_date=None):
         self.active = active
         self.address = address
         self.address_line_two = address_line_two
@@ -159,6 +160,7 @@ class Event(db.Model):
         self.create_date = create_date
         self.description = description
         self.end_date = end_date
+        self.invite_status_id = invite_status_id
         self.last_edit_date = last_edit_date
         self.last_host_view = last_host_view
         self.name = name
@@ -248,3 +250,23 @@ class StatusSchema(ma.ModelSchema):
         model = Status
 
 status_schema = StatusSchema()
+
+
+class InviteStatus(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(225))
+    status_code = db.Column(db.Integer())
+
+    def __init__(self, name, status_code):
+        self.name = name
+        self.status_code = status_code
+
+        def __repr__(self):
+            return 'Status %r>' % self.name
+
+
+class InviteStatusSchema(ma.ModelSchema):
+    class Meta:
+        model = InviteStatus
+
+invite_status_schema = InviteStatusSchema()

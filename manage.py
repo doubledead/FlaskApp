@@ -23,7 +23,7 @@ def populate():
     status_inactive = Status(name='inactive', status_code=200)
     status_cancelled = Status(name='cancelled', status_code=300)
     status_completed = Status(name='completed', status_code=400)
-    status_archived = Status(name='completed', status_code=500)
+    status_archived = Status(name='archived', status_code=500)
 
     db.session.add(status_active)
     db.session.add(status_inactive)
