@@ -17,7 +17,8 @@ app = Flask(__name__,
             instance_relative_config=True,
             template_folder='templates')
 
-app.config.from_object('flaskapp.settings')
+# app.config.from_object('flaskapp.settings') # PROD
+app.config.from_object('flaskapp.settings_dev_mail') # DEV
 app.config.from_pyfile('config.cfg', silent=True)
 
 # logging.basicConfig(format=app.config['LOGGING_FORMAT'],filename='logs.log',level=logging.DEBUG)
