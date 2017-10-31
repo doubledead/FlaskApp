@@ -68,7 +68,6 @@ def events_invites_status_check():
 
                 for g in guests_data:
                     e = g.email
-                    Guest invite email
                     guest_message = Message()
                     guest_message.subject = "FlaskApp - Event Invite - " + event.name
                     guest_message.body = "You have been invited to the following event: " + event.name
