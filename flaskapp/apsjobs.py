@@ -59,7 +59,6 @@ def events_invites_status_check():
                 current_app.logger.info('Sending mail invites for Event ID: %s', event.id)
 
                 user = User.query.filter_by(id=event.user_id).first_or_404()
-                host_name = user.email
 
                 guests_data = event.guests
                 # Guest invite email
@@ -72,7 +71,7 @@ def events_invites_status_check():
                     guest_message = Message()
                     guest_message.subject = "FlaskApp - Event Invite - " + event.name
                     # guest_message.body = "You have been invited to the following event: " + event.name
-                    guest_message.html = render_template('/mails/event/event_invite.html', host_name=host_name, event_name=event.name, event_id=event.id)
+                    guest_message.html = render_template('/mails/event/event_invite.html', host=user.email, event_name=event.name, event_id=event.id)
                     guest_message.add_recipient(e)
                     # Send message
                     mail.send(guest_message)
