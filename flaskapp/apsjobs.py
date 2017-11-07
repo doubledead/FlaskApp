@@ -5,7 +5,7 @@
 """
 
 from datetime import datetime
-from flask import current_app
+from flask import current_app, render_template
 from flaskapp import app
 from .core import db, mail
 from .models import Event, User
