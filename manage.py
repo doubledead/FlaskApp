@@ -5,7 +5,7 @@
     Manager module
 """
 
-from flask.ext.script import Manager
+from flask_script import Manager
 from flask import json, current_app
 
 from flaskapp import app
