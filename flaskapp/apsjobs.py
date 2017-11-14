@@ -61,17 +61,16 @@ def events_invites_status_check():
                 user = User.query.filter_by(id=event.user_id).first_or_404()
 
                 guests_data = event.guests
-                # Guest invite email
-                # guest_message = Message()
-                # guest_message.subject = "FlaskApp - Event Invite - " + event.name
-                # guest_message.body = "You have been invited to the following event: " + event.name
 
                 for g in guests_data:
                     e = g.email
                     guest_message = Message()
                     guest_message.subject = "FlaskApp - Event Invite - " + event.name
                     # guest_message.body = "You have been invited to the following event: " + event.name
-                    guest_message.html = render_template('/mails/event/event_invite.html', host=user.email, event_name=event.name, id=event.id)
+                    guest_message.html = render_template('/mails/event/event_invite.html',
+                                                         host=user.email,
+                                                         event_name=event.name,
+                                                         id=event.id)
                     guest_message.add_recipient(e)
                     # Send message
                     mail.send(guest_message)
@@ -83,7 +82,6 @@ def events_invites_status_check():
 
                 db.session.add(event)
                 mail.send(confmsg)
-                # mail.send(guest_message)
             else:
                 current_app.logger.info('Status 105, all invites sent.')
 

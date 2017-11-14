@@ -83,14 +83,8 @@ def create():
                       last_edit_date=last_edit_date, last_host_view=last_host_view, name=name, start_date=start_date, state=state,
                       status_id=status_id, use_host_email=True, user_id=user_id, zip_code=zip_code)
 
-        # Guest invite email
-        guestmsg = Message()
-        guestmsg.subject = "FlaskApp - Event Invite - " + name
-        guestmsg.body = "You have been invited to the following event: " + name
-
 
         # Iterate through guest email addresses
-        # Move this to ABS job
         for g in guests_data:
             e = g['email']
 
@@ -101,7 +95,6 @@ def create():
                           rsvp_flag=False,
                           user_id=u_id)
             event.guests.append(guest)
-            # guestmsg.add_recipient(e)
 
 
         # Iterate through items
@@ -140,7 +133,6 @@ def create():
             db.session.add(event)
             db.session.commit()
             mail.send(msg)
-            # mail.send(guestmsg)
             return json.dumps({'status':'OK'})
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
