@@ -55,7 +55,6 @@ class User(db.Model, UserMixin):
     last_edit_date = db.Column(db.DateTime())
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
-    full_name = db.Column(db.String(255))
 
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
