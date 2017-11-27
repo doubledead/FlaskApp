@@ -44,13 +44,13 @@ def index():
                            events_completed=events_completed)
 
 
-@events.route('/')
-@login_required
-def display_events():
-    user_id = current_user.id
-    events = Event.query.filter_by(user_id=user_id)
+# @events.route('/')
+# @login_required
+# def display_events():
+#     user_id = current_user.id
+#     events = Event.query.filter_by(user_id=user_id)
 
-    return render_template("events/events.html", events=events)
+#     return render_template("events/events.html", events=events)
 
 
 @events.route('/create', methods=['GET', 'POST'])
@@ -148,7 +148,13 @@ def show(event_id):
         u_id = current_user.id
         event = Event.query.filter_by(id=event_id).first_or_404()
 
-        return render_template("events/show.html", event=event, u_id=u_id)
+        # return render_template("events/show.html", event=event, u_id=u_id)
+        # Might be a faster way to query with SQLAlchemy
+        for guest in event.guests:
+            if guest.email == current_user.email:
+                return render_template("events/show.html", event=event, u_id=u_id)
+        
+        return page_forbidden("Forbidden page access attempt.")
 
 
 @events.route('/host/<event_id>', methods=['GET', 'POST'])

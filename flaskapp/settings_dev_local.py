@@ -22,9 +22,6 @@ MAIL_DEFAULT_SENDER = 'service@loveschaos.com'
 MAIL_SERVER = 'smtp.mailgun.org'
 MAIL_PORT = 25
 MAIL_USE_TLS = True
-# Sandbox domain credentials
-# MAIL_USERNAME = 'postmaster@app612f53d0a96248fdab12a8ad2f5cc871.mailgun.org'
-# MAIL_PASSWORD = '9115f88eef5f0426f65301afc351d97e'
 # Personal Media Template email configs
 MAIL_USERNAME = 'postmaster@mg.loveschaos.com'
 MAIL_PASSWORD = '05f20eb390515bce00f8d19d7fb5bbd5'
@@ -38,7 +35,7 @@ SECURITY_POST_CHANGE_VIEW = '/user'
 SECURITY_POST_LOGIN_VIEW = '/main'
 SECURITY_POST_LOGOUT_VIEW = '/'
 SECURITY_SEND_PASSWORD_CHANGE_EMAIL = False # Prod change
-SECURITY_POST_REGISTER_VIEW = '/main/confirmation'
+SECURITY_POST_REGISTER_VIEW = '/main'
 SECURITY_SEND_REGISTER_EMAIL = False
 SECURITY_TRACKABLE = True
 SECURITY_PASSWORD_SALT = 'Some_salt'
@@ -49,17 +46,17 @@ LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 
 # Flask-APScheduler
 JOBS = [
-    {
-        'id': 'job1',
-        'func': 'flaskapp.apsjobs:events_check',
-        'trigger': 'interval',
-        'seconds': 30
-    },
-    {
-        'id': 'job2',
-        'func': 'flaskapp.apsjobs:events_invites_status_check',
-        'trigger': 'interval',
-        'seconds': 60
-    }
+    # {
+    #     'id': 'job1',
+    #     'func': 'flaskapp.apsjobs:events_check',
+    #     'trigger': 'interval',
+    #     'seconds': 30
+    # },
+    # {
+    #     'id': 'job2',
+    #     'func': 'flaskapp.apsjobs:events_invites_status_check',
+    #     'trigger': 'interval',
+    #     'seconds': 60
+    # }
 ]
 SCHEDULER_VIEWS_ENABLED = True
