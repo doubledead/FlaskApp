@@ -5,7 +5,7 @@ from flask_mail import Message
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import UpdateEventForm
-from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem, subitem_schema
+from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem, subitem_schema, Status, status_schema
 from sqlalchemy import exc
 from flaskapp import page_forbidden
 from ..utils import representsint
@@ -302,6 +302,22 @@ def getitems():
         payload = {"u_Id" : u_id, "items_data" : items, "status" : "OK"}
 
         return json.dumps(payload)
+
+
+@events.route('/get_metadata', methods=['GET', 'POST'])
+@login_required
+def get_metadata():
+    if request.method == "POST":
+
+        status = [(s.status_code, s.name) for s in Status.query.all()]
+
+        # pull Categories
+
+        payload = {"status_data": status}
+
+        return json.dumps(payload)
+
+
 
 
 @events.route('/get_host_items', methods=['GET', 'POST'])
