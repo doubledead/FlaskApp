@@ -1,6 +1,7 @@
 angular.module('controllers', [])
 .controller('formCtrl', ['$scope', '$http', '$timeout', 'CreateService', function ($scope, $http, $timeout, CreateService) {
   $scope.params = {};
+  $scope.metadata = [];
   $scope.stage = '';
   //$scope.direction = 0;
   $scope.longStage = 0;
@@ -12,7 +13,7 @@ angular.module('controllers', [])
   $scope.params = {
     address: '',
     address_line_two: '',
-    category_id: 100,
+    category_id: '',
     city: '',
     country: '',
     description: '',
@@ -27,6 +28,12 @@ angular.module('controllers', [])
     state: '',
     zip_code: ''
   };
+
+  CreateService
+    .getMetadata()
+    .then(function (response) {
+      $scope.metadata = response.data;
+    });
 
   // Navigation functions
   $scope.next = function (stage) {

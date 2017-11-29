@@ -15,6 +15,18 @@ angular.module('services', [])
         }, function errorCallback(response) {
           console.log(response);
         });
+      },
+      getMetadata: function(data) {
+
+        return $http({
+          method: 'POST',
+          url: '/events/get_metadata',
+          data: data
+        }).then(function successCallback(response) {
+          return response;
+        }, function errorCallback(response) {
+          console.log(response);
+        });
       }
     }
   });

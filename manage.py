@@ -11,7 +11,7 @@ from flask import json, current_app
 from flaskapp import app
 from flaskapp.core import db, mail
 from flaskapp.users.models import User
-from flaskapp.events.models import Category, Event, event_schema, Status
+from flaskapp.events.models import Category, Event, event_schema, Status, ItemCategory
 from datetime import datetime, date, timedelta
 from sqlalchemy import exc
 
@@ -19,17 +19,31 @@ manager = Manager(app)
 
 @manager.command
 def populate():
+    # Event Status
     status_active = Status(name='active', status_code=100)
     status_inactive = Status(name='inactive', status_code=200)
     status_cancelled = Status(name='cancelled', status_code=300)
     status_completed = Status(name='completed', status_code=400)
     status_archived = Status(name='archived', status_code=500)
+    # Event Category
+    category_custom = Category(active=True, name='Custom', status_code=100)
+    category_meeting = Category(active=True, name='Meeting', status_code=200)
+    category_party = Category(active=True, name='Party', status_code=300)
+    category_team_building_exercise = Category(active=True, name='Team Building Exercise', status_code=400)
 
+    # Add Categories to DB session
+    db.session.add(category_custom)
+    db.session.add(category_meeting)
+    db.session.add(category_party)
+    db.session.add(category_team_building_exercise)
+
+    # Add Status' to DB session
     db.session.add(status_active)
     db.session.add(status_inactive)
     db.session.add(status_cancelled)
     db.session.add(status_completed)
     db.session.add(status_archived)
+    # Commit session
     db.session.commit()
 
 @manager.command

@@ -5,7 +5,7 @@ from flask_mail import Message
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import UpdateEventForm
-from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem, subitem_schema, Status, status_schema
+from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem, subitem_schema, Status, Category
 from sqlalchemy import exc
 from flaskapp import page_forbidden
 from ..utils import representsint
@@ -59,10 +59,17 @@ def create():
     if request.method == "POST":
         data = request.get_json()
         u_id = current_user.id
+        event_category_id = 0
+
+        if data["category_id"] and representsint(data["category_id"]):
+            event_category_id = int(data["category_id"])
+        else:
+            event_category_id = 10
 
         address = data["address"]
         address_line_two = data["address_line_two"]
-        category_id = data["category_id"]
+        # category_id = data["category_id"]
+        category_id = event_category_id
         city = data["city"]
         country = data["country"]
         description = data["description"]
@@ -78,10 +85,11 @@ def create():
         status_id = 100 # New event status
         user_id = u_id
         zip_code = data["zip_code"]
-        event = Event(active=True, address=address, address_line_two=address_line_two, category_id=category_id, city=city,
-                      country=country, description=description, end_date=end_date, invite_status_id=invite_status_id,
-                      last_edit_date=last_edit_date, last_host_view=last_host_view, name=name, start_date=start_date, state=state,
-                      status_id=status_id, use_host_email=True, user_id=user_id, zip_code=zip_code)
+        event = Event(active=True, address=address, address_line_two=address_line_two, category_id=category_id,
+                      city=city, country=country, description=description, end_date=end_date,
+                      invite_status_id=invite_status_id, last_edit_date=last_edit_date, last_host_view=last_host_view,
+                      name=name, start_date=start_date, state=state, status_id=status_id, user_id=user_id,
+                      zip_code=zip_code)
 
 
         # Iterate through guest email addresses
@@ -132,7 +140,7 @@ def create():
         try:
             db.session.add(event)
             db.session.commit()
-            mail.send(msg)
+            # mail.send(msg)
             return json.dumps({'status':'OK'})
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
@@ -312,8 +320,10 @@ def get_metadata():
         status = [(s.status_code, s.name) for s in Status.query.all()]
 
         # pull Categories
+        # categories = [(c.status_code, c.name) for c in Category.query.all()]
+        categories = [{"name" : c.name, "status_code" : c.status_code} for c in Category.query.all()]
 
-        payload = {"status_data": status}
+        payload = {"categories" : categories, "status_data": status}
 
         return json.dumps(payload)
 
@@ -330,6 +340,8 @@ def get_host_items():
 
         event = Event.query.filter_by(id=param_id).first_or_404()
 
+        status = [(s.status_code, s.name) for s in Status.query.all()]
+
         if event.user_id == u_id:
             items = item_schema.dump(event.items).data
             guest_data = []
@@ -341,7 +353,8 @@ def get_host_items():
                        "e_id" : event.id,
                        "guest_data" : guest_data,
                        "items_data" : items,
-                       "status" : "OK"}
+                       "status" : "OK",
+                       "status_items" : status}
             return json.dumps(payload)
         else:
             return page_forbidden("Forbidden page access attempt.")
