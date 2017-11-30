@@ -43,7 +43,7 @@
                         ng-model="params.category_id"
                         required>
                   <option value="">..Select..</option>
-                  <option ng-repeat="option in metadata.categories" value="{{ option.category_code }}">
+                  <option ng-repeat="option in metadata.categories" value="{{ option.status_code }}">
                     {{ option.name }}
                   </option>
                 </select>

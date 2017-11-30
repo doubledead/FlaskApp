@@ -5,7 +5,7 @@ from flask_mail import Message
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import UpdateEventForm
-from .models import Event, event_schema, Guest, guest_schema, Item, item_schema, Subitem, subitem_schema, Status, Category
+from .models import Category, Event, event_schema, Guest, guest_schema, Item, item_schema, ItemCategory, Subitem, subitem_schema, Status
 from sqlalchemy import exc
 from flaskapp import page_forbidden
 from ..utils import representsint
@@ -68,7 +68,6 @@ def create():
 
         address = data["address"]
         address_line_two = data["address_line_two"]
-        # category_id = data["category_id"]
         category_id = event_category_id
         city = data["city"]
         country = data["country"]
@@ -323,7 +322,9 @@ def get_metadata():
         # categories = [(c.status_code, c.name) for c in Category.query.all()]
         categories = [{"name" : c.name, "status_code" : c.status_code} for c in Category.query.all()]
 
-        payload = {"categories" : categories, "status_data": status}
+        item_categories = [{"name" : ic.name, "category_code" : ic.category_code} for ic in ItemCategory.query.all()]
+
+        payload = {"categories" : categories, "itemCategories" : item_categories, "status_data": status}
 
         return json.dumps(payload)
 
