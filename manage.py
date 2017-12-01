@@ -31,10 +31,10 @@ def populate():
     category_party = Category(active=True, name='Party', status_code=300)
     category_team_building_exercise = Category(active=True, name='Team Building Exercise', status_code=400)
     # Event Item Categories
-    item_category_custom = ItemCategory(active=True, name='Custom', status_code=100)
-    item_category_type1 = ItemCategory(active=True, name='Type 1', status_code=101)
-    item_category_type2 = ItemCategory(active=True, name='Type 2', status_code=102)
-    item_category_type3 = ItemCategory(active=True, name='Type 3', status_code=103)
+    item_category_custom = ItemCategory(active=True, name='Custom', code=100)
+    item_category_type1 = ItemCategory(active=True, name='Type 1', code=101)
+    item_category_type2 = ItemCategory(active=True, name='Type 2', code=102)
+    item_category_type3 = ItemCategory(active=True, name='Type 3', code=103)
 
     # Add Categories to DB session
     db.session.add(category_custom)

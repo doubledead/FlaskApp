@@ -212,12 +212,12 @@ class ItemCategory(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     active = db.Column(db.Boolean(), default=True)
     name = db.Column(db.String(225))
-    category_code = db.Column(db.Integer())
+    code = db.Column(db.Integer())
 
-    def __init__(self, active, name, category_code):
+    def __init__(self, active, name, code):
         self.active = active
         self.name = name
-        self.category_code = category_code
+        self.code = code
 
         def __repr__(self):
             return 'ItemCategory %r>' % self.name

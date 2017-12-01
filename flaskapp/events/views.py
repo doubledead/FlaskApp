@@ -322,7 +322,7 @@ def get_metadata():
         # categories = [(c.status_code, c.name) for c in Category.query.all()]
         categories = [{"name" : c.name, "status_code" : c.status_code} for c in Category.query.all()]
 
-        item_categories = [{"name" : ic.name, "category_code" : ic.category_code} for ic in ItemCategory.query.all()]
+        item_categories = [{"name" : ic.name, "code" : ic.code} for ic in ItemCategory.query.all()]
 
         payload = {"categories" : categories, "itemCategories" : item_categories, "status_data": status}
 
