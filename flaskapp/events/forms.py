@@ -6,7 +6,7 @@
 """
 
 from flask_wtf import Form
-from wtforms import DateField, DateTimeField, IntegerField, StringField, FieldList
+from wtforms import DateField, DateTimeField, IntegerField, StringField, SelectField, FieldList
 from wtforms import validators
 
 
@@ -39,6 +39,7 @@ class UpdateEventForm(Form):
         validators.Length(min=1, max=70)
     ])
     start_date = DateField('Start Date', [validators.DataRequired()], format='%m-%d-%Y')
+    status = SelectField(u'Status', coerce=int)
     end_date = DateField('End Date', [validators.DataRequired()], format='%m-%d-%Y')
     # birthdate = DateTimeField('Birth Date', format='%m/%d/%Y %I:%M:%S %p')
     # birthdate = DateField('Birth Date', format='%Y-%m-%d')
