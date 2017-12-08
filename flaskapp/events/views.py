@@ -208,6 +208,7 @@ def update(event_id):
             event.name = form.name.data
             event.start_date = form.start_date.data
             event.state = form.state.data
+            event.status_id = form.status_id.data
             event.user_id = user_id
             event.zip_code = form.zip_code.data
 
@@ -226,7 +227,8 @@ def update(event_id):
             form.name.data = event.name
             form.start_date.data = event.start_date
             form.state.data = event.state
-            form.status_id = [(s.id, s.name) for s in Status.query.order_by('name')]
+            # form.status_id.data = [(s.id, s.name) for s in Status.query.all()]
+            form.status_id.data = event.status_id
             form.zip_code.data = event.zip_code
 
         return render_template("events/update.html", event=event, form=form)
