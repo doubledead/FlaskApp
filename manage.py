@@ -20,11 +20,12 @@ manager = Manager(app)
 @manager.command
 def populate():
     # Event Status
-    status_active = Status(name='active', status_code=100)
-    status_inactive = Status(name='inactive', status_code=200)
-    status_cancelled = Status(name='cancelled', status_code=300)
-    status_completed = Status(name='completed', status_code=400)
-    status_archived = Status(name='archived', status_code=500)
+    status_active = Status(name='Active', status_code=100)
+    status_inactive = Status(name='Archived', status_code=200)
+    status_cancelled = Status(name='Cancelled', status_code=300)
+    status_completed = Status(name='Completed', status_code=400)
+    status_archived = Status(name='Inactive', status_code=500)
+    status_postponed = Status(name='Postponed', status_code=600)
     # Event Category
     category_custom = Category(active=True, name='Custom', status_code=100)
     category_meeting = Category(active=True, name='Meeting', status_code=200)

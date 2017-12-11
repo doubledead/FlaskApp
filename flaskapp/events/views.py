@@ -771,6 +771,7 @@ def remove_guest():
 
             if data['g_id'] == guest.id and guest.active:
                 guest.active = False
+                # Send email
             elif data['g_id'] == guest.id and guest.active == False:
                 guest.active = True
             else:
