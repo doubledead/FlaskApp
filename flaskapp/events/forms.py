@@ -41,7 +41,7 @@ class UpdateEventForm(Form):
     start_date = DateField('Start Date', [validators.DataRequired()], format='%m-%d-%Y')
     # status_id = SelectField(u'Status', coerce=int)
     # status_id = IntegerField('Status')
-    status_id = SelectField(u'Status', choices=[(100, 'Active'), (300, 'Cancelled'), (600, 'Postponed')])
+    status_id = SelectField(u'Status', choices=[('100', 'Active'), ('300', 'Cancelled'), ('600', 'Postponed')])
     end_date = DateField('End Date', [validators.DataRequired()], format='%m-%d-%Y')
     # birthdate = DateTimeField('Birth Date', format='%m/%d/%Y %I:%M:%S %p')
     # birthdate = DateField('Birth Date', format='%Y-%m-%d')
