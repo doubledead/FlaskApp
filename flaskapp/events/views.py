@@ -36,12 +36,16 @@ def index():
     # Events belonging to current user with status 400, completed.
     events_completed = Event.query.filter_by(user_id=user_id, status_id=400).all()
 
+    # Events belonging to current user with status 300, cancelled.
+    events_cancelled = Event.query.filter_by(user_id=user_id, status_id=300).all()
+
     return render_template('events/events.html',
                            events_active=events_active,
                            events_active_count=events_active_count,
                            events_invited_active=events_invited_active,
                            events_invited_active_count=events_invited_active_count,
-                           events_completed=events_completed)
+                           events_completed=events_completed, 
+                           events_cancelled=events_cancelled)
 
 
 # @events.route('/')
