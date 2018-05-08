@@ -2,8 +2,7 @@
 # Settings
 
 DEBUG = True
-# DEBUG = False
-# Setting TESTING to True disables @login_required checks
+use_reloader=False
 TESTING = False
 
 CACHE_TYPE = 'simple'

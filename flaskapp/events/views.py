@@ -290,32 +290,58 @@ def removeitem():
 @login_required
 def getitems():
     if request.method == "POST":
-        data = request.get_json()
-        param_id = data['paramId']
-        u_id = current_user.id
-        items_data = []
-        items = []
+        try:
+            data = request.get_json()
+            param_id = data['paramId']
+            u_id = current_user.id
+            # items_data = []
+            items = []
 
-        event = Event.query.filter_by(id=param_id).first_or_404()
+            event = Event.query.filter_by(id=param_id).first_or_404()
 
-        for active_item in event.items:
-            if active_item.active:
-                items_data.append(active_item)
+            # for active_item in event.items:
+            #     if active_item.active:
+            #         items_data.append(active_item)
 
-        # Remove Subitems that do not belong to guest.
-        if event.user_id != u_id:
-            for item in items_data:
-                for i in xrange(len(item.subitems) - 1, -1, -1):
-                    subitem = item.subitems[i]
-                    if subitem.user_id != u_id:
-                        del item.subitems[i]
-            items = item_schema.dump(items_data).data
+            # # Remove Subitems that do not belong to guest.
+            # if event.user_id != u_id:
+            #     for item in items_data:
+            #         for i in xrange(len(item.subitems) - 1, -1, -1):
+            #             subitem = item.subitems[i]
+            #             if subitem.user_id != u_id:
+            #                 del item.subitems[i]
+            #     items = item_schema.dump(items_data).data
+
+            if event.user_id != u_id:
+                for item in event.items:
+                    if item.active:
+                        subitems = []
+                        for si in item.subitems:
+                            if current_user.id == si.user_id:
+                                # append to Python list
+                                subitem = subitem_schema.dump(si).data
+                                subitems.append(subitem)
+
+                        event_item = {'id' : item.id, 
+                            'categoryId' : item.category_id, 
+                            #'measurementId' : item.measurement_id, 
+                            'name' : item.name, 
+                            'subitems' : subitems, 
+                            'quantity' : item.quantity, 
+                            'quantityClaimed' : item.quantity_claimed}
+                        items.append(event_item)
 
 
-        # Package data payload into a Python dictionary
-        payload = {"u_Id" : u_id, "items_data" : items, "status" : "OK"}
+            # Package data payload into a Python dictionary
+            payload = {"u_Id" : u_id, "items_data" : items, "status" : "OK"}
+            current_app.logger.info('sending payload')
 
-        return json.dumps(payload)
+            return json.dumps(payload)
+        except exc.SQLAlchemyError as e:
+            current_app.logger.error(e)
+            return json.dumps({'status':'Error'})
+    else:
+        return render_template("errors/404.html")
 
 
 @events.route('/get_metadata', methods=['GET', 'POST'])
