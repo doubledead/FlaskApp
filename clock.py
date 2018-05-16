@@ -10,26 +10,21 @@ from flask_mail import Message
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=1)
-def timed_job():
-    print('This job is run every minute.')
+# @sched.scheduled_job('interval', minutes=1)
+# def timed_job():
+#     print('This job is run every minute.')
 
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=17)
-def scheduled_job():
-    print('This job is run every weekday at 5pm.')
+# This can be a job schedule to clean up databases
+# @sched.scheduled_job('cron', day_of_week='mon-fri', hour=17)
+# def scheduled_job():
+#     print('This job is run every weekday at 5pm.')
 
 def low_interval_job():
     print('This job runs every 30 seconds.')
 
-def test_job():
-    with app.app_context():
-        events = Event.query.filter_by(status_id=100).all()
-        for event in events:
-            print(event.status_id)
-
+@sched.scheduled_job('interval', minutes=1)
 def events_invites_status_check():
     with app.app_context():
-        # Check for events with status_id 100, active status.
         events = Event.query.filter_by(status_id=100).all()
 
         for event in events:
@@ -62,12 +57,44 @@ def events_invites_status_check():
             else:
                 current_app.logger.info('Status 105, all invites sent.')
 
+        try:
+            db.session.commit()
+            current_app.logger.info('Event Invites Check Complete.')
+        except exc.SQLAlchemyError as e:
+            current_app.logger.info('Something went wrong.')
+            current_app.logger.error(e)
 
-        # Commit the db session back.
-        db.session.commit()
+@sched.scheduled_job('interval', seconds=30)
+def events_status_check():
+    with app.app_context():
+        events = Event.query.filter_by(status_id=100).all()
+
+        for event in events:
+            # If the event end_date has expired, change its status_id
+            # to 400, completed status.
+            if event.end_date <= datetime.utcnow():
+                event.status_id = 400
+                current_app.logger.info('Event expired. Status updated. Event ID: %s', event.id)
+
+                user = User.query.filter_by(id=event.user_id).first_or_404()
+                confmsg = Message()
+                confmsg.subject = "FlaskApp - Event Ended"
+                confmsg.add_recipient(user.email)
+                confmsg.body = "The following event has ended: " + event.name
+
+                db.session.add(event)
+                mail.send(confmsg)
+            else:
+                current_app.logger.info('Status 105, no expired events.')
+
+        try:
+            db.session.commit()
+            current_app.logger.info('Event Status Check Complete.')
+        except exc.SQLAlchemyError as e:
+            current_app.logger.info('Something went wrong.')
+            current_app.logger.error(e)
+            # Send error email
 
 # sched.add_job(low_interval_job, 'interval', seconds=30)
-# sched.add_job(test_job, 'interval', seconds=10) # This works when using local DB
-sched.add_job(events_invites_status_check, 'interval', seconds=30)
 
 sched.start()
