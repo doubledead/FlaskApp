@@ -38,7 +38,7 @@ def events_check():
                 confmsg.body = "The following event has ended: " + event.name
 
                 db.session.add(event)
-                mail.send(confmsg)
+                # mail.send(confmsg)
             else:
                 current_app.logger.info('Status 105, no expired events.')
 
@@ -81,7 +81,7 @@ def events_invites_status_check():
                 confmsg.body = "Event invites have been sent for the following event: " + event.name
 
                 db.session.add(event)
-                mail.send(confmsg)
+                # mail.send(confmsg)
             else:
                 current_app.logger.info('Status 105, all invites sent.')
 

@@ -7,12 +7,17 @@ Features:
 - Jinja2 templating
 - Embedded AngularJS
 
-This webapp requires these programs: 
+## Dependencies
 
-- Python 2.7.*
-- pip
-- virtualenv
-- bower
+    Database
+
+    - PostgreSQL 11+
+
+    Flask Web API Server
+
+	- Python ^3.6.*
+	- pip
+	- virtualenv
 
 #### 1. Activate virtualenv (run at root of project)
 
@@ -21,12 +26,12 @@ This webapp requires these programs:
 
 #### 2. Install all required Python libraries
 
-	$ pip install -r requirements.txt
+	$ pip3 install -r requirements.txt
 
 #### 3. Install SQLite(or postgreSQL, depending on connection) test data (run at root of project)
 
-    $ python seed.py
+    $ python3 seed.py
 
 #### 4. Run the Flask project (run at root of project)
 
-    $ python run.py
+    $ python3 run.py

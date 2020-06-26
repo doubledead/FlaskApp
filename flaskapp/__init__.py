@@ -18,7 +18,7 @@ app = Flask(__name__,
             template_folder='templates')
 
 # app.config.from_object('flaskapp.settings')
-app.config.from_object('flaskapp.settings_dev_local')
+app.config.from_object('flaskapp.settings_local')
 
 # logging.basicConfig(format=app.config['LOGGING_FORMAT'],filename='logs.log',level=logging.DEBUG)
 
@@ -33,8 +33,8 @@ security.init_app(app, SQLAlchemyUserDatastore(db, User, Role),
                   confirm_register_form=ExtendedConfirmRegisterForm)
 
 # Flask-APScheduler initialize and start.
-# scheduler.init_app(app)
-# scheduler.start()
+scheduler.init_app(app)
+scheduler.start()
 
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
