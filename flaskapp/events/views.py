@@ -815,3 +815,9 @@ def remove_guest():
             except exc.SQLAlchemyError as e:
                 current_app.logger.error(e)
                 return json.dumps({'status':'Error'})
+
+
+@events.route('/chat', methods=['GET', 'POST'])
+@login_required
+def chat():
+    return render_template('/events/chat/chat.html')
