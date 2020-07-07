@@ -12,6 +12,7 @@ from ..utils import representsint
 
 events = Blueprint('events', __name__, template_folder='templates')
 
+
 @events.route('/')
 @login_required
 def index():

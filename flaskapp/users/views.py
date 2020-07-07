@@ -9,6 +9,7 @@ from sqlalchemy import exc
 
 user = Blueprint('user', __name__, template_folder='templates')
 
+
 @user.route('/')
 @login_required
 def index():
@@ -21,6 +22,7 @@ def index():
 #     user = User.query.filter_by(id=user_id).first_or_404()
 #
 #     return render_template('users/user_profile.html', user=user)
+
 
 @user.route('/edit', methods=['GET', 'POST'])
 @login_required
