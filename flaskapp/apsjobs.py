@@ -73,7 +73,7 @@ def events_invites_status_check():
                                                          id=event.id)
                     guest_message.add_recipient(e)
                     # Send message
-                    mail.send(guest_message)
+                    # mail.send(guest_message)
 
                 confmsg = Message()
                 confmsg.subject = "FlaskApp - Event Invites Sent"
