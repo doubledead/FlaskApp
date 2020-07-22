@@ -23,8 +23,7 @@ MAIL_USERNAME = 'postmaster@mg.loveschaos.com'
 MAIL_PASSWORD = '05f20eb390515bce00f8d19d7fb5bbd5'
 
 # Flask-Security
-# User Model confirmed_at needs to be uncommented
-SECURITY_CONFIRMABLE = False # Prod change
+SECURITY_CONFIRMABLE = False
 SECURITY_CHANGEABLE = True
 SECURITY_RECOVERABLE = True
 SECURITY_REGISTERABLE = True

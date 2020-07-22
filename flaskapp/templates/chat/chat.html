@@ -1,10 +1,26 @@
-{% extends 'layouts/_datepicker_layout.html' %}
+{% extends 'layouts/chat_base.html' %}
 {% block container %}
   <div class="page-header">
     <h3>Event Chat</h3>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-md-12">&nbsp;</div>
+    <div class="col-sm-12 col-md-12">&nbsp</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">&nbsp</div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <h1>Potluck-Chat: {{ room }}</h1>
+      {% for m in chat_messages %}
+        <p>&nbsp;{{ m.name }}: {{ m.text }}</p>
+      {% endfor %}
+      <textarea id="chat" cols="40" rows="10"></textarea><br><br>
+      <input id="text" size="40" placeholder="Enter message">
+      <button id="btnSend" class="btn-orange-dark">Send</button><br><br>
+      {#      <a href="#" onclick="leave_room();">Leave room</a>#}
+    </div>
   </div>
 
   <div class="row">

@@ -45,18 +45,18 @@ SECURITY_EMAIL_SENDER = 'service@loveschaos.com'
 LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 
 # Flask-APScheduler
-JOBS = [
-    {
-        'id': 'job1',
-        'func': 'flaskapp.apsjobs:events_check',
-        'trigger': 'interval',
-        'seconds': 30
-    },
-    {
-        'id': 'job2',
-        'func': 'flaskapp.apsjobs:events_invites_status_check',
-        'trigger': 'interval',
-        'seconds': 60
-    }
-]
-SCHEDULER_VIEWS_ENABLED = True
+# JOBS = [
+#     {
+#         'id': 'job1',
+#         'func': 'flaskapp.apsjobs:events_check',
+#         'trigger': 'interval',
+#         'seconds': 30
+#     },
+#     {
+#         'id': 'job2',
+#         'func': 'flaskapp.apsjobs:events_invites_status_check',
+#         'trigger': 'interval',
+#         'seconds': 60
+#     }
+# ]
+# SCHEDULER_VIEWS_ENABLED = True

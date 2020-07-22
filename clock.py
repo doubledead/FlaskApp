@@ -1,12 +1,14 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from flask import json, current_app
-from flaskapp import app
+from flaskapp import create_app
 from flaskapp.core import db, mail
 from flaskapp.users.models import User
 from flaskapp.events.models import Category, Event, event_schema, Status, ItemCategory
 from datetime import datetime, date, timedelta
 from sqlalchemy import exc
 from flask_mail import Message
+
+app = create_app()
 
 sched = BlockingScheduler()
 
@@ -19,8 +21,10 @@ sched = BlockingScheduler()
 # def scheduled_job():
 #     print('This job is run every weekday at 5pm.')
 
+
 def low_interval_job():
     print('This job runs every 30 seconds.')
+
 
 @sched.scheduled_job('interval', minutes=1)
 def events_invites_status_check():
@@ -64,6 +68,7 @@ def events_invites_status_check():
             current_app.logger.info('Something went wrong.')
             current_app.logger.error(e)
 
+
 @sched.scheduled_job('interval', seconds=30)
 def events_status_check():
     with app.app_context():
@@ -96,5 +101,6 @@ def events_status_check():
             # Send error email
 
 # sched.add_job(low_interval_job, 'interval', seconds=30)
+
 
 sched.start()

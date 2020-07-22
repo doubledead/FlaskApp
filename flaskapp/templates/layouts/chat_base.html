@@ -1,0 +1,58 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>App</title>
+  <meta name="description" content="Flask App">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js.map"></script>
+  <link href="{{ url_for('static', filename='css/grid.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+      let socket = io();
+      let paramId = location.pathname.split('/chat/', 2)[1];
+
+      socket.on('connect', function() {
+        socket.emit('joined', {paramId});
+      });
+      socket.on('status', function(data) {
+        $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
+        $('#chat').scrollTop($('#chat')[0].scrollHeight);
+        console.log(data);
+      });
+      socket.on('message', function(data) {
+        $('#chat').val($('#chat').val() + data.msg + '\n');
+        $('#chat').scrollTop($('#chat')[0].scrollHeight);
+      });
+      $('#text').keypress(function(e) {
+        var code = e.keyCode || e.which;
+        if (code == 13) {
+          let text = $('#text').val();
+          $('#text').val('');
+          socket.emit('text', {msg: text, paramId: paramId});
+        }
+      });
+      $( "#btnSend" ).click(function () {
+        let text = $('#text').val();
+        $('#text').val('');
+        socket.emit('text', {msg: text, paramId: paramId});
+      })
+    });
+
+  </script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  {% include "layouts/_menu.html" %}
+</nav>
+<div class="container">
+  {% block container %}{% endblock %}
+</div>
+<footer class="footer"></footer>
+</body>
+</html>

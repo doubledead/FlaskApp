@@ -8,14 +8,17 @@
 from flask_script import Manager
 from flask import json, current_app
 
-from flaskapp import app
+from flaskapp import create_app
 from flaskapp.core import db, mail
 from flaskapp.users.models import User
 from flaskapp.events.models import Category, Event, event_schema, Status, ItemCategory
 from datetime import datetime, date, timedelta
 from sqlalchemy import exc
 
+app = create_app()
+
 manager = Manager(app)
+
 
 @manager.command
 def populate():
@@ -52,6 +55,7 @@ def populate():
     # Commit session
     db.session.commit()
 
+
 @manager.command
 def create_test_users():
     # test_user = User(email='user@test.com', password='123456', active=True)
@@ -87,7 +91,6 @@ def create_test_users():
     db.session.commit()
 
 
-## event_status_check has been automated but will remain here for reference
 @manager.command
 def event_status_check():
     # Check for events with status_id 100, active status.
@@ -112,8 +115,6 @@ def event_status_check():
                 current_app.logger.error(e)
                 print("Event Status Check: Error")
 
-
-    # Commit the db session back.
     db.session.commit()
 
 
@@ -136,8 +137,6 @@ def event_archive_check():
         # Email errors.
         current_app.logger.error(e)
         print("Archive check: Error")
-
-
 
 
 if __name__ == "__main__":

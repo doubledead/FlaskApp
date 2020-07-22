@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-    flaskapp.users.models
-    ~~~~~~~~~~~~~~~~~~~~~
-    User models
-"""
-
 from flask_security import UserMixin, RoleMixin
 from ..core import db, ma
 from marshmallow import fields
@@ -34,7 +27,7 @@ class Role(db.Model, RoleMixin):
         self.name = name
 
     def __repr__(self):
-        return '<Role %r>' % (self.name)
+        return '<Role %r>' % self.name
 
 
 class User(db.Model, UserMixin):
@@ -60,8 +53,9 @@ class User(db.Model, UserMixin):
                             backref=db.backref('users', lazy='dynamic'))
 
 
-class UserSchema(ma.ModelSchema):
+class UserSchema(ma.Schema):
     class Meta:
         model = User
+
 
 user_schema = UserSchema()

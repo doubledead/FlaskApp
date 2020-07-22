@@ -7,7 +7,6 @@ from datetime import datetime
 from .forms import UpdateEventForm
 from .models import Category, Event, event_schema, Guest, guest_schema, Item, item_schema, ItemCategory, Subitem, subitem_schema, Status
 from sqlalchemy import exc
-from flaskapp import page_forbidden
 from ..utils import representsint
 
 events = Blueprint('events', __name__, template_folder='templates')
@@ -95,7 +94,6 @@ def create():
                       name=name, start_date=start_date, state=state, status_id=status_id, user_id=user_id,
                       zip_code=zip_code)
 
-
         # Iterate through guest email addresses
         for g in guests_data:
             e = g['email']
@@ -107,7 +105,6 @@ def create():
                           rsvp_flag=False,
                           user_id=u_id)
             event.guests.append(guest)
-
 
         # Iterate through items
         for i in items_data:
@@ -140,7 +137,6 @@ def create():
 
         msg.body = "Event created: " + name
 
-
         try:
             db.session.add(event)
             db.session.commit()
@@ -156,7 +152,7 @@ def create():
 @events.route('/<event_id>', methods=['GET', 'POST'])
 @login_required
 def show(event_id):
-    if request.method =="GET":
+    if request.method == "GET":
         u_id = current_user.id
         event = Event.query.filter_by(id=event_id).first_or_404()
 
@@ -166,7 +162,7 @@ def show(event_id):
             if guest.email == current_user.email:
                 return render_template("events/show.html", event=event, u_id=u_id)
         
-        return page_forbidden("Forbidden page access attempt.")
+        return redirect(url_for('error.page_forbidden'))
 
 
 @events.route('/host/<event_id>', methods=['GET', 'POST'])
@@ -191,7 +187,7 @@ def host(event_id):
                 current_app.logger.error(e)
                 return json.dumps({'status':'Error'})
         else:
-            return page_forbidden("Forbidden page access attempt.")
+            return redirect(url_for('error.page_forbidden'))
 
 
 ## Update Event details
@@ -238,7 +234,7 @@ def update(event_id):
 
         return render_template("events/update.html", event=event, form=form)
     else:
-        return page_forbidden("Forbidden page access attempt.")
+        return redirect(url_for('error.page_forbidden'))
 
 
 @events.route('/delete/<event_id>', methods=['GET', 'POST'])
@@ -258,7 +254,7 @@ def delete(event_id):
     return redirect(url_for('events.display_events'))
 
 
-#################### Items ################
+# Items
 @events.route('/removeitem', methods=['GET', 'POST'])
 @login_required
 def removeitem():
@@ -284,7 +280,7 @@ def removeitem():
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
             # Email log here
-            return json.dumps({'status':'Error'})
+            return json.dumps({'status': 'Error'})
 
 
 @events.route('/getitems', methods=['GET', 'POST'])
@@ -323,15 +319,14 @@ def getitems():
                                 subitem = subitem_schema.dump(si).data
                                 subitems.append(subitem)
 
-                        event_item = {'id' : item.id, 
-                            'categoryId' : item.category_id, 
-                            #'measurementId' : item.measurement_id, 
-                            'name' : item.name, 
-                            'subitems' : subitems, 
-                            'quantity' : item.quantity, 
-                            'quantityClaimed' : item.quantity_claimed}
+                        event_item = {'id' : item.id,
+                                      'categoryId' : item.category_id,
+                                      #'measurementId' : item.measurement_id,
+                                      'name' : item.name,
+                                      'subitems' : subitems,
+                                      'quantity' : item.quantity,
+                                      'quantityClaimed' : item.quantity_claimed}
                         items.append(event_item)
-
 
             # Package data payload into a Python dictionary
             payload = {"u_Id" : u_id, "items_data" : items, "status" : "OK"}
@@ -363,8 +358,6 @@ def get_metadata():
         return json.dumps(payload)
 
 
-
-
 @events.route('/get_host_items', methods=['GET', 'POST'])
 @login_required
 def get_host_items():
@@ -392,7 +385,7 @@ def get_host_items():
                        "status_items" : status}
             return json.dumps(payload)
         else:
-            return page_forbidden("Forbidden page access attempt.")
+            return redirect(url_for('error.page_forbidden'))
 
 
 @events.route('/updateitems', methods=['GET', 'POST'])
