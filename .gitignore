@@ -77,3 +77,12 @@ flaskapp/static/events/node_modules
 flaskapp/static/host/node_modules
 flaskapp/static/jsmvcapp/node_modules
 flaskapp/static/create/node_modules
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/

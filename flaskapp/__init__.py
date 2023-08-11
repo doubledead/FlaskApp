@@ -1,8 +1,8 @@
-
 import os
 from flask import abort, Flask, g, render_template, request
 from flask_security import SQLAlchemyUserDatastore, current_user
 import logging
+from .config import DevelopmentConfig
 
 from flaskapp.utils import get_instance_folder_path
 # from flaskapp.cache import cache
@@ -17,8 +17,7 @@ app = Flask(__name__,
             instance_relative_config=True,
             template_folder='templates')
 
-# app.config.from_object('flaskapp.settings')
-app.config.from_object('flaskapp.settings_local')
+app.config.from_object(DevelopmentConfig)
 
 # logging.basicConfig(format=app.config['LOGGING_FORMAT'],filename='logs.log',level=logging.DEBUG)
 

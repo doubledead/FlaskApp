@@ -1,5 +1,5 @@
 # FlaskApp
-Flask app using modular blueprints.
+Fullstack Flask app using modular blueprints.
 
 Features:
 
