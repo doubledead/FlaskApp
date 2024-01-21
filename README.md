@@ -19,19 +19,22 @@ Features:
 	- pip
 	- virtualenv
 
-#### 1. Activate virtualenv (run at root of project)
+#### 1. Create Python virtual environment
 
-	$ virtualenv env
-	$ source env/bin/activate
+	$ python3 -m venv .venv
 
-#### 2. Install all required Python libraries
+#### 2. Activate virtual environment
+
+	$ source .venv/bin/activate
+
+#### 3. Install all required Python libraries
 
 	$ pip3 install -r requirements.txt
 
-#### 3. Install SQLite(or postgreSQL, depending on connection) test data (run at root of project)
+#### 4. Install SQLite(or postgreSQL, depending on connection) test data (run at root of project)
 
     $ python3 seed.py
 
-#### 4. Run the Flask project (run at root of project)
+#### 5. Run the Flask project (run at root of project)
 
     $ python3 run.py
