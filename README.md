@@ -34,6 +34,8 @@ Features:
 #### 4. Install SQLite(or postgreSQL, depending on connection) test data (run at root of project)
 
     $ python3 seed.py
+	$ python3 manage.py populate
+	$ python3 manage.py create_test_users
 
 #### 5. Run the Flask project (run at root of project)
 
