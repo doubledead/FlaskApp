@@ -5,9 +5,8 @@ from flask_mail import Message
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import UpdateEventForm
-from .models import Category, Event, event_schema, Guest, guest_schema, Item, item_schema, ItemCategory, Subitem, subitem_schema, Status
+from .models import Category, Event, Guest, guest_schema, Item, item_schema, ItemCategory, Subitem, subitem_schema, Status
 from sqlalchemy import exc
-from flaskapp import page_forbidden
 from ..utils import representsint
 
 events = Blueprint('events', __name__, template_folder='templates')
@@ -46,15 +45,6 @@ def index():
                            events_invited_active_count=events_invited_active_count,
                            events_completed=events_completed, 
                            events_cancelled=events_cancelled)
-
-
-# @events.route('/')
-# @login_required
-# def display_events():
-#     user_id = current_user.id
-#     events = Event.query.filter_by(user_id=user_id)
-
-#     return render_template("events/events.html", events=events)
 
 
 @events.route('/create', methods=['GET', 'POST'])
@@ -165,7 +155,7 @@ def show(event_id):
             if guest.email == current_user.email:
                 return render_template("events/show.html", event=event, u_id=u_id)
         
-        return page_forbidden("Forbidden page access attempt.")
+        return render_template("errors/404.html")
 
 
 @events.route('/host/<event_id>', methods=['GET', 'POST'])
@@ -190,7 +180,7 @@ def host(event_id):
                 current_app.logger.error(e)
                 return json.dumps({'status':'Error'})
         else:
-            return page_forbidden("Forbidden page access attempt.")
+            return render_template("errors/404.html")
 
 
 ## Update Event details
@@ -237,7 +227,7 @@ def update(event_id):
 
         return render_template("events/update.html", event=event, form=form)
     else:
-        return page_forbidden("Forbidden page access attempt.")
+        return render_template("errors/404.html")
 
 
 @events.route('/delete/<event_id>', methods=['GET', 'POST'])
@@ -391,7 +381,7 @@ def get_host_items():
                        "status_items" : status}
             return json.dumps(payload)
         else:
-            return page_forbidden("Forbidden page access attempt.")
+            return render_template("errors/404.html")
 
 
 @events.route('/updateitems', methods=['GET', 'POST'])

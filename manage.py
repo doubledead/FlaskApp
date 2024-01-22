@@ -6,14 +6,16 @@
 """
 
 from flask_script import Manager
-from flask import json, current_app
+from flask import current_app
 
-from flaskapp import app
-from flaskapp.core import db, mail
+from flaskapp import create_app
+from flaskapp.core import db
 from flaskapp.users.models import User
-from flaskapp.events.models import Category, Event, event_schema, Status, ItemCategory
+from flaskapp.events.models import Category, Event, Status
 from datetime import datetime, date, timedelta
 from sqlalchemy import exc
+
+app = create_app()
 
 manager = Manager(app)
 
@@ -31,11 +33,6 @@ def populate():
     category_meeting = Category(active=True, name='Meeting', status_code=200)
     category_party = Category(active=True, name='Party', status_code=300)
     category_team_building_exercise = Category(active=True, name='Team Building Exercise', status_code=400)
-    # Event Item Categories
-    item_category_custom = ItemCategory(active=True, name='Custom', code=100)
-    item_category_type1 = ItemCategory(active=True, name='Type 1', code=101)
-    item_category_type2 = ItemCategory(active=True, name='Type 2', code=102)
-    item_category_type3 = ItemCategory(active=True, name='Type 3', code=103)
 
     # Add Categories to DB session
     db.session.add(category_custom)

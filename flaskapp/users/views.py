@@ -4,7 +4,7 @@ from ..core import db
 from flask_security import login_required, current_user
 from datetime import datetime
 from .forms import EditProfileForm
-from .models import User, Role
+from .models import User
 from sqlalchemy import exc
 
 user = Blueprint('user', __name__, template_folder='templates')

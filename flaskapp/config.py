@@ -28,6 +28,8 @@ class BaseConfig(object):
     SECURITY_POST_LOGIN_VIEW = '/main'
     SECURITY_POST_LOGOUT_VIEW = '/'
     SECURITY_POST_REGISTER_VIEW = '/main'
+    SECURITY_PASSWORD_SALT = getenv("SECURITY_PASSWORD_SALT")
+    SECURITY_EMAIL_SENDER = 'service@test.com'
 
 
 class DevelopmentConfig(BaseConfig):

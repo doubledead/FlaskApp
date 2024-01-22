@@ -48,7 +48,7 @@ class Guest(db.Model):
         self.user_id = user_id
 
 
-class GuestSchema(ma.ModelSchema):
+class GuestSchema(ma.Schema):
     class Meta:
         model = Guest
 
@@ -70,7 +70,7 @@ class Subitem(db.Model):
         self.user_id = user_id
 
 
-class SubitemSchema(ma.ModelSchema):
+class SubitemSchema(ma.Schema):
     class Meta:
         model = Subitem
 
@@ -105,7 +105,7 @@ class Item(db.Model):
         return 'Item %r>' % (self.name)
 
 
-class ItemSchema(ma.ModelSchema):
+class ItemSchema(ma.Schema):
     subitems = fields.Nested('SubitemSchema', default=None, many=True)
     class Meta:
         model = Item
@@ -173,7 +173,7 @@ class Event(db.Model):
         return '<Event %r>' % (self.name)
 
 
-class EventSchema(ma.ModelSchema):
+class EventSchema(ma.Schema):
     guests = fields.Nested('GuestSchema', default=None, many=True)
     items = fields.Nested('ItemSchema', default=None, many=True)
     class Meta:
@@ -199,7 +199,7 @@ class Category(db.Model):
             return 'Category %r>' % self.name
 
 
-class CategorySchema(ma.ModelSchema):
+class CategorySchema(ma.Schema):
     class Meta:
         model = Category
 
@@ -223,7 +223,7 @@ class ItemCategory(db.Model):
             return 'ItemCategory %r>' % self.name
 
 
-class ItemCategorySchema(ma.ModelSchema):
+class ItemCategorySchema(ma.Schema):
     class Meta:
         model = ItemCategory
 
@@ -243,7 +243,7 @@ class Status(db.Model):
             return 'Status %r>' % self.name
 
 
-class StatusSchema(ma.ModelSchema):
+class StatusSchema(ma.Schema):
     class Meta:
         model = Status
 
@@ -263,7 +263,7 @@ class InviteStatus(db.Model):
             return 'Status %r>' % self.name
 
 
-class InviteStatusSchema(ma.ModelSchema):
+class InviteStatusSchema(ma.Schema):
     class Meta:
         model = InviteStatus
 
