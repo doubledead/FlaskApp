@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask_security import SQLAlchemyUserDatastore, current_user
-import logging
 from .config import DevelopmentConfig
 
 from flaskapp.utils import get_instance_folder_path
@@ -15,6 +14,7 @@ from flaskapp.main.views import main
 from flaskapp.admin.views import admin
 from flaskapp.users.views import user
 from flaskapp.events.views import events
+from flaskapp.api.views import api
 
 
 def create_app():
@@ -57,5 +57,6 @@ def create_app():
     app.register_blueprint(admin, url_prefix='/admin')
     app.register_blueprint(user, url_prefix='/user')
     app.register_blueprint(events, url_prefix='/events')
+    app.register_blueprint(api, url_prefix='/api')
 
     return app

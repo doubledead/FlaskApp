@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DemoService } from './modules/shared/services/demo.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,20 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'frontend';
+
+  newdata: any;
+
+  constructor(private _apiservice: DemoService) {}
+
+  ngOnInit(): void {
+    this.getdata();
+  }
+
+  getdata() {
+    this._apiservice.getDemoData().subscribe(res => {
+      this.newdata = res;
+    })
+  }
 }
